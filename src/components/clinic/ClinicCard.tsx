@@ -91,12 +91,23 @@ export default function ClinicCard({
           </div>
         </div>
 
-        {/* 子育て向け診療科ハイライト */}
-        {hasPriority && (
-          <div className="mt-2 text-xs font-medium text-orange-600 bg-orange-50 rounded-lg px-3 py-1.5">
-            🧒 {clinic.departments.filter((d) => PRIORITY_DEPARTMENTS.includes(d)).join("・")} あり
-          </div>
-        )}
+        {/* 下段: Google評価 + 子育て科目 */}
+        <div className="mt-2 flex items-center gap-2 flex-wrap">
+          {clinic.google_rating && (
+            <span className="text-xs text-gray-500 flex items-center gap-0.5">
+              <span className="text-yellow-400">★</span>
+              <span className="font-medium text-gray-700">{clinic.google_rating}</span>
+              {clinic.google_review_count && (
+                <span className="text-gray-400">({clinic.google_review_count})</span>
+              )}
+            </span>
+          )}
+          {hasPriority && (
+            <span className="text-xs font-medium text-orange-600 bg-orange-50 rounded-lg px-2 py-1">
+              🧒 {clinic.departments.filter((d) => PRIORITY_DEPARTMENTS.includes(d)).join("・")}
+            </span>
+          )}
+        </div>
       </div>
     </Link>
   );

@@ -72,6 +72,40 @@ export default async function ClinicDetailPage({
             📞 {clinic.tel}
           </a>
         )}
+
+        {/* Google評価 */}
+        {clinic.google_rating && (
+          <div className="mt-3 flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-0.5">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`text-base ${star <= Math.round(clinic.google_rating!) ? "text-yellow-400" : "text-gray-200"}`}
+                >
+                  ★
+                </span>
+              ))}
+              <span className="ml-1 text-base font-bold text-gray-800">
+                {clinic.google_rating}
+              </span>
+            </div>
+            {clinic.google_review_count && (
+              <span className="text-xs text-gray-400">
+                ({clinic.google_review_count}件のクチコミ)
+              </span>
+            )}
+            {clinic.google_place_id && (
+              <a
+                href={`https://www.google.com/maps/place/?q=place_id:${clinic.google_place_id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-blue-500 underline ml-auto"
+              >
+                Googleマップで見る →
+              </a>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 診療科目 */}

@@ -120,6 +120,9 @@ export interface Clinic {
   notes: string | null;
   location: Location | null;
   geocoded: boolean;
+  google_place_id: string | null;
+  google_rating: number | null;
+  google_review_count: number | null;
 }
 
 /** 距離計算結果付きの医療機関（フロントエンド用） */

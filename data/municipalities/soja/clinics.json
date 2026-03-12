@@ -22,7 +22,10 @@
       "lat": 34.673739,
       "lng": 133.745998
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJx6rjzftUUTURdKX7NIfCspI",
+    "google_rating": 4.5,
+    "google_review_count": 16
   },
   {
     "id": "taniko-naika",
@@ -49,7 +52,10 @@
       "lat": 34.679809,
       "lng": 133.767715
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJrcEplz5VUTURit_vqGP9Ozo",
+    "google_rating": 2.3,
+    "google_review_count": 12
   },
   {
     "id": "oka-heart-clinic",
@@ -75,7 +81,10 @@
       "lat": 34.651914,
       "lng": 133.773613
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJN--HHxlVUTURU-w9WWSTLss",
+    "google_rating": 4.3,
+    "google_review_count": 13
   },
   {
     "id": "koura-seikei",
@@ -101,7 +110,10 @@
       "lat": 34.668026,
       "lng": 133.748589
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJb12xDP9UUTURiVmkvOuK19o",
+    "google_rating": 3.4,
+    "google_review_count": 16
   },
   {
     "id": "park-clinic",
@@ -129,7 +141,10 @@
       "lat": 34.671134,
       "lng": 133.739816
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJJUahnFhUUTUR354zVcx3tJg",
+    "google_rating": 3.2,
+    "google_review_count": 14
   },
   {
     "id": "nagano-hospital",
@@ -159,7 +174,10 @@
       "lat": 34.682909,
       "lng": 133.768958
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJWZou7x1VUTURmNeg_hN7Z8A",
+    "google_rating": 2.8,
+    "google_review_count": 26
   },
   {
     "id": "izumi-clinic",
@@ -186,7 +204,10 @@
       "lat": 34.687715,
       "lng": 133.746387
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJgZcazN1UUTURzZlX6FwybZM",
+    "google_rating": 4.6,
+    "google_review_count": 10
   },
   {
     "id": "sugi-clinic-kadota",
@@ -214,7 +235,10 @@
       "lat": 34.679682,
       "lng": 133.739974
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJk9Fsm_RUUTURZmnEs4yg-dE",
+    "google_rating": 3.4,
+    "google_review_count": 14
   },
   {
     "id": "sugimoto-clinic",
@@ -238,7 +262,10 @@
       "lat": 34.670086,
       "lng": 133.741089
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJRwK-cFhUUTUREEnNzW7XPxo",
+    "google_rating": 3.8,
+    "google_review_count": 8
   },
   {
     "id": "tomono-naika",
@@ -264,7 +291,10 @@
       "lat": 34.670752,
       "lng": 133.715413
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJM1QySHZUUTURtomH2SlHS1g",
+    "google_rating": 3.2,
+    "google_review_count": 6
   },
   {
     "id": "matsuo-hifuka",
@@ -288,7 +318,10 @@
       "lat": 34.677662,
       "lng": 133.754479
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJC2zGyB1VUTURkm4YyDd3Yjs",
+    "google_rating": 3,
+    "google_review_count": 36
   },
   {
     "id": "yakushiji-hospital",
@@ -318,7 +351,10 @@
       "lat": 34.676627,
       "lng": 133.75038
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJ37oQJ-NUUTURhUKfRAzJQ-w",
+    "google_rating": 2.7,
+    "google_review_count": 32
   },
   {
     "id": "yamamoto-iin",
@@ -344,7 +380,10 @@
       "lat": 34.661154,
       "lng": 133.746302
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJgZS2Y1pUUTUR2LYH86gNexg",
+    "google_rating": 2.7,
+    "google_review_count": 21
   },
   {
     "id": "sugi-clinic-misu",
@@ -370,7 +409,10 @@
       "lat": 34.673324,
       "lng": 133.767023
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJ30d6HRRVUTURtQ02OY8w2Uw",
+    "google_rating": 4.3,
+    "google_review_count": 7
   },
   {
     "id": "kiyone-clinic",
@@ -397,7 +439,10 @@
       "lat": 34.649169,
       "lng": 133.75004
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJCSDChUpUUTURK-E34H40nj4",
+    "google_rating": 4,
+    "google_review_count": 4
   },
   {
     "id": "hattori-jibika",
@@ -421,7 +466,10 @@
       "lat": 34.679627,
       "lng": 133.767678
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJGRbSkT5VUTUR3xPnvs1VCHU",
+    "google_rating": 3.3,
+    "google_review_count": 18
   },
   {
     "id": "sakaegeka-clinic",
@@ -449,7 +497,10 @@
       "lat": 34.671871,
       "lng": 133.728359
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJ12lWAARVUTURnBoOX75N8Xc",
+    "google_rating": 3.8,
+    "google_review_count": 14
   },
   {
     "id": "fujii-clinic",
@@ -476,7 +527,10 @@
       "lat": 34.66747,
       "lng": 133.741604
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJay42o0lVUTUR1HS6ddJF-yQ",
+    "google_rating": 5,
+    "google_review_count": 2
   },
   {
     "id": "sato-iin",
@@ -501,7 +555,10 @@
       "lat": 34.643686,
       "lng": 133.730425
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJZ1NOBxhUUTURxT2GPwElbNw",
+    "google_rating": 3.5,
+    "google_review_count": 8
   },
   {
     "id": "soja-mimi-hana-nodo",
@@ -526,7 +583,10 @@
       "lat": 34.677273,
       "lng": 133.75048
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJz88e--JUUTURyEQxusT7TKg",
+    "google_rating": 2.8,
+    "google_review_count": 29
   },
   {
     "id": "takasuki-kodomo-clinic",
@@ -554,7 +614,10 @@
       "lat": 34.661513,
       "lng": 133.770719
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJQ_elzhtVUTURaqePhVz8HU8",
+    "google_rating": 3.7,
+    "google_review_count": 18
   },
   {
     "id": "tanaka-jibika",
@@ -579,7 +642,10 @@
       "lat": 34.671667,
       "lng": 133.748958
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJM9L9tP5UUTURM8XAeKM1Fy0",
+    "google_rating": 3.9,
+    "google_review_count": 24
   },
   {
     "id": "hirakawa-naika",
@@ -606,7 +672,10 @@
       "lat": 34.675791,
       "lng": 133.699215
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJo_3RFyxTUTURQ4_g0YwtmbA",
+    "google_rating": null,
+    "google_review_count": null
   },
   {
     "id": "miyake-naika-shoni",
@@ -633,7 +702,10 @@
       "lat": 34.679899,
       "lng": 133.771223
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJfQ9xrjhVUTUR5m8G-h8kF-U",
+    "google_rating": 2.7,
+    "google_review_count": 23
   },
   {
     "id": "miyashita-naika",
@@ -657,7 +729,10 @@
       "lat": 34.673248,
       "lng": 133.730207
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJbxfnC2FUUTURastMF_-ODUk",
+    "google_rating": 2.3,
+    "google_review_count": 8
   },
   {
     "id": "morishita-hospital",
@@ -687,7 +762,10 @@
       "lat": 34.673903,
       "lng": 133.739959
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJ558L7_ZUUTURdbR0dq5omQ0",
+    "google_rating": 2.3,
+    "google_review_count": 46
   },
   {
     "id": "watanabe-iin",
@@ -714,7 +792,10 @@
       "lat": 34.669962,
       "lng": 133.756609
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJx2ZxkANVUTURAWU1ikHjhgU",
+    "google_rating": 2.8,
+    "google_review_count": 4
   },
   {
     "id": "kibiji-seikei",
@@ -740,7 +821,10 @@
       "lat": 34.660447,
       "lng": 133.775732
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJJ8KeI4lVUTURS2mFarpUuCM",
+    "google_rating": 3.4,
+    "google_review_count": 37
   },
   {
     "id": "kibi-hifuka",
@@ -765,7 +849,10 @@
       "lat": 34.673553,
       "lng": 133.744118
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJ-YL4NQBVUTURhgrxUscpaDk",
+    "google_rating": 2.7,
+    "google_review_count": 39
   },
   {
     "id": "kunitomi-clinic",
@@ -791,6 +878,9 @@
       "lat": 34.67697,
       "lng": 133.747483
     },
-    "geocoded": true
+    "geocoded": true,
+    "google_place_id": "ChIJqeJqbAJVUTURTgxj6quR1KE",
+    "google_rating": 5,
+    "google_review_count": 2
   }
 ]
