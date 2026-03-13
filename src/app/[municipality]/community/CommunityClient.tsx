@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useMemo } from "react";
 import type { MunicipalityCommunity, CommunityLink } from "@/lib/data/types";
+import { useLiff } from "@/hooks/useLiff";
+import { liff } from "@/lib/liff/liffClient";
 
 interface CommunityClientProps {
   community: MunicipalityCommunity;
@@ -190,10 +192,15 @@ function CommunityCard({
 }) {
   const platformIcon = PLATFORM_ICONS[link.platform] ?? "🔗";
   const personaNote = selectedPersona ? link.persona_notes[selectedPersona] : null;
+  const { isLiff } = useLiff();
 
   const handleAction = () => {
     if (link.url) {
-      window.open(link.url, "_blank", "noopener,noreferrer");
+      if (isLiff) {
+        liff.openWindow({ url: link.url, external: true });
+      } else {
+        window.open(link.url, "_blank", "noopener,noreferrer");
+      }
     } else if (link.tel) {
       window.location.href = `tel:${link.tel}`;
     }

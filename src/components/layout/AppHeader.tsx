@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
+import { useLiff } from "@/hooks/useLiff";
 
 interface AppHeaderProps {
   municipalityName?: string;
@@ -77,6 +78,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const { isLoggedIn, profile, loading: liffLoading } = useLiff();
   const activeTab = searchParams.get("tab") ?? "nursery";
 
   // サブページの判定
@@ -199,6 +201,31 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
                 );
               })}
             </nav>
+
+            {/* LINEプロフィール */}
+            {!liffLoading && isLoggedIn && profile && (
+              <div className="px-4 py-3 border-t border-gray-100">
+                <div className="flex items-center gap-3">
+                  {profile.pictureUrl ? (
+                    <img
+                      src={profile.pictureUrl}
+                      alt=""
+                      className="w-8 h-8 rounded-full"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full bg-[#06C755] flex items-center justify-center text-white text-xs font-bold">
+                      L
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-xs text-gray-500">LINEでログイン中</p>
+                    <p className="text-sm font-semibold text-gray-800 truncate">
+                      {profile.displayName}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
 
             {/* フッター */}
             <div className="px-4 py-4 border-t border-gray-100">

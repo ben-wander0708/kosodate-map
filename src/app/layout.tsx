@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import LiffProvider from "@/components/providers/LiffProvider";
 
 export const metadata: Metadata = {
   title: "こそだてマップ - 転居先の子育て情報をワンストップで",
@@ -33,7 +34,9 @@ export default function RootLayout({
           crossOrigin=""
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <LiffProvider>{children}</LiffProvider>
+      </body>
     </html>
   );
 }
