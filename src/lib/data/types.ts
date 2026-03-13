@@ -259,6 +259,38 @@ export interface MunicipalityShops {
   point_strategy: PointStrategy[];
 }
 
+/** コミュニティリンクのカテゴリ */
+export interface CommunityCategory {
+  id: string;
+  label: string;
+  icon: string;
+}
+
+/** コミュニティリンク */
+export interface CommunityLink {
+  id: string;
+  category: string;
+  name: string;
+  description: string;
+  url: string | null;
+  action_label: string;
+  platform: string;
+  platform_color: string;
+  verified: boolean;
+  address?: string;
+  tel?: string;
+  hours?: string;
+  persona_tags: string[];
+  persona_notes: Record<string, string>;
+}
+
+/** 自治体のコミュニティリンク全体 */
+export interface MunicipalityCommunity {
+  municipality_id: string;
+  categories: CommunityCategory[];
+  links: CommunityLink[];
+}
+
 /** 移動手段 */
 export type TransportMode = "walk" | "bike" | "car";
 

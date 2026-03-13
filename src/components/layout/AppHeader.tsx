@@ -61,6 +61,16 @@ const NAV_ITEMS = [
     href: (municipalityId: string) => `/${municipalityId}/shops`,
     type: "page",
   },
+  {
+    tab: "community",
+    icon: "🤝",
+    title: "コミュニティ",
+    description: "子育て拠点・お譲り・移住者ネットワーク",
+    activeColor: "text-[#7c3aed]",
+    activeBg: "bg-purple-50 border border-purple-200",
+    href: (municipalityId: string) => `/${municipalityId}/community`,
+    type: "page",
+  },
 ];
 
 function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
@@ -70,12 +80,14 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const activeTab = searchParams.get("tab") ?? "nursery";
 
   // サブページの判定
-  const isChecklistPage = pathname?.endsWith("/checklist") ?? false;
-  const isShopsPage = pathname?.endsWith("/shops") ?? false;
+  const isChecklistPage  = pathname?.endsWith("/checklist")  ?? false;
+  const isShopsPage      = pathname?.endsWith("/shops")       ?? false;
+  const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
 
   const isActive = (item: typeof NAV_ITEMS[number]) => {
     if (isChecklistPage) return item.tab === "checklist";
-    if (isShopsPage) return item.tab === "shops";
+    if (isShopsPage)     return item.tab === "shops";
+    if (isCommunityPage) return item.tab === "community";
     return item.type === "tab" && activeTab === item.tab;
   };
 

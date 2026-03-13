@@ -1,0 +1,157 @@
+{
+  "municipality_id": "soja",
+  "categories": [
+    { "id": "first",   "label": "まずやること", "icon": "📌" },
+    { "id": "hub",     "label": "子育て拠点",   "icon": "👶" },
+    { "id": "support", "label": "助け合い",      "icon": "🤝" },
+    { "id": "migrant", "label": "移住者ネットワーク", "icon": "🏡" }
+  ],
+  "links": [
+    {
+      "id": "soja-official-line",
+      "category": "first",
+      "name": "総社市 公式LINE（スマホ市役所）",
+      "description": "市からのお知らせ・防災情報・給付金申請がLINEで完結。転入後まず登録すべき公式アカウント。フォロワー31,000人超。",
+      "url": "https://page.line.me/230nidad",
+      "action_label": "友達追加",
+      "platform": "LINE",
+      "platform_color": "#06C755",
+      "verified": true,
+      "persona_tags": ["dual-income", "stay-at-home", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "保育施設の申込み・給付金通知が自動で届く",
+        "stay-at-home":  "乳幼児健診の案内・子育てイベント情報が届く",
+        "single-parent": "児童扶養手当などの給付通知をプッシュで受け取れる"
+      }
+    },
+    {
+      "id": "kosodate-navi",
+      "category": "first",
+      "name": "そうじゃ子育て応援ナビ",
+      "description": "予防接種スケジュール管理・保育施設検索・離乳食情報・小児救急案内。妊娠中〜就学前まで使える行政公式ポータル。",
+      "url": "https://soja.city-hc.jp/",
+      "action_label": "登録する",
+      "platform": "Web",
+      "platform_color": "#2d6eb0",
+      "verified": true,
+      "persona_tags": ["dual-income", "stay-at-home", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "予防接種のスケジュールを自動管理。忙しくても接種漏れを防げる",
+        "stay-at-home":  "離乳食・育児の疑問を検索。相談窓口への案内も充実",
+        "single-parent": "申請できる支援制度の案内が届く"
+      }
+    },
+    {
+      "id": "honobono",
+      "category": "hub",
+      "name": "そうじゃ子育ての駅 ほのぼの",
+      "description": "JR総社駅東口から徒歩3分。0〜3歳の親子が集まる交流拠点。スタッフへの相談・他の保護者との交流が自然に生まれる。地域のサークル・グループ情報もここで入手できる。",
+      "url": "https://www.instagram.com/soja_honobono/",
+      "action_label": "Instagramを見る",
+      "platform": "Instagram",
+      "platform_color": "#E1306C",
+      "verified": true,
+      "address": "総社市駅前2丁目12-12（JR総社駅東口 徒歩3分）",
+      "tel": "0866-96-0700",
+      "hours": "開館日は公式Instagramで確認",
+      "persona_tags": ["stay-at-home", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "土日開館あり。週末の親子交流に",
+        "stay-at-home":  "平日の午前中が特に賑わう。同じ月齢の子を持つ親と自然につながれる",
+        "single-parent": "無料で利用可。スタッフへの育児相談もできる"
+      }
+    },
+    {
+      "id": "kokko",
+      "category": "hub",
+      "name": "子育て応援 こっこ",
+      "description": "天満屋ハピータウン リブ総社店3Fにある親子の広場。0〜3歳対象。NPO法人きよね夢てらすが運営。市内3箇所で開催。買い物ついでに立ち寄れる便利な立地。",
+      "url": "https://www.instagram.com/tsudoinohiroba_kokko/",
+      "action_label": "Instagramを見る",
+      "platform": "Instagram",
+      "platform_color": "#E1306C",
+      "verified": true,
+      "address": "総社市門田187 天満屋ハピータウン リブ総社店3F",
+      "hours": "日・月・火・木・金・土 10:00〜16:30",
+      "persona_tags": ["stay-at-home", "dual-income", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "ショッピングモール内なので買い物と一緒に。土日も開館",
+        "stay-at-home":  "平日ほぼ毎日開いている。近所の友達ができやすい環境",
+        "single-parent": "無料で利用可。相談しやすいスタッフがいる"
+      }
+    },
+    {
+      "id": "family-support",
+      "category": "support",
+      "name": "総社市 ファミリー・サポート・センター",
+      "description": "「子どもを預けたい人」と「預かれる人」が会員登録して助け合う相互援助システム。急な残業・病院・きょうだいの行事などに対応。1時間800円〜（平日）。",
+      "url": null,
+      "action_label": "電話で問い合わせ",
+      "platform": "電話",
+      "platform_color": "#555555",
+      "verified": true,
+      "address": "総社市中央6丁目6-102 総社ふれあいセンター2F",
+      "tel": "0866-94-5665",
+      "hours": "平日 9:00〜17:00（土日祝休）",
+      "persona_tags": ["dual-income", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "急な残業・保育園のお迎えに対応。まず会員登録だけしておくと安心",
+        "stay-at-home":  "提供会員（預かる側）として登録する選択肢も",
+        "single-parent": "緊急時の預け先として最重要。転入後すぐ登録を推奨"
+      }
+    },
+    {
+      "id": "jmty-soja",
+      "category": "support",
+      "name": "ジモティー（総社市エリア）",
+      "description": "地域密着型の無料掲示板。不用品のお譲り・ベビー用品のフリマ・地域のサークル募集など。総社市エリアに絞って検索できる。",
+      "url": "https://jmty.jp/okayama/com-cty126",
+      "action_label": "総社市の投稿を見る",
+      "platform": "Web",
+      "platform_color": "#FF6633",
+      "verified": true,
+      "persona_tags": ["stay-at-home", "single-parent", "dual-income"],
+      "persona_notes": {
+        "dual-income":   "不要になったベビー用品の処分・格安ベビーグッズ入手に",
+        "stay-at-home":  "地域のサークル募集・子育てグループの案内が掲示されることも",
+        "single-parent": "無料〜格安でベビー用品・子ども服を手に入れられる"
+      }
+    },
+    {
+      "id": "sumo-soja",
+      "category": "migrant",
+      "name": "住もう！そうじゃ",
+      "description": "総社市・商工会議所・信用金庫が共同で運営する移住・創業サポートサイト。先輩移住者インタビュー・お試し住宅・空き家情報・移住相談窓口（TEL: 0866-95-2127）。",
+      "url": "https://sumousoja.jp/",
+      "action_label": "サイトを見る",
+      "platform": "Web",
+      "platform_color": "#2d9e6b",
+      "verified": true,
+      "tel": "0866-95-2127",
+      "hours": "平日 9:00〜17:00（土日祝休）",
+      "persona_tags": ["dual-income", "stay-at-home", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "先輩移住者の共働き事例が参考になる。移住後の仕事探しの相談も可",
+        "stay-at-home":  "子育て世代の移住者インタビューが充実。地域の生活イメージが掴める",
+        "single-parent": "移住支援金・住宅支援の情報が集まっている"
+      }
+    },
+    {
+      "id": "smout-soja",
+      "category": "migrant",
+      "name": "SMOUT（スマウト）総社市",
+      "description": "移住マッチングサービス。登録すると総社市からスカウトが届く。東京圏からの転入者向け移住支援金（最大100万円）の情報も。",
+      "url": "https://smout.jp/areas/1494",
+      "action_label": "ページを見る",
+      "platform": "Web",
+      "platform_color": "#7c3aed",
+      "verified": true,
+      "persona_tags": ["dual-income", "stay-at-home", "single-parent"],
+      "persona_notes": {
+        "dual-income":   "移住支援金の対象か確認。就職先を総社市内で見つけた場合に対象になることも",
+        "stay-at-home":  "移住を検討中の知人・親族へのシェアにも使える",
+        "single-parent": "移住支援金が活用できる場合、引っ越し費用の一部をカバーできる"
+      }
+    }
+  ]
+}

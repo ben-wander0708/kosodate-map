@@ -7,7 +7,7 @@
 import fs from "fs/promises";
 import path from "path";
 import type { DataRepository } from "./repository";
-import type { Municipality, Nursery, Clinic, GovSupport, MunicipalityChecklist, MunicipalityShops } from "./types";
+import type { Municipality, Nursery, Clinic, GovSupport, MunicipalityChecklist, MunicipalityShops, MunicipalityCommunity } from "./types";
 
 const DATA_DIR = path.join(process.cwd(), "data", "municipalities");
 
@@ -103,6 +103,16 @@ export class JsonDataRepository implements DataRepository {
   async getShops(municipalityId: string): Promise<MunicipalityShops | null> {
     try {
       const filePath = path.join(DATA_DIR, municipalityId, "shops.json");
+      const raw = await fs.readFile(filePath, "utf-8");
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+
+  async getCommunity(municipalityId: string): Promise<MunicipalityCommunity | null> {
+    try {
+      const filePath = path.join(DATA_DIR, municipalityId, "community.json");
       const raw = await fs.readFile(filePath, "utf-8");
       return JSON.parse(raw);
     } catch {
