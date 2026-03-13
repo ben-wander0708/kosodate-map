@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import dynamic from "next/dynamic";
 import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Location, TransportMode } from "@/lib/data/types";
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
@@ -54,6 +54,15 @@ export default function MunicipalityHome({
   const [selectedNurseryId, setSelectedNurseryId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>("nursery");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+
+  // URLの ?tab= パラメータに応じて初期タブを設定
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get("tab") as TabType | null;
+    if (tab && ["nursery", "clinic", "gov"].includes(tab)) {
+      setActiveTab(tab);
+    }
+  }, []);
 
   const defaultCenter: Location = {
     lat: municipality.center_lat,
