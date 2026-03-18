@@ -82,6 +82,16 @@ const NAV_ITEMS = [
     href: (municipalityId: string) => `/${municipalityId}/community`,
     type: "page",
   },
+  {
+    tab: "faq",
+    icon: "❓",
+    title: "よくある質問",
+    description: "保育園の申込み・転入手続きなど疑問を解決",
+    activeColor: "text-gray-700",
+    activeBg: "bg-gray-100 border border-gray-200",
+    href: (municipalityId: string) => `/${municipalityId}/faq`,
+    type: "page",
+  },
 ];
 
 function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
@@ -96,12 +106,14 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const isShopsPage      = pathname?.endsWith("/shops")       ?? false;
   const isGiveawayPage   = pathname?.includes("/giveaway")    ?? false;
   const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
+  const isFaqPage        = pathname?.endsWith("/faq")         ?? false;
 
   const isActive = (item: typeof NAV_ITEMS[number]) => {
     if (isChecklistPage) return item.tab === "checklist";
     if (isShopsPage)     return item.tab === "shops";
     if (isGiveawayPage)  return item.tab === "giveaway";
     if (isCommunityPage) return item.tab === "community";
+    if (isFaqPage)       return item.tab === "faq";
     return item.type === "tab" && activeTab === item.tab;
   };
 
