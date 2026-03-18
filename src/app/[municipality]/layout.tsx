@@ -47,9 +47,50 @@ export default async function MunicipalityLayout({
     notFound();
   }
 
+  const baseUrl = "https://kosodate-map.vercel.app";
+  const municipalityUrl = `${baseUrl}/${municipalityId}`;
+
+  // AIが「このサービスとは何か」を理解するための構造化データ
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "こそだてマップ",
+    "url": baseUrl,
+    "description": "引越し先の保育園の空き状況・子育て施設をまとめて確認できるサービス。住所が決まったその日から使えます。",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${baseUrl}/soja`,
+      "query-input": "required name=municipality"
+    }
+  };
+
+  const localGovSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": `${municipality.prefecture_ja}${municipality.name_ja}の保育園・子育て情報`,
+    "url": municipalityUrl,
+    "description": `${municipality.prefecture_ja}${municipality.name_ja}への転入前から確認できる保育園の空き状況・施設マップ・入園手続きチェックリスト。`,
+    "about": {
+      "@type": "City",
+      "name": municipality.name_ja,
+      "containedInPlace": {
+        "@type": "State",
+        "name": municipality.prefecture_ja
+      }
+    }
+  };
+
   return (
     <AnalyticsProvider municipalityId={municipalityId}>
       <div className="min-h-screen bg-[#f7f9fc]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localGovSchema) }}
+        />
         <AppHeader
           municipalityName={municipality.name_ja}
           municipalityId={municipalityId}
