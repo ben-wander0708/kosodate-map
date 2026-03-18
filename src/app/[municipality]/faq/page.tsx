@@ -2,6 +2,7 @@ import { dataRepository } from "@/lib/data/json-adapter";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import FaqAccordion from "./FaqAccordion";
 
 interface FaqPageProps {
   params: Promise<{ municipality: string }>;
@@ -73,7 +74,7 @@ export default async function FaqPage({ params }: FaqPageProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 pb-10">
+    <div className="space-y-4 p-4 pb-28">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -86,24 +87,7 @@ export default async function FaqPage({ params }: FaqPageProps) {
       </div>
 
       {/* FAQ一覧 */}
-      <div className="space-y-3">
-        {FAQ_ITEMS.map((item, index) => (
-          <details
-            key={index}
-            className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden"
-          >
-            <summary className="flex items-start gap-3 p-4 cursor-pointer list-none">
-              <span className="text-[#2d9e6b] font-bold text-sm mt-0.5 shrink-0">Q</span>
-              <span className="text-sm font-semibold text-gray-800 flex-1">{item.question}</span>
-              <span className="text-gray-400 text-xs shrink-0 mt-0.5">▼</span>
-            </summary>
-            <div className="px-4 pb-4 flex gap-3">
-              <span className="text-orange-500 font-bold text-sm shrink-0">A</span>
-              <p className="text-sm text-gray-600 leading-relaxed">{item.answer}</p>
-            </div>
-          </details>
-        ))}
-      </div>
+      <FaqAccordion items={FAQ_ITEMS} />
 
       {/* 戻るリンク */}
       <div className="pt-2">
