@@ -11,6 +11,7 @@ import GovSupportCard from "@/components/gov/GovSupportCard";
 import TransportSelector from "@/components/nursery/TransportSelector";
 import AddressInput from "@/components/common/AddressInput";
 import { track, updateLocation } from "@/lib/analytics/tracker";
+import OnboardingModal, { ONBOARDING_DONE_KEY } from "@/components/onboarding/OnboardingModal";
 
 // Leafletはクライアントのみでロード（SSR無効化）
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), {
@@ -58,6 +59,20 @@ export default function MunicipalityHome({
   const activeTab = (searchParams.get("tab") as TabType | null) ?? "nursery";
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  // 初回訪問時にオンボーディングを表示（800ms 遅延でメインUIを先に見せる）
+  useEffect(() => {
+    try {
+      const done = localStorage.getItem(ONBOARDING_DONE_KEY);
+      if (!done) {
+        const t = setTimeout(() => setShowOnboarding(true), 800);
+        return () => clearTimeout(t);
+      }
+    } catch {
+      // localStorage 非対応環境では無視
+    }
+  }, []);
 
   // タブ切り替え時にフィルターをリセット
   useEffect(() => {
@@ -189,6 +204,14 @@ export default function MunicipalityHome({
 
   return (
     <div className="space-y-4 p-4">
+      {/* オンボーディングモーダル（初回訪問時のみ） */}
+      {showOnboarding && (
+        <OnboardingModal
+          municipalityName={municipality.name_ja}
+          onClose={() => setShowOnboarding(false)}
+        />
+      )}
+
       {/* ウェルカムバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <h2 className="text-base font-bold mb-1">

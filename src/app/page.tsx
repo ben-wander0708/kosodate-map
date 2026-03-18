@@ -18,17 +18,17 @@ export default async function HomePage() {
                 こそだて<span className="text-green-200">マップ</span>
               </h1>
               <p className="text-green-200 text-xs">
-                転居先の子育て情報をワンストップで
+                住む場所が決まったら、まずここへ
               </p>
             </div>
           </div>
 
           <p className="text-sm text-green-100 leading-relaxed">
-            引っ越し先で保育園を探すのは大変。
+            物件が決まってから、行政の窓口が開くまで——
             <br />
-            こそだてマップなら、自宅からの距離で保育園をランキング。
+            その空白を、こそだてマップが埋めます。
             <br />
-            空き状況もひと目でわかります。
+            <span className="text-green-300">転居前から保育園の空き状況・施設情報をひと目で。</span>
           </p>
         </div>
       </div>
@@ -40,7 +40,7 @@ export default async function HomePage() {
             エリアを選んでください
           </h2>
           <p className="text-xs text-gray-500 mb-4">
-            お住まいの自治体を選択すると、保育施設情報を確認できます
+            引越し先（または現住所）の自治体を選んでください
           </p>
 
           <div className="space-y-3">
