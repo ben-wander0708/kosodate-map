@@ -37,10 +37,11 @@ function getDeadlineDate(movingDate: Date, daysFromMoving: number): string {
 
 export default function ChecklistClient({ checklist, municipalityName }: ChecklistClientProps) {
   const [shareId, setShareId] = useState<string | null>(null);
-  const [isShared, setIsShared] = useState(false); // パートナーのURLで開いているか
+  const [isShared, setIsShared] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [selectedPersonaId, setSelectedPersonaId] = useState<string | null>(null);
   const [checkedItems, setCheckedItems] = useState<Set<string>>(new Set());
+  const [decisionDateStr, setDecisionDateStr] = useState<string>("");
   const [movingDateStr, setMovingDateStr] = useState<string>("");
   const [loaded, setLoaded] = useState(false);
 
@@ -57,6 +58,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
         if (data.persona_id) setSelectedPersonaId(data.persona_id);
         if (data.checked_items) setCheckedItems(new Set(data.checked_items as string[]));
         if (data.moving_date) setMovingDateStr(data.moving_date);
+        if (data.decision_date) setDecisionDateStr(data.decision_date);
       }
     } catch {
       // Supabase失敗時はlocalStorageにフォールバック
@@ -66,7 +68,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
   // Supabaseに保存
   const saveToSupabase = useCallback(async (
     id: string,
-    updates: { persona_id?: string | null; checked_items?: string[]; moving_date?: string }
+    updates: { persona_id?: string | null; checked_items?: string[]; moving_date?: string; decision_date?: string }
   ) => {
     try {
       const supabase = getSupabase();
@@ -108,6 +110,8 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
           if (savedPersona) setSelectedPersonaId((prev) => prev ?? savedPersona);
           if (savedChecked) setCheckedItems((prev) => prev.size > 0 ? prev : new Set(JSON.parse(savedChecked)));
           if (savedDate) setMovingDateStr((prev) => prev || savedDate);
+          const savedDecision = localStorage.getItem("kosodate_decision_date");
+          if (savedDecision) setDecisionDateStr((prev) => prev || savedDecision);
         } catch {}
         setLoaded(true);
       });
@@ -130,6 +134,12 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     });
   }, [shareId, saveToSupabase]);
 
+  const handleDecisionDateChange = useCallback((value: string) => {
+    setDecisionDateStr(value);
+    try { localStorage.setItem("kosodate_decision_date", value); } catch {}
+    if (shareId) saveToSupabase(shareId, { decision_date: value });
+  }, [shareId, saveToSupabase]);
+
   const handleMovingDateChange = useCallback((value: string) => {
     setMovingDateStr(value);
     try { localStorage.setItem("kosodate_moving_date", value); } catch {}
@@ -145,11 +155,11 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
 
   const handleShare = useCallback(async () => {
     if (!shareId) return;
-    // まず現在の状態をSupabaseに保存
     await saveToSupabase(shareId, {
       persona_id: selectedPersonaId,
       checked_items: [...checkedItems],
       moving_date: movingDateStr,
+      decision_date: decisionDateStr,
     });
     const url = `${window.location.origin}${window.location.pathname}?share=${shareId}`;
     try {
@@ -161,6 +171,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     }
   }, [shareId, saveToSupabase, selectedPersonaId, checkedItems, movingDateStr]);
 
+  const decisionDate = decisionDateStr ? new Date(decisionDateStr) : null;
   const movingDate = movingDateStr ? new Date(movingDateStr) : null;
   const selectedPersona = checklist.personas.find((p) => p.id === selectedPersonaId);
   const totalItems = selectedPersona
@@ -206,20 +217,36 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
         )}
       </div>
 
-      {/* 転入日入力 */}
-      <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-        <p className="text-xs font-semibold text-gray-500 mb-2">📅 転入日（引越し日）</p>
-        <input
-          type="date"
-          value={movingDateStr}
-          onChange={(e) => handleMovingDateChange(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-        />
-        {movingDate && (
-          <p className="text-xs text-[#2d9e6b] mt-2 font-medium">
-            ✅ {movingDate.getMonth() + 1}月{movingDate.getDate()}日から期限を計算中
-          </p>
-        )}
+      {/* 日付入力 */}
+      <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-3">
+        <div>
+          <p className="text-xs font-semibold text-gray-500 mb-1">🏠 転居を決めた日（物件契約日）</p>
+          <input
+            type="date"
+            value={decisionDateStr}
+            onChange={(e) => handleDecisionDateChange(e.target.value)}
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+          />
+          {decisionDate && (
+            <p className="text-xs text-[#2d9e6b] mt-1 font-medium">
+              ✅ 転居前のやることリストが表示されます
+            </p>
+          )}
+        </div>
+        <div>
+          <p className="text-xs font-semibold text-gray-500 mb-1">📅 引越し予定日</p>
+          <input
+            type="date"
+            value={movingDateStr}
+            onChange={(e) => handleMovingDateChange(e.target.value)}
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+          />
+          {movingDate && (
+            <p className="text-xs text-[#2d9e6b] mt-1 font-medium">
+              ✅ {movingDate.getMonth() + 1}月{movingDate.getDate()}日から転入後の期限を計算中
+            </p>
+          )}
+        </div>
       </div>
 
       {/* ペルソナ選択 */}
@@ -277,23 +304,33 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
           </div>
 
           {/* セクション別チェックリスト */}
-          {selectedPersona.sections.map((section) => (
-            <div key={section.id}>
-              <h3 className="text-sm font-bold text-gray-700 mb-2">{section.title}</h3>
-              <div className="space-y-2">
-                {section.items.map((item) => (
-                  <ChecklistItemCard
-                    key={item.id}
-                    item={item}
-                    checked={checkedItems.has(item.id)}
-                    onToggle={handleToggle}
-                    accentColor={selectedPersona.color}
-                    movingDate={movingDate}
-                  />
-                ))}
+          {selectedPersona.sections.map((section) => {
+            const isPreMove = section.id === "pre-move";
+            // 転居前セクションは転居決定日がないと非表示
+            if (isPreMove && !decisionDate) return (
+              <div key={section.id} className="bg-gray-50 border border-dashed border-gray-200 rounded-xl p-4 text-center">
+                <p className="text-sm text-gray-400">🏠 転居を決めた日を入力すると<br />転居前にやることが表示されます</p>
               </div>
-            </div>
-          ))}
+            );
+            return (
+              <div key={section.id}>
+                <h3 className="text-sm font-bold text-gray-700 mb-2">{section.title}</h3>
+                <div className="space-y-2">
+                  {section.items.map((item) => (
+                    <ChecklistItemCard
+                      key={item.id}
+                      item={item}
+                      checked={checkedItems.has(item.id)}
+                      onToggle={handleToggle}
+                      accentColor={selectedPersona.color}
+                      movingDate={movingDate}
+                      decisionDate={isPreMove ? decisionDate : null}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
 
           {/* 完了メッセージ */}
           {progress === 100 && (
@@ -331,12 +368,14 @@ function ChecklistItemCard({
   onToggle,
   accentColor,
   movingDate,
+  decisionDate,
 }: {
   item: ChecklistItem;
   checked: boolean;
   onToggle: (id: string) => void;
   accentColor: string;
   movingDate: Date | null;
+  decisionDate?: Date | null;
 }) {
   const urgencyBadge: Record<string, { label: string; bg: string; text: string }> = {
     high: { label: "急ぎ", bg: "bg-red-50", text: "text-red-600" },
@@ -348,7 +387,20 @@ function ChecklistItemCard({
   let countdownBadge: { label: string; bg: string; text: string } | null = null;
   let deadlineDateStr: string | null = null;
 
-  if (movingDate && item.days_from_moving !== null && item.days_from_moving !== undefined) {
+  // 転居前タスク（decisionDateベース）
+  if (decisionDate && item.days_from_decision !== null && item.days_from_decision !== undefined) {
+    const daysLeft = getDaysLeft(decisionDate, item.days_from_decision);
+    deadlineDateStr = getDeadlineDate(decisionDate, item.days_from_decision);
+    if (daysLeft < 0) {
+      countdownBadge = { label: "対応済み確認を", bg: "bg-gray-100", text: "text-gray-500" };
+    } else if (daysLeft === 0) {
+      countdownBadge = { label: "今日やろう", bg: "bg-red-100", text: "text-red-700" };
+    } else if (daysLeft <= 7) {
+      countdownBadge = { label: `あと${daysLeft}日`, bg: "bg-red-50", text: "text-red-600" };
+    } else {
+      countdownBadge = { label: `あと${daysLeft}日`, bg: "bg-blue-50", text: "text-blue-600" };
+    }
+  } else if (movingDate && item.days_from_moving !== null && item.days_from_moving !== undefined) {
     const daysLeft = getDaysLeft(movingDate, item.days_from_moving);
     deadlineDateStr = getDeadlineDate(movingDate, item.days_from_moving);
     if (daysLeft < 0) {

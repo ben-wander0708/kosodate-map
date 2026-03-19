@@ -175,6 +175,7 @@ export interface ChecklistItem {
   text: string;
   deadline: string | null;
   days_from_moving: number | null;
+  days_from_decision: number | null; // 転居決定日からの日数（転居前タスク用）
   urgency: "high" | "medium" | "low";
   note: string | null;
 }

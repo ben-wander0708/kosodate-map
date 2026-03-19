@@ -9,8 +9,59 @@
       "color": "#2d9e6b",
       "sections": [
         {
+          "id": "pre-move",
+          "title": "🏠 転居前にやること",
+          "items": [
+            {
+              "id": "di-p-1",
+              "text": "現在の保育園に退園・転園を伝える",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 0,
+              "urgency": "high",
+              "note": "退園日の調整が必要。引越し日が決まり次第できるだけ早く連絡を"
+            },
+            {
+              "id": "di-p-2",
+              "text": "転入先の保育施設の空き状況を確認",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 0,
+              "urgency": "high",
+              "note": "こそだてマップの保育施設タブで確認。空きが少ない場合は複数の施設に申込みを検討"
+            },
+            {
+              "id": "di-p-3",
+              "text": "途中入所の申込み（転入前でも可）",
+              "deadline": "入所希望月の前月1日まで（書面）",
+              "days_from_moving": null,
+              "days_from_decision": 7,
+              "urgency": "high",
+              "note": "賃貸契約書があれば転入前に申込み可能。転入は入所希望月の前月20日までに完了が条件。こども夢づくり課 0866-92-8265"
+            },
+            {
+              "id": "di-p-4",
+              "text": "気になる保育施設に見学を予約",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 14,
+              "urgency": "medium",
+              "note": "見学せずに入所申込みも可能だが、事前見学しておくと安心。電話で予約を"
+            },
+            {
+              "id": "di-p-5",
+              "text": "かかりつけ医・小児科の目星をつける",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 21,
+              "urgency": "medium",
+              "note": "こそだてマップの医療機関タブから近くの小児科を確認できます"
+            }
+          ]
+        },
+        {
           "id": "urgent",
-          "title": "⚡ 急ぎの手続き（期限あり）",
+          "title": "⚡ 転入後の急ぎ手続き（期限あり）",
           "items": [
             {
               "id": "di-u-1",
@@ -18,7 +69,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可"
+              "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可",
+              "days_from_decision": null
             },
             {
               "id": "di-u-2",
@@ -26,7 +78,8 @@
               "deadline": "転入後15日以内",
               "days_from_moving": 15,
               "urgency": "high",
-              "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨"
+              "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨",
+              "days_from_decision": null
             },
             {
               "id": "di-u-3",
@@ -34,7 +87,8 @@
               "deadline": "早めに申請",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "中学校卒業まで医療費が無料。申請すると1〜2週間で受給者証が届く"
+              "note": "中学校卒業まで医療費が無料。申請すると1〜2週間で受給者証が届く",
+              "days_from_decision": null
             },
             {
               "id": "di-u-4-april",
@@ -42,7 +96,8 @@
               "deadline": "前年11月1日〜11月28日",
               "days_from_moving": null,
               "urgency": "high",
-              "note": "4月入所は年1回の一斉選考。物件契約後・転入前でも申込み可（賃貸契約書＋就労証明書が必要）。1月中旬に結果通知。こども夢づくり課 0866-92-8265"
+              "note": "4月入所は年1回の一斉選考。物件契約後・転入前でも申込み可（賃貸契約書＋就労証明書が必要）。1月中旬に結果通知。こども夢づくり課 0866-92-8265",
+              "days_from_decision": null
             },
             {
               "id": "di-u-4-midyear",
@@ -50,7 +105,8 @@
               "deadline": "入所希望月の前月1日まで（書面）",
               "days_from_moving": 1,
               "urgency": "high",
-              "note": "4月以外の入所は毎月随時受付。転入前でも申込み可（賃貸契約書が必要）。転入は入所希望月の前月20日頃までに完了が条件。オンライン申請は前々月15日まで。こども夢づくり課 0866-92-8265"
+              "note": "4月以外の入所は毎月随時受付。転入前でも申込み可（賃貸契約書が必要）。転入は入所希望月の前月20日頃までに完了が条件。オンライン申請は前々月15日まで。こども夢づくり課 0866-92-8265",
+              "days_from_decision": null
             }
           ]
         },
@@ -64,7 +120,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "市民課窓口で手続き。暗証番号が必要"
+              "note": "市民課窓口で手続き。暗証番号が必要",
+              "days_from_decision": null
             },
             {
               "id": "di-a-2",
@@ -72,7 +129,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "職場の健保組合に転居を連絡。子どもを扶養として追加手続きも"
+              "note": "職場の健保組合に転居を連絡。子どもを扶養として追加手続きも",
+              "days_from_decision": null
             },
             {
               "id": "di-a-3",
@@ -80,7 +138,8 @@
               "deadline": "保険証切り替え後",
               "days_from_moving": 21,
               "urgency": "medium",
-              "note": "医療機関受診前に必ず確認"
+              "note": "医療機関受診前に必ず確認",
+              "days_from_decision": null
             },
             {
               "id": "di-a-4",
@@ -88,7 +147,8 @@
               "deadline": "入所申込みと同時",
               "days_from_moving": 1,
               "urgency": "medium",
-              "note": "就労証明書が必要。勤務先に引越し前から依頼しておくと当日スムーズ"
+              "note": "就労証明書が必要。勤務先に引越し前から依頼しておくと当日スムーズ",
+              "days_from_decision": null
             }
           ]
         },
@@ -102,7 +162,8 @@
               "deadline": null,
               "days_from_moving": 30,
               "urgency": "medium",
-              "note": "各施設に直接電話。複数を比較して決めるのがおすすめ"
+              "note": "各施設に直接電話。複数を比較して決めるのがおすすめ",
+              "days_from_decision": null
             },
             {
               "id": "di-c-2",
@@ -110,7 +171,8 @@
               "deadline": null,
               "days_from_moving": null,
               "urgency": "low",
-              "note": "2歳児クラスがある園も。保育料は所得に応じた負担"
+              "note": "2歳児クラスがある園も。保育料は所得に応じた負担",
+              "days_from_decision": null
             },
             {
               "id": "di-c-3",
@@ -118,7 +180,8 @@
               "deadline": null,
               "days_from_moving": 30,
               "urgency": "medium",
-              "note": "総社市内に病児保育施設あり。事前登録が必要"
+              "note": "総社市内に病児保育施設あり。事前登録が必要",
+              "days_from_decision": null
             }
           ]
         },
@@ -132,7 +195,8 @@
               "deadline": null,
               "days_from_moving": 3,
               "urgency": "low",
-              "note": "マルナカ・フジグラン・イオン総社店など。営業時間も確認"
+              "note": "マルナカ・フジグラン・イオン総社店など。営業時間も確認",
+              "days_from_decision": null
             },
             {
               "id": "di-l-2",
@@ -140,7 +204,8 @@
               "deadline": null,
               "days_from_moving": 7,
               "urgency": "low",
-              "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり"
+              "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり",
+              "days_from_decision": null
             },
             {
               "id": "di-l-3",
@@ -148,7 +213,8 @@
               "deadline": null,
               "days_from_moving": 30,
               "urgency": "low",
-              "note": "総社市子育て支援センターで情報取得可。子育て相談も無料"
+              "note": "総社市子育て支援センターで情報取得可。子育て相談も無料",
+              "days_from_decision": null
             },
             {
               "id": "di-l-4",
@@ -156,7 +222,8 @@
               "deadline": null,
               "days_from_moving": 3,
               "urgency": "medium",
-              "note": "市役所窓口またはWebサイトから入手。地区によって収集曜日が異なる"
+              "note": "市役所窓口またはWebサイトから入手。地区によって収集曜日が異なる",
+              "days_from_decision": null
             },
             {
               "id": "di-l-5",
@@ -164,7 +231,8 @@
               "deadline": null,
               "days_from_moving": 7,
               "urgency": "low",
-              "note": "市からのお知らせ・災害情報が届く。@sojaciityで検索"
+              "note": "市からのお知らせ・災害情報が届く。@sojaciityで検索",
+              "days_from_decision": null
             }
           ]
         }
@@ -178,8 +246,41 @@
       "color": "#e05a2b",
       "sections": [
         {
+          "id": "pre-move",
+          "title": "🏠 転居前にやること",
+          "items": [
+            {
+              "id": "sh-p-1",
+              "text": "転入先の幼稚園・認定こども園を調べる",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 0,
+              "urgency": "high",
+              "note": "こそだてマップの保育施設タブから確認。幼稚園は4月一斉入園が基本のため、時期によって空き状況が異なる"
+            },
+            {
+              "id": "sh-p-2",
+              "text": "現在の保育園・幼稚園に退園を伝える",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 0,
+              "urgency": "high",
+              "note": "退園日の調整が必要。引越し日が決まり次第、できるだけ早く連絡を"
+            },
+            {
+              "id": "sh-p-3",
+              "text": "気になる施設に見学を予約",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 14,
+              "urgency": "medium",
+              "note": "幼稚園は雰囲気の確認が大切。電話で事前予約を"
+            }
+          ]
+        },
+        {
           "id": "urgent",
-          "title": "⚡ 急ぎの手続き（期限あり）",
+          "title": "⚡ 転入後の急ぎ手続き（期限あり）",
           "items": [
             {
               "id": "sh-u-1",
@@ -187,7 +288,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可"
+              "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可",
+              "days_from_decision": null
             },
             {
               "id": "sh-u-2",
@@ -195,7 +297,8 @@
               "deadline": "転入後15日以内",
               "days_from_moving": 15,
               "urgency": "high",
-              "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨"
+              "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨",
+              "days_from_decision": null
             },
             {
               "id": "sh-u-3",
@@ -203,7 +306,8 @@
               "deadline": "早めに申請",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "中学校卒業まで医療費が無料。申請すると1〜2週間で受給者証が届く"
+              "note": "中学校卒業まで医療費が無料。申請すると1〜2週間で受給者証が届く",
+              "days_from_decision": null
             }
           ]
         },
@@ -217,7 +321,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "市民課窓口で手続き。暗証番号が必要"
+              "note": "市民課窓口で手続き。暗証番号が必要",
+              "days_from_decision": null
             },
             {
               "id": "sh-a-2",
@@ -225,7 +330,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "市民課で手続き。子どもも同時に加入"
+              "note": "市民課で手続き。子どもも同時に加入",
+              "days_from_decision": null
             },
             {
               "id": "sh-a-3",
@@ -233,7 +339,8 @@
               "deadline": "保険証切り替え後",
               "days_from_moving": 21,
               "urgency": "medium",
-              "note": "医療機関受診前に必ず確認"
+              "note": "医療機関受診前に必ず確認",
+              "days_from_decision": null
             }
           ]
         },
@@ -247,7 +354,8 @@
               "deadline": "入園の前年10〜11月頃が締め切り",
               "days_from_moving": null,
               "urgency": "medium",
-              "note": "3歳（年少）からが多い。2歳児クラスがある園も確認"
+              "note": "3歳（年少）からが多い。2歳児クラスがある園も確認",
+              "days_from_decision": null
             },
             {
               "id": "sh-c-2",
@@ -255,7 +363,8 @@
               "deadline": null,
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "育児相談・親子交流。0〜就学前の子どもと保護者が対象。無料で利用可"
+              "note": "育児相談・親子交流。0〜就学前の子どもと保護者が対象。無料で利用可",
+              "days_from_decision": null
             },
             {
               "id": "sh-c-3",
@@ -263,7 +372,8 @@
               "deadline": null,
               "days_from_moving": 30,
               "urgency": "low",
-              "note": "会員同士で育児の助け合い。急な用事のときに子どもを預けられる"
+              "note": "会員同士で育児の助け合い。急な用事のときに子どもを預けられる",
+              "days_from_decision": null
             },
             {
               "id": "sh-c-4",
@@ -271,7 +381,8 @@
               "deadline": null,
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "市から通知が届く。転入後は早めに市の健康増進課に確認"
+              "note": "市から通知が届く。転入後は早めに市の健康増進課に確認",
+              "days_from_decision": null
             }
           ]
         },
@@ -285,7 +396,8 @@
               "deadline": null,
               "days_from_moving": 3,
               "urgency": "low",
-              "note": "マルナカ・フジグラン・イオン総社店など。毎日使うので営業時間も確認"
+              "note": "マルナカ・フジグラン・イオン総社店など。毎日使うので営業時間も確認",
+              "days_from_decision": null
             },
             {
               "id": "sh-l-2",
@@ -293,7 +405,8 @@
               "deadline": null,
               "days_from_moving": 7,
               "urgency": "low",
-              "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり"
+              "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり",
+              "days_from_decision": null
             },
             {
               "id": "sh-l-3",
@@ -301,7 +414,8 @@
               "deadline": null,
               "days_from_moving": 30,
               "urgency": "low",
-              "note": "総社市内に子ども向け公園が多数。総合公園・こもれびの森など"
+              "note": "総社市内に子ども向け公園が多数。総合公園・こもれびの森など",
+              "days_from_decision": null
             },
             {
               "id": "sh-l-4",
@@ -309,7 +423,8 @@
               "deadline": null,
               "days_from_moving": 3,
               "urgency": "medium",
-              "note": "市役所窓口またはWebサイトから入手。地区によって収集曜日が異なる"
+              "note": "市役所窓口またはWebサイトから入手。地区によって収集曜日が異なる",
+              "days_from_decision": null
             },
             {
               "id": "sh-l-5",
@@ -317,7 +432,8 @@
               "deadline": null,
               "days_from_moving": 7,
               "urgency": "low",
-              "note": "市からのお知らせ・災害情報が届く"
+              "note": "市からのお知らせ・災害情報が届く",
+              "days_from_decision": null
             },
             {
               "id": "sh-l-6",
@@ -325,7 +441,8 @@
               "deadline": null,
               "days_from_moving": null,
               "urgency": "low",
-              "note": "子育て支援センターの掲示板やSNSグループで地域のつながりを作ろう"
+              "note": "子育て支援センターの掲示板やSNSグループで地域のつながりを作ろう",
+              "days_from_decision": null
             }
           ]
         }
@@ -339,8 +456,50 @@
       "color": "#7c3aed",
       "sections": [
         {
+          "id": "pre-move",
+          "title": "🏠 転居前にやること",
+          "items": [
+            {
+              "id": "sp-p-1",
+              "text": "現在の保育園に退園・転園を伝える",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 0,
+              "urgency": "high",
+              "note": "退園日の調整が必要。引越し日が決まり次第できるだけ早く連絡を"
+            },
+            {
+              "id": "sp-p-2",
+              "text": "転入先のひとり親支援窓口に事前問い合わせ",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 7,
+              "urgency": "high",
+              "note": "総社市こども夢づくり課 0866-92-8265。転入前から相談可能。児童扶養手当の引き継ぎ手続きも確認を"
+            },
+            {
+              "id": "sp-p-3",
+              "text": "途中入所の申込み（転入前でも可）",
+              "deadline": "入所希望月の前月1日まで（書面）",
+              "days_from_moving": null,
+              "days_from_decision": 7,
+              "urgency": "high",
+              "note": "ひとり親は保育の必要性が高く優先されやすい。賃貸契約書があれば転入前に申込み可能"
+            },
+            {
+              "id": "sp-p-4",
+              "text": "気になる保育施設に見学を予約",
+              "deadline": null,
+              "days_from_moving": null,
+              "days_from_decision": 14,
+              "urgency": "medium",
+              "note": "こそだてマップの保育施設タブから確認。電話で予約を"
+            }
+          ]
+        },
+        {
           "id": "urgent",
-          "title": "⚡ 急ぎの手続き（期限あり）",
+          "title": "⚡ 転入後の急ぎ手続き（期限あり）",
           "items": [
             {
               "id": "sp-u-1",
@@ -348,7 +507,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "本人確認書類・旧住所の住民票持参"
+              "note": "本人確認書類・旧住所の住民票持参",
+              "days_from_decision": null
             },
             {
               "id": "sp-u-2",
@@ -356,7 +516,8 @@
               "deadline": "転入後15日以内",
               "days_from_moving": 15,
               "urgency": "high",
-              "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨"
+              "note": "月をまたぐと受給開始が1ヶ月遅れる。転入届と同日に手続き推奨",
+              "days_from_decision": null
             },
             {
               "id": "sp-u-3",
@@ -364,7 +525,8 @@
               "deadline": "早めに申請",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "中学校卒業まで医療費が無料"
+              "note": "中学校卒業まで医療費が無料",
+              "days_from_decision": null
             },
             {
               "id": "sp-u-4",
@@ -372,7 +534,8 @@
               "deadline": "転入後できるだけ早く",
               "days_from_moving": 7,
               "urgency": "high",
-              "note": "離婚・死別・未婚の一人親が対象。申請月の翌月から支給開始。遡及不可"
+              "note": "離婚・死別・未婚の一人親が対象。申請月の翌月から支給開始。遡及不可",
+              "days_from_decision": null
             }
           ]
         },
@@ -386,7 +549,8 @@
               "deadline": "早めに申請",
               "days_from_moving": 14,
               "urgency": "high",
-              "note": "保護者と子どもの医療費の自己負担が大幅軽減。こども医療費とは別に申請"
+              "note": "保護者と子どもの医療費の自己負担が大幅軽減。こども医療費とは別に申請",
+              "days_from_decision": null
             },
             {
               "id": "sp-s-2",
@@ -394,7 +558,8 @@
               "deadline": null,
               "days_from_moving": null,
               "urgency": "low",
-              "note": "JRへの通勤定期が3割引。証明書を市で発行"
+              "note": "JRへの通勤定期が3割引。証明書を市で発行",
+              "days_from_decision": null
             },
             {
               "id": "sp-s-3",
@@ -402,7 +567,8 @@
               "deadline": null,
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "受けられる支援を一括で確認できる。生活困窮・就労支援なども相談可"
+              "note": "受けられる支援を一括で確認できる。生活困窮・就労支援なども相談可",
+              "days_from_decision": null
             },
             {
               "id": "sp-s-4",
@@ -410,7 +576,8 @@
               "deadline": null,
               "days_from_moving": null,
               "urgency": "low",
-              "note": "自立支援教育訓練給付金・高等職業訓練促進給付金などあり"
+              "note": "自立支援教育訓練給付金・高等職業訓練促進給付金などあり",
+              "days_from_decision": null
             }
           ]
         },
@@ -424,7 +591,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "市民課窓口で手続き"
+              "note": "市民課窓口で手続き",
+              "days_from_decision": null
             },
             {
               "id": "sp-a-2",
@@ -432,7 +600,8 @@
               "deadline": "転入後14日以内",
               "days_from_moving": 14,
               "urgency": "medium",
-              "note": "子どもを扶養として加入手続きも"
+              "note": "子どもを扶養として加入手続きも",
+              "days_from_decision": null
             },
             {
               "id": "sp-a-3-april",
@@ -440,7 +609,8 @@
               "deadline": "前年11月1日〜11月28日",
               "days_from_moving": null,
               "urgency": "high",
-              "note": "4月入所は年1回の一斉選考。転入前でも申込み可（賃貸契約書＋就労証明書が必要）。ひとり親は保育の必要性が高く優先されやすい。こども夢づくり課 0866-92-8265"
+              "note": "4月入所は年1回の一斉選考。転入前でも申込み可（賃貸契約書＋就労証明書が必要）。ひとり親は保育の必要性が高く優先されやすい。こども夢づくり課 0866-92-8265",
+              "days_from_decision": null
             },
             {
               "id": "sp-a-3-midyear",
@@ -448,7 +618,8 @@
               "deadline": "入所希望月の前月1日まで（書面）",
               "days_from_moving": 1,
               "urgency": "high",
-              "note": "毎月随時受付。転入前でも申込み可（賃貸契約書が必要）。転入は入所希望月の前月20日頃までに完了が条件。ひとり親は優先されやすい。こども夢づくり課 0866-92-8265"
+              "note": "毎月随時受付。転入前でも申込み可（賃貸契約書が必要）。転入は入所希望月の前月20日頃までに完了が条件。ひとり親は優先されやすい。こども夢づくり課 0866-92-8265",
+              "days_from_decision": null
             }
           ]
         },
@@ -462,7 +633,8 @@
               "deadline": null,
               "days_from_moving": 3,
               "urgency": "low",
-              "note": "まとめ買いできる大型スーパーと近所のコンビニの位置を確認"
+              "note": "まとめ買いできる大型スーパーと近所のコンビニの位置を確認",
+              "days_from_decision": null
             },
             {
               "id": "sp-l-2",
@@ -470,7 +642,8 @@
               "deadline": null,
               "days_from_moving": 7,
               "urgency": "low",
-              "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり"
+              "note": "ツルハドラッグ・コスモス薬品・マツキヨなど複数あり",
+              "days_from_decision": null
             },
             {
               "id": "sp-l-3",
@@ -478,7 +651,8 @@
               "deadline": null,
               "days_from_moving": 30,
               "urgency": "low",
-              "note": "子育て支援センターでの相談・交流も活用しよう"
+              "note": "子育て支援センターでの相談・交流も活用しよう",
+              "days_from_decision": null
             },
             {
               "id": "sp-l-4",
@@ -486,7 +660,8 @@
               "deadline": null,
               "days_from_moving": 3,
               "urgency": "medium",
-              "note": "市役所窓口またはWebサイトから入手"
+              "note": "市役所窓口またはWebサイトから入手",
+              "days_from_decision": null
             },
             {
               "id": "sp-l-5",
@@ -494,7 +669,8 @@
               "deadline": null,
               "days_from_moving": 7,
               "urgency": "low",
-              "note": "市からのお知らせ・災害情報が届く"
+              "note": "市からのお知らせ・災害情報が届く",
+              "days_from_decision": null
             }
           ]
         }
