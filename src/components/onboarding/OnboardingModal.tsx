@@ -8,11 +8,13 @@ export const ONBOARDING_DONE_KEY = "kosodate_onboarding_v2";
 
 type Phase = "decided" | "moving_soon" | "moved" | "exploring";
 type WorkStatus = "fulltime" | "parttime" | "leave";
+type ChildCount = "1人" | "2人" | "3人以上";
 type ChildAgeGroup = "0-1歳" | "2-3歳" | "4-5歳" | "5歳以上";
 
 interface OnboardingAnswers {
   phase?: Phase;
   work_status?: WorkStatus;
+  child_count?: ChildCount;
   child_age_group?: ChildAgeGroup;
 }
 
@@ -22,7 +24,7 @@ interface OnboardingModalProps {
   onClose: () => void;
 }
 
-type Step = 1 | 2 | 3 | "done";
+type Step = 1 | 2 | 3 | 4 | "done";
 
 const PHASE_OPTIONS: { label: string; sub: string; value: Phase }[] = [
   { label: "🏠 物件が決まった", sub: "転居先が確定している", value: "decided" },
@@ -35,6 +37,12 @@ const WORK_OPTIONS: { label: string; sub: string; value: WorkStatus }[] = [
   { label: "💼 フルタイム勤務", sub: "保育標準時間（最長11時間）が必要", value: "fulltime" },
   { label: "⏰ パート・時短勤務", sub: "保育短時間（最長8時間）で対応可", value: "parttime" },
   { label: "🍼 育休中", sub: "復職後の入園に向けて情報収集", value: "leave" },
+];
+
+const COUNT_OPTIONS: { label: string; sub: string; value: ChildCount }[] = [
+  { label: "👶 1人", sub: "", value: "1人" },
+  { label: "👶👶 2人", sub: "", value: "2人" },
+  { label: "👶👶👶 3人以上", sub: "", value: "3人以上" },
 ];
 
 const AGE_OPTIONS: { label: string; value: ChildAgeGroup }[] = [
@@ -112,6 +120,13 @@ export default function OnboardingModal({
     setStep(3);
   };
 
+  const handleChildCount = (value: ChildCount) => {
+    const next = { ...answers, child_count: value };
+    setAnswers(next);
+    track("onboarding_step", { step: "child_count", value_category: value });
+    setStep(4);
+  };
+
   const handleChildAge = (value: ChildAgeGroup) => {
     const next = { ...answers, child_age_group: value };
     setAnswers(next);
@@ -134,7 +149,7 @@ export default function OnboardingModal({
     router.push(href);
   };
 
-  const progressPercent = step === "done" ? 100 : (Number(step) / 3) * 100;
+  const progressPercent = step === "done" ? 100 : (Number(step) / 4) * 100;
   const cta = getCtaForPhase(answers.phase, municipalityId);
 
   return (
@@ -160,12 +175,13 @@ export default function OnboardingModal({
           <div className="flex items-start justify-between">
             <div className="flex-1">
               {step !== "done" && (
-                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/3</p>
+                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/4</p>
               )}
               <h3 className="text-base font-bold text-gray-900">
-                {step === 1 && `今の状況を教えてください`}
+                {step === 1 && "今の状況を教えてください"}
                 {step === 2 && "就労状況を教えてください"}
-                {step === 3 && "お子さんの年齢は？"}
+                {step === 3 && "未就学児は何人いますか？"}
+                {step === 4 && "末子の年齢を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
               {step === 1 && (
@@ -223,8 +239,23 @@ export default function OnboardingModal({
             </div>
           )}
 
-          {/* Step 3: 子どもの年齢 */}
+          {/* Step 3: 未就学児の人数 */}
           {step === 3 && (
+            <div className="grid grid-cols-3 gap-2">
+              {COUNT_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => handleChildCount(opt.value)}
+                  className="text-center p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-[#2d9e6b] hover:bg-[#f0faf5] active:scale-95 transition-all"
+                >
+                  <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Step 4: 末子の年齢 */}
+          {step === 4 && (
             <div className="grid grid-cols-2 gap-2">
               {AGE_OPTIONS.map((opt) => (
                 <button
