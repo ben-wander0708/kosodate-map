@@ -74,7 +74,9 @@ export default async function FaqPage({ params }: FaqPageProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 pb-28">
+    <div className="space-y-4 p-4 pb-32 overflow-y-auto"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
