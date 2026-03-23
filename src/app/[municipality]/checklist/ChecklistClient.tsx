@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { getSupabase } from "@/lib/supabase/client";
 import type { MunicipalityChecklist, ChecklistItem, PostEnrollmentEvent, EventAssignee } from "@/lib/data/types";
 import postEnrollmentData from "@/lib/data/post-enrollment-events.json";
+import { useOnboarding } from "@/hooks/useOnboarding";
 
 interface ChecklistClientProps {
   checklist: MunicipalityChecklist;
@@ -43,29 +44,6 @@ function getMonthLabel(enrollmentMonth: string, offset: number): string {
   return `${d.getFullYear()}年${d.getMonth() + 1}月`;
 }
 
-/** 子どもが複数いるかどうかを onboarding データから判定 */
-function isMultiChild(): boolean {
-  try {
-    const raw = localStorage.getItem("kosodate_onboarding_v2");
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    return data?.answers?.child_count !== "1人";
-  } catch {
-    return false;
-  }
-}
-
-/** 育休中かどうかを onboarding データから判定 */
-function isOnLeave(): boolean {
-  try {
-    const raw = localStorage.getItem("kosodate_onboarding_v2");
-    if (!raw) return false;
-    const data = JSON.parse(raw);
-    return data?.answers?.work_status === "leave";
-  } catch {
-    return false;
-  }
-}
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   慣らし保育: { bg: "bg-blue-50",   text: "text-blue-700",  border: "border-blue-200" },
@@ -82,6 +60,8 @@ const ASSIGNEE_OPTIONS: { value: EventAssignee; label: string; emoji: string }[]
 ];
 
 export default function ChecklistClient({ checklist, municipalityName }: ChecklistClientProps) {
+  const onboarding = useOnboarding();
+
   const [shareId, setShareId] = useState<string | null>(null);
   const [isShared, setIsShared] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
@@ -174,6 +154,17 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     }
   }, [loadFromSupabase]);
 
+  // オンボーディングのwork_statusからペルソナを自動選択（未選択の場合のみ）
+  useEffect(() => {
+    if (!onboarding.isLoaded) return;
+    if (!onboarding.suggestedPersonaId) return;
+    setSelectedPersonaId((prev) => {
+      if (prev) return prev;
+      return onboarding.suggestedPersonaId;
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onboarding.isLoaded]);
+
   const handlePersonaSelect = useCallback((personaId: string) => {
     setSelectedPersonaId(personaId);
     try { localStorage.setItem("kosodate_checklist_persona", personaId); } catch {}
@@ -257,11 +248,9 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     ? selectedPersona.sections.flatMap((s) => s.items).filter((item) => checkedItems.has(item.id)).length : 0;
   const progress = totalItems > 0 ? Math.round((doneItems / totalItems) * 100) : 0;
 
-  // 入園後イベントをフィルタリング
-  const multiChild = loaded ? isMultiChild() : false;
-  const onLeave    = loaded ? isOnLeave()    : false;
+  // 入園後イベントをフィルタリング（useOnboarding から取得）
   const timelineEvents = (postEnrollmentData.events as PostEnrollmentEvent[]).filter((e) => {
-    if (e.for_leave_only && !onLeave) return false;
+    if (e.for_leave_only && !onboarding.isOnLeave) return false;
     return true;
   });
 
@@ -547,7 +536,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
                           )}
 
                           {/* 多子注意 */}
-                          {multiChild && event.multi_child_note && (
+                          {onboarding.isMultiChild && event.multi_child_note && (
                             <div className="bg-amber-50 border border-amber-100 rounded-lg px-2 py-1.5 mb-2">
                               <p className="text-[11px] text-amber-700 leading-relaxed">
                                 👶👶 {event.multi_child_note}
