@@ -14,6 +14,8 @@ interface UseOnboardingResult {
   isMultiChild: boolean;
   /** 育休中か */
   isOnLeave: boolean;
+  /** 入園月（"YYYY-MM" 形式）。未設定なら null */
+  enrollmentMonth: string | null;
   /**
    * work_status から推奨ペルソナIDを返す
    * dual-income / stay-at-home / single-parent
@@ -67,6 +69,7 @@ export function useOnboarding(): UseOnboardingResult {
     hasEnrolled,
     isMultiChild,
     isOnLeave,
+    enrollmentMonth: answers?.enrollment_month ?? null,
     suggestedPersonaId,
   };
 }

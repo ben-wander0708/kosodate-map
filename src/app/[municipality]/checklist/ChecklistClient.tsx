@@ -157,11 +157,13 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
   // オンボーディングのwork_statusからペルソナを自動選択（未選択の場合のみ）
   useEffect(() => {
     if (!onboarding.isLoaded) return;
-    if (!onboarding.suggestedPersonaId) return;
-    setSelectedPersonaId((prev) => {
-      if (prev) return prev;
-      return onboarding.suggestedPersonaId;
-    });
+    if (onboarding.suggestedPersonaId) {
+      setSelectedPersonaId((prev) => prev ?? onboarding.suggestedPersonaId);
+    }
+    // 入園月もオンボーディングから自動反映（未設定の場合のみ）
+    if (onboarding.enrollmentMonth) {
+      setEnrollmentMonth((prev) => prev || onboarding.enrollmentMonth!);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onboarding.isLoaded]);
 

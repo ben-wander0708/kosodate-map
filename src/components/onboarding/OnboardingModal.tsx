@@ -22,6 +22,7 @@ export interface OnboardingAnswers {
   work_status?: WorkStatus;
   child_count?: ChildCount;
   children?: ChildInfo[];
+  enrollment_month?: string; // "YYYY-MM" 形式
 }
 
 interface OnboardingModalProps {
@@ -30,7 +31,7 @@ interface OnboardingModalProps {
   onClose: () => void;
 }
 
-type Step = 1 | 2 | 3 | 4 | "done";
+type Step = 1 | 2 | 3 | 4 | 5 | "done";
 
 /** child_count 文字列 → 人数 */
 function countToNumber(count: ChildCount): number {
@@ -67,6 +68,20 @@ const ENROLLMENT_OPTIONS: { value: EnrollmentStatus; label: string; sub: string;
 ];
 
 const CHILD_LABELS = ["第1子", "第2子", "第3子"];
+
+/** 今月 -3ヶ月 〜 +12ヶ月 の選択肢を生成 */
+function getMonthOptions(): { value: string; label: string }[] {
+  const options: { value: string; label: string }[] = [];
+  const now = new Date();
+  for (let i = -3; i <= 12; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const value = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+    const label = `${d.getFullYear()}年${d.getMonth() + 1}月`;
+    options.push({ value, label });
+  }
+  return options;
+}
+const MONTH_OPTIONS = getMonthOptions();
 
 function getCtaForPhase(phase: Phase | undefined, municipalityId: string): {
   message: string;
@@ -181,8 +196,34 @@ export default function OnboardingModal({
       step: "children",
       value_category: children.map((c) => `${c.age}歳/${c.enrollment_status}`).join(","),
     });
+    // 保活中 or 在籍中の子がいればStep5（入園月）へ
+    const needsEnrollmentMonth = children.some(
+      (c) => c.enrollment_status === "seeking" || c.enrollment_status === "enrolled"
+    );
+    if (needsEnrollmentMonth) {
+      setAnswers(next);
+      setStep(5);
+    } else {
+      try {
+        localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers: next }));
+      } catch {}
+      setStep("done");
+    }
+  };
+
+  const handleEnrollmentMonth = (value: string) => {
+    const next = { ...answers, enrollment_month: value };
+    setAnswers(next);
+    track("onboarding_step", { step: "enrollment_month", value_category: value });
     try {
       localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers: next }));
+    } catch {}
+    setStep("done");
+  };
+
+  const handleSkipEnrollmentMonth = () => {
+    try {
+      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers }));
     } catch {}
     setStep("done");
   };
@@ -199,7 +240,10 @@ export default function OnboardingModal({
     router.push(href);
   };
 
-  const progressPercent = step === "done" ? 100 : (Number(step) / 4) * 100;
+  const totalSteps = answers.children?.some(
+    (c) => c.enrollment_status === "seeking" || c.enrollment_status === "enrolled"
+  ) ? 5 : 4;
+  const progressPercent = step === "done" ? 100 : (Number(step) / totalSteps) * 100;
   const cta = getCtaForPhase(answers.phase, municipalityId);
   const allChildrenComplete = childDrafts.length > 0 &&
     childDrafts.every((d) => d.age !== null && d.enrollment_status !== null);
@@ -227,13 +271,14 @@ export default function OnboardingModal({
           <div className="flex items-start justify-between">
             <div className="flex-1">
               {step !== "done" && (
-                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/4</p>
+                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/{totalSteps}</p>
               )}
               <h3 className="text-base font-bold text-gray-900">
                 {step === 1 && "今の状況を教えてください"}
                 {step === 2 && "就労状況を教えてください"}
                 {step === 3 && "未就学児は何人いますか？"}
                 {step === 4 && "お子さんの情報を教えてください"}
+                {step === 5 && "入園月を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
               {step === 1 && (
@@ -244,6 +289,11 @@ export default function OnboardingModal({
               {step === 4 && (
                 <p className="text-xs text-gray-400 mt-1">
                   年齢と保育園の状況をそれぞれ教えてください
+                </p>
+              )}
+              {step === 5 && (
+                <p className="text-xs text-gray-400 mt-1">
+                  入園後のスケジュールを自動で表示します（予定月でもOK）
                 </p>
               )}
             </div>
@@ -384,6 +434,29 @@ export default function OnboardingModal({
                 }`}
               >
                 {allChildrenComplete ? "次へ →" : "全員の情報を入力してください"}
+              </button>
+            </div>
+          )}
+
+          {/* Step 5: 入園月 */}
+          {step === 5 && (
+            <div className="space-y-3">
+              <div className="grid grid-cols-3 gap-2">
+                {MONTH_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    onClick={() => handleEnrollmentMonth(opt.value)}
+                    className="py-2.5 px-1 rounded-xl border-2 border-gray-200 bg-white text-xs font-semibold text-gray-700 hover:border-[#2d9e6b] hover:bg-[#f0faf5] active:scale-95 transition-all text-center"
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={handleSkipEnrollmentMonth}
+                className="w-full text-gray-400 text-xs underline text-center pt-1"
+              >
+                まだ決まっていない・スキップ
               </button>
             </div>
           )}
