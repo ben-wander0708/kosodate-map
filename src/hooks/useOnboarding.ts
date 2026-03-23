@@ -5,6 +5,8 @@ import { ONBOARDING_DONE_KEY, type OnboardingAnswers } from "@/components/onboar
 
 interface UseOnboardingResult {
   answers: OnboardingAnswers | null;
+  /** オンボーディングを完了 or スキップ済みか */
+  isDone: boolean;
   isLoaded: boolean;
   /** 保活中（enrollment_status === "seeking"）の子どもがいるか */
   hasSeeking: boolean;
@@ -23,21 +25,30 @@ interface UseOnboardingResult {
   suggestedPersonaId: string | null;
 }
 
+export const ONBOARDING_DONE_EVENT = "kosodate_onboarding_done";
+
 export function useOnboarding(): UseOnboardingResult {
   const [answers, setAnswers] = useState<OnboardingAnswers | null>(null);
+  const [isDone, setIsDone] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(ONBOARDING_DONE_KEY);
-      if (raw) {
-        const data = JSON.parse(raw);
-        if (data?.answers) {
-          setAnswers(data.answers);
+    const readStorage = () => {
+      try {
+        const raw = localStorage.getItem(ONBOARDING_DONE_KEY);
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data?.done) setIsDone(true);
+          if (data?.answers) setAnswers(data.answers);
         }
-      }
-    } catch {}
-    setIsLoaded(true);
+      } catch {}
+      setIsLoaded(true);
+    };
+
+    readStorage();
+    // 同タブでオンボーディングが完了したときに再読み込み
+    window.addEventListener(ONBOARDING_DONE_EVENT, readStorage);
+    return () => window.removeEventListener(ONBOARDING_DONE_EVENT, readStorage);
   }, []);
 
   const children = answers?.children ?? [];
@@ -64,6 +75,7 @@ export function useOnboarding(): UseOnboardingResult {
 
   return {
     answers,
+    isDone,
     isLoaded,
     hasSeeking,
     hasEnrolled,

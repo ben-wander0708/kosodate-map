@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ONBOARDING_DONE_KEY, type OnboardingAnswers } from "@/components/onboarding/OnboardingModal";
+import { useOnboarding } from "@/hooks/useOnboarding";
 
 type Phase = "decided" | "moving_soon" | "moved" | "exploring";
 type WorkStatus = "fulltime" | "parttime" | "leave";
@@ -200,25 +199,13 @@ interface DashboardHomeProps {
 }
 
 export default function DashboardHome({ municipalityId, municipalityName }: DashboardHomeProps) {
-  const [answers, setAnswers] = useState<OnboardingAnswers | null>(null);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(ONBOARDING_DONE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed.answers) setAnswers(parsed.answers);
-      }
-    } catch {}
-    setLoaded(true);
-  }, []);
+  const { answers, isDone, isLoaded } = useOnboarding();
 
   const phase = answers?.phase;
   const phaseInfo = phase ? PHASE_LABELS[phase] : null;
   const priorityActions = getPriorityActions(phase, municipalityId);
 
-  if (!loaded) {
+  if (!isLoaded) {
     return <div className="p-4 space-y-4 animate-pulse">
       <div className="h-24 bg-gray-100 rounded-xl" />
       <div className="h-40 bg-gray-100 rounded-xl" />
@@ -327,13 +314,13 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       </div>
 
       {/* オンボーディング未完了の場合 */}
-      {!answers && (
+      {!isDone && (
         <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
           <p className="text-sm font-semibold text-amber-800 mb-1">あなたの状況を教えてください</p>
           <p className="text-xs text-amber-700 mb-3">回答に合わせて「今やること」をカスタマイズします</p>
           <button
             onClick={() => {
-              try { localStorage.removeItem(ONBOARDING_DONE_KEY); } catch {}
+              try { localStorage.removeItem("kosodate_onboarding_v2"); } catch {}
               window.location.reload();
             }}
             className="w-full bg-amber-500 text-white text-sm font-semibold py-2 rounded-lg active:scale-95 transition-transform"

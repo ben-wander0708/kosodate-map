@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { track } from "@/lib/analytics/tracker";
+import { ONBOARDING_DONE_EVENT } from "@/hooks/useOnboarding";
 
 export const ONBOARDING_DONE_KEY = "kosodate_onboarding_v2";
 
@@ -204,27 +205,28 @@ export default function OnboardingModal({
       setAnswers(next);
       setStep(5);
     } else {
-      try {
-        localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers: next }));
-      } catch {}
+      saveDone(next);
       setStep("done");
     }
+  };
+
+  const saveDone = (finalAnswers: OnboardingAnswers) => {
+    try {
+      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers: finalAnswers }));
+      window.dispatchEvent(new Event(ONBOARDING_DONE_EVENT));
+    } catch {}
   };
 
   const handleEnrollmentMonth = (value: string) => {
     const next = { ...answers, enrollment_month: value };
     setAnswers(next);
     track("onboarding_step", { step: "enrollment_month", value_category: value });
-    try {
-      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers: next }));
-    } catch {}
+    saveDone(next);
     setStep("done");
   };
 
   const handleSkipEnrollmentMonth = () => {
-    try {
-      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers }));
-    } catch {}
+    saveDone(answers);
     setStep("done");
   };
 
