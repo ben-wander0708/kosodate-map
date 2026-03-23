@@ -191,6 +191,7 @@ const FEATURE_TILES = [
     href: (id: string) => `/${id}/shops`,
     color: "text-orange-600",
     bg: "bg-orange-50",
+    badge: "試作中",
   },
 ];
 
@@ -312,8 +313,13 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
             <Link
               key={tile.title}
               href={tile.href(municipalityId)}
-              className={`${tile.bg} rounded-xl p-3 text-center active:scale-95 transition-transform`}
+              className={`${tile.bg} rounded-xl p-3 text-center active:scale-95 transition-transform relative`}
             >
+              {"badge" in tile && tile.badge && (
+                <span className="absolute top-1.5 right-1.5 text-[9px] bg-gray-200 text-gray-500 rounded-full px-1.5 py-0.5 font-medium leading-tight">
+                  {tile.badge}
+                </span>
+              )}
               <div className="text-2xl mb-1">{tile.icon}</div>
               <p className={`text-xs font-semibold ${tile.color}`}>{tile.title}</p>
               <p className="text-[10px] text-gray-400 mt-0.5 leading-tight">{tile.sub}</p>

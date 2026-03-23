@@ -71,6 +71,7 @@ const NAV_ITEMS = [
     activeBg: "bg-orange-50 border border-orange-200",
     href: (municipalityId: string) => `/${municipalityId}/shops`,
     type: "page",
+    badge: "試作中",
   },
   {
     tab: "giveaway",
@@ -81,6 +82,7 @@ const NAV_ITEMS = [
     activeBg: "bg-pink-50 border border-pink-200",
     href: (municipalityId: string) => `/${municipalityId}/giveaway`,
     type: "page",
+    badge: "準備中",
   },
   {
     tab: "community",
@@ -226,12 +228,19 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
                   >
                     <span className="text-2xl w-8 text-center">{item.icon}</span>
                     <div className="flex-1 min-w-0">
-                      <div
-                        className={`font-semibold text-sm ${
-                          active ? item.activeColor : "text-gray-800"
-                        }`}
-                      >
-                        {item.title}
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`font-semibold text-sm ${
+                            active ? item.activeColor : "text-gray-800"
+                          }`}
+                        >
+                          {item.title}
+                        </span>
+                        {"badge" in item && item.badge && (
+                          <span className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-1.5 py-0.5 font-medium">
+                            {item.badge}
+                          </span>
+                        )}
                       </div>
                       <div className="text-xs text-gray-500 mt-0.5 leading-snug">
                         {item.description}
