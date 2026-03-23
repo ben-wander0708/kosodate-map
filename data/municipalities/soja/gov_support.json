@@ -8,19 +8,40 @@
     "summary": "子どもの年齢・人数に応じて毎月支給。2024年10月から所得制限が撤廃され、高校生世代まで拡充。第3子以降は月3万円に増額。",
     "amount": "月額1万〜3万円（年齢・子どもの順番により異なる）",
     "amount_detail": [
-      { "label": "3歳未満（第1・2子）", "value": "月15,000円" },
-      { "label": "3歳未満（第3子以降）", "value": "月30,000円" },
-      { "label": "3歳〜小学校修了（第1・2子）", "value": "月10,000円" },
-      { "label": "3歳〜小学校修了（第3子以降）", "value": "月30,000円" },
-      { "label": "中学生（第1・2子）", "value": "月10,000円" },
-      { "label": "中学生（第3子以降）", "value": "月30,000円" }
+      {
+        "label": "3歳未満（第1・2子）",
+        "value": "月15,000円"
+      },
+      {
+        "label": "3歳未満（第3子以降）",
+        "value": "月30,000円"
+      },
+      {
+        "label": "3歳〜小学校修了（第1・2子）",
+        "value": "月10,000円"
+      },
+      {
+        "label": "3歳〜小学校修了（第3子以降）",
+        "value": "月30,000円"
+      },
+      {
+        "label": "中学生（第1・2子）",
+        "value": "月10,000円"
+      },
+      {
+        "label": "中学生（第3子以降）",
+        "value": "月30,000円"
+      }
     ],
     "how_to_apply": "出生・転入から15日以内に申請。出生届と同時に窓口で手続き可能。",
     "no_application_needed": false,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3267.html",
-    "tags": ["全員対象", "毎月支給", "2024年拡充"]
+    "tags": [
+      "全員対象",
+      "毎月支給",
+      "2024年拡充"
+    ]
   },
   {
     "id": "bukka-teate",
@@ -34,9 +55,12 @@
     "how_to_apply": "申請不要（自動支給）",
     "no_application_needed": true,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": null,
-    "tags": ["申請不要", "1回限り", "自動支給"]
+    "tags": [
+      "申請不要",
+      "1回限り",
+      "自動支給"
+    ]
   },
   {
     "id": "shussan-gift",
@@ -50,9 +74,12 @@
     "how_to_apply": "出生届提出時または後日、こども課窓口で申請。母子健康手帳が必要。",
     "no_application_needed": false,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3259.html",
-    "tags": ["総社市独自", "出産祝い", "クーポン"]
+    "tags": [
+      "総社市独自",
+      "出産祝い",
+      "クーポン"
+    ]
   },
   {
     "id": "kodomo-iryo",
@@ -66,9 +93,12 @@
     "how_to_apply": "出生・転入時に受給資格証の交付申請が必要。健康保険証・マイナンバーが必要。",
     "no_application_needed": false,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3298.html",
-    "tags": ["中学生まで無料", "窓口無料", "転入時要申請"]
+    "tags": [
+      "中学生まで無料",
+      "窓口無料",
+      "転入時要申請"
+    ]
   },
   {
     "id": "hoiku-muryoka",
@@ -79,16 +109,28 @@
     "summary": "認可保育所・認定こども園・幼稚園の保育料が無料に。ただし給食費・通園費などは実費負担あり。",
     "amount": "3〜5歳：全額無償／0〜2歳（非課税世帯）：全額無償",
     "amount_detail": [
-      { "label": "3〜5歳（認可保育所・こども園）", "value": "保育料無料" },
-      { "label": "3〜5歳（幼稚園）", "value": "月25,700円まで無償" },
-      { "label": "0〜2歳（非課税世帯）", "value": "保育料無料" }
+      {
+        "label": "3〜5歳（認可保育所・こども園）",
+        "value": "保育料無料"
+      },
+      {
+        "label": "3〜5歳（幼稚園）",
+        "value": "月25,700円まで無償"
+      },
+      {
+        "label": "0〜2歳（非課税世帯）",
+        "value": "保育料無料"
+      }
     ],
     "how_to_apply": "施設入所申込時に一括申請。別途手続きは不要（認可施設の場合）。",
     "no_application_needed": false,
     "contact_name": "こども夢づくり課",
-    "contact_phone": "0866-92-8207",
     "url": "https://www.city.soja.okayama.jp/soshiki/44/4565.html",
-    "tags": ["3歳から全員無料", "保育料", "国の制度"]
+    "tags": [
+      "3歳から全員無料",
+      "保育料",
+      "国の制度"
+    ]
   },
   {
     "id": "sango-care",
@@ -99,16 +141,28 @@
     "summary": "助産師・保健師による産後の心身ケアと育児サポート。宿泊・日帰り・訪問の3タイプから選べる。低所得世帯は無料。",
     "amount": "宿泊型1泊3,000円〜／日帰り1日1,500円〜／訪問1回750円〜（非課税世帯は無料）",
     "amount_detail": [
-      { "label": "宿泊型（上限7泊）", "value": "1泊2日3,000円〜" },
-      { "label": "日帰り型（上限7日）", "value": "1日1,500円〜" },
-      { "label": "訪問型（上限7回）", "value": "1回750円〜" }
+      {
+        "label": "宿泊型（上限7泊）",
+        "value": "1泊2日3,000円〜"
+      },
+      {
+        "label": "日帰り型（上限7日）",
+        "value": "1日1,500円〜"
+      },
+      {
+        "label": "訪問型（上限7回）",
+        "value": "1回750円〜"
+      }
     ],
     "how_to_apply": "こども課または保健センターに相談・申請。妊娠中からの事前登録も可能。",
     "no_application_needed": false,
     "contact_name": "こども課（保健センター）",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3246.html",
-    "tags": ["産後サポート", "助産師", "低所得無料"]
+    "tags": [
+      "産後サポート",
+      "助産師",
+      "低所得無料"
+    ]
   },
   {
     "id": "nyuyoji-kenshin",
@@ -119,16 +173,28 @@
     "summary": "4か月・1歳6か月・3歳の節目に無料で実施。身体計測・診察・歯科検診・発達確認など。市から案内が届く。",
     "amount": "無料",
     "amount_detail": [
-      { "label": "4か月児健診", "value": "身体計測・診察・育児相談" },
-      { "label": "1歳6か月児健診", "value": "身体計測・歯科・言語相談" },
-      { "label": "3歳児健診", "value": "視力・聴力・尿検査など" }
+      {
+        "label": "4か月児健診",
+        "value": "身体計測・診察・育児相談"
+      },
+      {
+        "label": "1歳6か月児健診",
+        "value": "身体計測・歯科・言語相談"
+      },
+      {
+        "label": "3歳児健診",
+        "value": "視力・聴力・尿検査など"
+      }
     ],
     "how_to_apply": "市から通知が届いたら予約して受診。",
     "no_application_needed": true,
     "contact_name": "こども課（保健センター）",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3258.html",
-    "tags": ["無料", "申請不要", "3回実施"]
+    "tags": [
+      "無料",
+      "申請不要",
+      "3回実施"
+    ]
   },
   {
     "id": "kangaroo-hiroba",
@@ -142,9 +208,12 @@
     "how_to_apply": "予約不要。開催日程は市のウェブサイト・広報誌で確認。",
     "no_application_needed": true,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3245.html",
-    "tags": ["無料", "予約不要", "助産師に相談"]
+    "tags": [
+      "無料",
+      "予約不要",
+      "助産師に相談"
+    ]
   },
   {
     "id": "family-support",
@@ -155,16 +224,28 @@
     "summary": "子育ての手伝いができる人（提供会員）と手伝ってほしい人（利用会員）をマッチングする相互援助システム。保育所の送迎・預かりなどを依頼できる。",
     "amount": "平日700円/時間・早朝夜間休日800円/時間（一人親家庭は半額）",
     "amount_detail": [
-      { "label": "平日7:00〜19:00", "value": "700円/時間" },
-      { "label": "早朝・夜間・休日", "value": "800円/時間" },
-      { "label": "児童扶養手当受給世帯", "value": "半額" }
+      {
+        "label": "平日7:00〜19:00",
+        "value": "700円/時間"
+      },
+      {
+        "label": "早朝・夜間・休日",
+        "value": "800円/時間"
+      },
+      {
+        "label": "児童扶養手当受給世帯",
+        "value": "半額"
+      }
     ],
     "how_to_apply": "センターへ来所または電話で会員登録。事前登録が必要。",
     "no_application_needed": false,
     "contact_name": "ファミリーサポートセンター",
-    "contact_phone": "0866-92-7370",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3226.html",
-    "tags": ["送迎・預かり", "低価格", "事前登録必要"]
+    "tags": [
+      "送迎・預かり",
+      "低価格",
+      "事前登録必要"
+    ]
   },
   {
     "id": "kosodate-center",
@@ -175,18 +256,36 @@
     "summary": "市内5か所の保育所内に設置。親子の自由遊びスペース・育児相談・イベントを無料で提供。予約不要でいつでも来られる。",
     "amount": "無料",
     "amount_detail": [
-      { "label": "あのねこども館（駅南）", "value": "0866-93-3571" },
-      { "label": "あゆみこどもひろば（上林）", "value": "0866-92-8700" },
-      { "label": "みんなのこどもひろば（総社）", "value": "0866-92-3355" },
-      { "label": "ひだまりこどもひろば（久代）", "value": "0866-93-6025" },
-      { "label": "みらいこどもひろば（井尻野）", "value": "0866-93-7055" }
+      {
+        "label": "あのねこども館（駅南）",
+        "value": "総社駅南エリア"
+      },
+      {
+        "label": "あゆみこどもひろば（上林）",
+        "value": "上林エリア"
+      },
+      {
+        "label": "みんなのこどもひろば（総社）",
+        "value": "総社エリア"
+      },
+      {
+        "label": "ひだまりこどもひろば（久代）",
+        "value": "久代エリア"
+      },
+      {
+        "label": "みらいこどもひろば（井尻野）",
+        "value": "井尻野エリア"
+      }
     ],
     "how_to_apply": "予約不要。各施設に直接来場。月〜土 9:00〜15:00ごろ。",
     "no_application_needed": true,
     "contact_name": "こども夢づくり課",
-    "contact_phone": "0866-92-8207",
     "url": "https://www.city.soja.okayama.jp/soshiki/44/4573.html",
-    "tags": ["無料", "予約不要", "市内5か所"]
+    "tags": [
+      "無料",
+      "予約不要",
+      "市内5か所"
+    ]
   },
   {
     "id": "ryoiku-soudan",
@@ -197,12 +296,15 @@
     "summary": "言語・運動・行動・学習など発達に関する専門的な相談・検査・療育支援を実施。相談は無料。保育所・学校との連携支援も行う。",
     "amount": "相談は無料（療育プログラムは別途）",
     "amount_detail": [],
-    "how_to_apply": "こども課（0866-92-8260）に相談の上、総社PECに繋いでもらう。または直接電話可。",
+    "how_to_apply": "こども課窓口に相談の上、総社PECに繋いでもらう。または直接窓口へ。",
     "no_application_needed": false,
     "contact_name": "総社PEC（発達支援センター）",
-    "contact_phone": "0866-92-8371",
     "url": null,
-    "tags": ["発達相談", "無料相談", "専門支援"]
+    "tags": [
+      "発達相談",
+      "無料相談",
+      "専門支援"
+    ]
   },
   {
     "id": "jido-fuyo-teate",
@@ -213,16 +315,28 @@
     "summary": "離婚・死別・未婚などのひとり親家庭に毎月支給。第2子・第3子加算あり。2か月に1回振込。",
     "amount": "第1子 月最大46,690円（所得に応じて変動）",
     "amount_detail": [
-      { "label": "第1子（全部支給）", "value": "46,690円/月" },
-      { "label": "第2子加算", "value": "11,180円/月" },
-      { "label": "第3子以降加算（1人あたり）", "value": "6,710円/月" }
+      {
+        "label": "第1子（全部支給）",
+        "value": "46,690円/月"
+      },
+      {
+        "label": "第2子加算",
+        "value": "11,180円/月"
+      },
+      {
+        "label": "第3子以降加算（1人あたり）",
+        "value": "6,710円/月"
+      }
     ],
     "how_to_apply": "こども課窓口に申請。戸籍謄本・所得証明書など必要。認定後2年ごとに現況届提出。",
     "no_application_needed": false,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3306.html",
-    "tags": ["ひとり親", "所得制限あり", "毎月支給"]
+    "tags": [
+      "ひとり親",
+      "所得制限あり",
+      "毎月支給"
+    ]
   },
   {
     "id": "hitorioya-iryo",
@@ -233,15 +347,24 @@
     "summary": "保険診療の自己負担を1医療機関あたり月500〜2,000円まで軽減。岡山県内の医療機関は受給資格証で窓口精算。",
     "amount": "自己負担上限：非課税世帯500円・課税世帯2,000円（1医療機関あたり）",
     "amount_detail": [
-      { "label": "住民税非課税世帯", "value": "自己負担上限500円/機関" },
-      { "label": "住民税課税世帯", "value": "自己負担上限2,000円/機関" }
+      {
+        "label": "住民税非課税世帯",
+        "value": "自己負担上限500円/機関"
+      },
+      {
+        "label": "住民税課税世帯",
+        "value": "自己負担上限2,000円/機関"
+      }
     ],
     "how_to_apply": "こども課窓口で受給資格証の交付申請。健康保険証・戸籍謄本が必要。",
     "no_application_needed": false,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3307.html",
-    "tags": ["ひとり親", "医療費軽減", "要申請"]
+    "tags": [
+      "ひとり親",
+      "医療費軽減",
+      "要申請"
+    ]
   },
   {
     "id": "tokubetsu-jido-teate",
@@ -252,14 +375,23 @@
     "summary": "国の手当制度。障害の程度（1級・2級）により月額が異なる。4か月ごとに振込。",
     "amount": "1級（重度）56,800円/月・2級（中度）37,830円/月",
     "amount_detail": [
-      { "label": "1級（重度障害）", "value": "56,800円/月" },
-      { "label": "2級（中度障害）", "value": "37,830円/月" }
+      {
+        "label": "1級（重度障害）",
+        "value": "56,800円/月"
+      },
+      {
+        "label": "2級（中度障害）",
+        "value": "37,830円/月"
+      }
     ],
     "how_to_apply": "こども課窓口で申請。医師の診断書（指定様式）が必要。岡山県が認定。",
     "no_application_needed": false,
     "contact_name": "こども課",
-    "contact_phone": "0866-92-8260",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3268.html",
-    "tags": ["障害児", "国の制度", "所得制限あり"]
+    "tags": [
+      "障害児",
+      "国の制度",
+      "所得制限あり"
+    ]
   }
 ]

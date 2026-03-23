@@ -126,25 +126,16 @@ export default function GovSupportCard({ support, municipalityId }: GovSupportCa
           <div className="flex items-center justify-between pt-2 border-t border-gray-100">
             <div>
               <p className="text-xs text-gray-500">{support.contact_name}</p>
-              <a
-                href={`tel:${support.contact_phone}`}
-                className="text-sm font-semibold text-[#2d9e6b]"
-                onClick={(e) => e.stopPropagation()}
-              >
-                📞 {support.contact_phone}
-              </a>
             </div>
-            {support.url && (
-              <a
-                href={support.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-blue-500 underline"
-                onClick={(e) => e.stopPropagation()}
-              >
-                詳細ページ →
-              </a>
-            )}
+            <a
+              href={support.url ?? "https://www.city.soja.okayama.jp/life/2/"}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-blue-500 underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              詳細・問い合わせ →
+            </a>
           </div>
         </div>
       )}

@@ -164,7 +164,7 @@ export interface GovSupport {
   how_to_apply: string | null;
   no_application_needed: boolean;
   contact_name: string;
-  contact_phone: string;
+  contact_phone?: string | null;
   url: string | null;
   tags: string[];
 }
