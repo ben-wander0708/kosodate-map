@@ -2,19 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { ONBOARDING_DONE_KEY } from "@/components/onboarding/OnboardingModal";
+import { ONBOARDING_DONE_KEY, type OnboardingAnswers } from "@/components/onboarding/OnboardingModal";
 
 type Phase = "decided" | "moving_soon" | "moved" | "exploring";
 type WorkStatus = "fulltime" | "parttime" | "leave";
-type ChildCount = "1人" | "2人" | "3人以上";
-type ChildAgeGroup = "0-1歳" | "2-3歳" | "4-5歳" | "5歳以上";
-
-interface OnboardingAnswers {
-  phase?: Phase;
-  work_status?: WorkStatus;
-  child_count?: ChildCount;
-  child_age_group?: ChildAgeGroup;
-}
 
 interface PriorityAction {
   icon: string;
@@ -267,9 +258,9 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
                 👶 {answers.child_count}
               </span>
             )}
-            {answers.child_age_group && (
+            {answers.children && answers.children.length > 0 && (
               <span className="text-xs bg-white/20 rounded-full px-2 py-0.5">
-                {answers.child_age_group}
+                {answers.children.map((c, i) => `${i === 0 ? "" : "・"}${c.age}歳`).join("")}
               </span>
             )}
           </div>

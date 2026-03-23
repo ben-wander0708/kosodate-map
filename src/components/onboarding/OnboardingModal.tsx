@@ -9,13 +9,16 @@ export const ONBOARDING_DONE_KEY = "kosodate_onboarding_v2";
 type Phase = "decided" | "moving_soon" | "moved" | "exploring";
 type WorkStatus = "fulltime" | "parttime" | "leave";
 type ChildCount = "1人" | "2人" | "3人以上";
-type ChildAgeGroup = "0-1歳" | "2-3歳" | "4-5歳" | "5歳以上";
 
-interface OnboardingAnswers {
+export interface ChildInfo {
+  age: number; // 0〜5歳
+}
+
+export interface OnboardingAnswers {
   phase?: Phase;
   work_status?: WorkStatus;
   child_count?: ChildCount;
-  child_age_group?: ChildAgeGroup;
+  children?: ChildInfo[]; // 各子どもの年齢
 }
 
 interface OnboardingModalProps {
@@ -26,31 +29,35 @@ interface OnboardingModalProps {
 
 type Step = 1 | 2 | 3 | 4 | "done";
 
+/** child_count 文字列 → 人数 */
+function countToNumber(count: ChildCount): number {
+  if (count === "1人") return 1;
+  if (count === "2人") return 2;
+  return 3; // "3人以上" は 3 として扱う
+}
+
 const PHASE_OPTIONS: { label: string; sub: string; value: Phase }[] = [
-  { label: "🏠 物件が決まった", sub: "転居先が確定している", value: "decided" },
-  { label: "🚚 もうすぐ引越し", sub: "1〜2ヶ月以内に引越し予定", value: "moving_soon" },
-  { label: "✅ 引越し済み", sub: "すでに転入している", value: "moved" },
-  { label: "🔍 まだ検討中", sub: "物件はまだ決まっていない", value: "exploring" },
+  { label: "🏠 物件が決まった",  sub: "転居先が確定している",          value: "decided" },
+  { label: "🚚 もうすぐ引越し",  sub: "1〜2ヶ月以内に引越し予定",     value: "moving_soon" },
+  { label: "✅ 引越し済み",      sub: "すでに転入している",            value: "moved" },
+  { label: "🔍 まだ検討中",      sub: "物件はまだ決まっていない",      value: "exploring" },
 ];
 
 const WORK_OPTIONS: { label: string; sub: string; value: WorkStatus }[] = [
-  { label: "💼 フルタイム勤務", sub: "保育標準時間（最長11時間）が必要", value: "fulltime" },
+  { label: "💼 フルタイム勤務", sub: "保育標準時間（最長11時間）が必要",   value: "fulltime" },
   { label: "⏰ パート・時短勤務", sub: "保育短時間（最長8時間）で対応可", value: "parttime" },
-  { label: "🍼 育休中", sub: "復職後の入園に向けて情報収集", value: "leave" },
+  { label: "🍼 育休中",          sub: "復職後の入園に向けて情報収集",     value: "leave" },
 ];
 
-const COUNT_OPTIONS: { label: string; sub: string; value: ChildCount }[] = [
-  { label: "👶 1人", sub: "", value: "1人" },
-  { label: "👶👶 2人", sub: "", value: "2人" },
-  { label: "👶👶👶 3人以上", sub: "", value: "3人以上" },
+const COUNT_OPTIONS: { label: string; value: ChildCount }[] = [
+  { label: "👶 1人",     value: "1人" },
+  { label: "👶👶 2人",   value: "2人" },
+  { label: "👶👶👶 3人以上", value: "3人以上" },
 ];
 
-const AGE_OPTIONS: { label: string; value: ChildAgeGroup }[] = [
-  { label: "👶 0〜1歳", value: "0-1歳" },
-  { label: "🧒 2〜3歳", value: "2-3歳" },
-  { label: "🧒 4〜5歳", value: "4-5歳" },
-  { label: "👦 就学前（6歳）", value: "5歳以上" },
-];
+const AGE_OPTIONS = [0, 1, 2, 3, 4, 5];
+
+const CHILD_LABELS = ["第1子", "第2子", "第3子"];
 
 function getCtaForPhase(phase: Phase | undefined, municipalityId: string): {
   message: string;
@@ -94,6 +101,8 @@ export default function OnboardingModal({
   const router = useRouter();
   const [step, setStep] = useState<Step>(1);
   const [answers, setAnswers] = useState<OnboardingAnswers>({});
+  // 各子どもの年齢（nullは未選択）
+  const [childAges, setChildAges] = useState<(number | null)[]>([]);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -101,36 +110,53 @@ export default function OnboardingModal({
     return () => clearTimeout(t);
   }, []);
 
+  // child_count が決まったら childAges を初期化
+  useEffect(() => {
+    if (answers.child_count) {
+      const n = countToNumber(answers.child_count);
+      setChildAges(Array(n).fill(null));
+    }
+  }, [answers.child_count]);
+
   const handleClose = () => {
     setVisible(false);
     setTimeout(onClose, 300);
   };
 
   const handlePhase = (value: Phase) => {
-    const next = { ...answers, phase: value };
-    setAnswers(next);
+    setAnswers((prev) => ({ ...prev, phase: value }));
     track("onboarding_step", { step: "phase", value_category: value });
     setStep(2);
   };
 
   const handleWorkStatus = (value: WorkStatus) => {
-    const next = { ...answers, work_status: value };
-    setAnswers(next);
+    setAnswers((prev) => ({ ...prev, work_status: value }));
     track("onboarding_step", { step: "work_status", value_category: value });
     setStep(3);
   };
 
   const handleChildCount = (value: ChildCount) => {
-    const next = { ...answers, child_count: value };
-    setAnswers(next);
+    setAnswers((prev) => ({ ...prev, child_count: value }));
     track("onboarding_step", { step: "child_count", value_category: value });
     setStep(4);
   };
 
-  const handleChildAge = (value: ChildAgeGroup) => {
-    const next = { ...answers, child_age_group: value };
+  const handleChildAgeSelect = (index: number, age: number) => {
+    setChildAges((prev) => {
+      const next = [...prev];
+      next[index] = age;
+      return next;
+    });
+  };
+
+  const handleChildrenDone = () => {
+    const children: ChildInfo[] = childAges.map((age) => ({ age: age ?? 0 }));
+    const next = { ...answers, children };
     setAnswers(next);
-    track("onboarding_step", { step: "child_age", value_category: value });
+    track("onboarding_step", {
+      step: "children_ages",
+      value_category: children.map((c) => `${c.age}歳`).join(","),
+    });
     try {
       localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, answers: next }));
     } catch {}
@@ -151,6 +177,7 @@ export default function OnboardingModal({
 
   const progressPercent = step === "done" ? 100 : (Number(step) / 4) * 100;
   const cta = getCtaForPhase(answers.phase, municipalityId);
+  const allAgesSelected = childAges.length > 0 && childAges.every((a) => a !== null);
 
   return (
     <div
@@ -181,12 +208,17 @@ export default function OnboardingModal({
                 {step === 1 && "今の状況を教えてください"}
                 {step === 2 && "就労状況を教えてください"}
                 {step === 3 && "未就学児は何人いますか？"}
-                {step === 4 && "末子の年齢を教えてください"}
+                {step === 4 && "お子さんの年齢を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
               {step === 1 && (
                 <p className="text-xs text-gray-400 mt-1">
                   {municipalityName}への転居フェーズに合わせた情報をお届けします
+                </p>
+              )}
+              {step === 4 && (
+                <p className="text-xs text-gray-400 mt-1">
+                  それぞれ選んでください
                 </p>
               )}
             </div>
@@ -254,18 +286,43 @@ export default function OnboardingModal({
             </div>
           )}
 
-          {/* Step 4: 末子の年齢 */}
+          {/* Step 4: 各子どもの年齢 */}
           {step === 4 && (
-            <div className="grid grid-cols-2 gap-2">
-              {AGE_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => handleChildAge(opt.value)}
-                  className="text-center p-4 rounded-xl border-2 border-gray-200 bg-white hover:border-[#2d9e6b] hover:bg-[#f0faf5] active:scale-95 transition-all"
-                >
-                  <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                </button>
+            <div className="space-y-4">
+              {childAges.map((selectedAge, index) => (
+                <div key={index}>
+                  <p className="text-xs font-semibold text-gray-500 mb-2">
+                    {CHILD_LABELS[index] ?? `第${index + 1}子`}
+                  </p>
+                  <div className="grid grid-cols-6 gap-1.5">
+                    {AGE_OPTIONS.map((age) => (
+                      <button
+                        key={age}
+                        onClick={() => handleChildAgeSelect(index, age)}
+                        className={`py-2.5 rounded-xl border-2 text-sm font-bold transition-all active:scale-95 ${
+                          selectedAge === age
+                            ? "border-[#2d9e6b] bg-[#2d9e6b] text-white"
+                            : "border-gray-200 bg-white text-gray-700 hover:border-[#2d9e6b] hover:bg-[#f0faf5]"
+                        }`}
+                      >
+                        {age}歳
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
+
+              <button
+                onClick={handleChildrenDone}
+                disabled={!allAgesSelected}
+                className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
+                  allAgesSelected
+                    ? "bg-[#2d9e6b] text-white active:scale-95"
+                    : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                {allAgesSelected ? "次へ →" : "全員の年齢を選んでください"}
+              </button>
             </div>
           )}
 
