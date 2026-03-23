@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useOnboarding } from "@/hooks/useOnboarding";
+import { ONBOARDING_OPEN_EVENT } from "@/components/onboarding/OnboardingWrapper";
 
 type Phase = "decided" | "moving_soon" | "moved" | "exploring";
 type WorkStatus = "fulltime" | "parttime" | "leave";
@@ -218,11 +219,19 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-2xl p-4 text-white">
         <div className="flex items-center justify-between mb-2">
           <p className="text-xs text-white/70">{municipalityName}への転居サポート</p>
-          {phaseInfo && (
-            <span className="text-xs bg-white/20 rounded-full px-2 py-0.5">
-              {phaseInfo.icon} {phaseInfo.label}
-            </span>
-          )}
+          <div className="flex items-center gap-2">
+            {phaseInfo && (
+              <span className="text-xs bg-white/20 rounded-full px-2 py-0.5">
+                {phaseInfo.icon} {phaseInfo.label}
+              </span>
+            )}
+            <button
+              onClick={() => window.dispatchEvent(new Event(ONBOARDING_OPEN_EVENT))}
+              className="text-xs bg-white/20 hover:bg-white/30 rounded-full px-2 py-0.5 transition-colors"
+            >
+              ✏️ {isDone ? "設定変更" : "回答する"}
+            </button>
+          </div>
         </div>
         <h2 className="text-base font-bold">
           {phase === "moved"

@@ -9,6 +9,8 @@ interface OnboardingWrapperProps {
   municipalityName: string;
 }
 
+export const ONBOARDING_OPEN_EVENT = "kosodate_open_onboarding";
+
 export default function OnboardingWrapper({
   children,
   municipalityId,
@@ -24,6 +26,13 @@ export default function OnboardingWrapper({
         return () => clearTimeout(t);
       }
     } catch {}
+  }, []);
+
+  // 「設定を変更する」ボタンからの再オープンイベントを受け取る
+  useEffect(() => {
+    const handler = () => setShowOnboarding(true);
+    window.addEventListener(ONBOARDING_OPEN_EVENT, handler);
+    return () => window.removeEventListener(ONBOARDING_OPEN_EVENT, handler);
   }, []);
 
   return (

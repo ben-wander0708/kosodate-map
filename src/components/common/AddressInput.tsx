@@ -84,9 +84,9 @@ export default function AddressInput({
 
         <button
           onClick={handleDemoClick}
-          className="px-4 bg-gray-100 text-gray-600 rounded-lg py-3 text-sm font-medium hover:bg-gray-200 transition-colors"
+          className="px-4 bg-gray-100 text-gray-600 rounded-lg py-3 text-sm font-medium hover:bg-gray-200 transition-colors whitespace-nowrap"
         >
-          デモ
+          総社駅を起点に
         </button>
       </div>
 
