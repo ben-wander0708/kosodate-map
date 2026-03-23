@@ -62,22 +62,23 @@ export default function AddressInput({
     setError(null);
 
     try {
-      const query = encodeURIComponent(addressQuery + " 岡山県総社市");
+      // 国土地理院ジオコーディングAPI（日本語住所対応）
+      const query = encodeURIComponent("岡山県総社市" + addressQuery);
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&accept-language=ja`,
-        { headers: { "Accept-Language": "ja" } }
+        `https://msearch.gsi.go.jp/address-search/AddressSearch?q=${query}`
       );
       const data = await res.json();
 
-      if (data.length === 0) {
-        setError("住所が見つかりませんでした。もう少し詳しく入力してみてください。");
+      if (!data || data.length === 0) {
+        setError("住所が見つかりませんでした。例: 「駅前1丁目」「中央1丁目」のように入力してみてください。");
         setIsSearching(false);
         return;
       }
 
-      const { lat, lon, display_name } = data[0];
-      onLocationSet({ lat: parseFloat(lat), lng: parseFloat(lon) });
-      setLocationLabel(display_name.split(",")[0]);
+      const [lng, lat] = data[0].geometry.coordinates;
+      const label = data[0].properties.title;
+      onLocationSet({ lat, lng });
+      setLocationLabel(label);
       setShowAddressInput(false);
       setAddressQuery("");
     } catch {
