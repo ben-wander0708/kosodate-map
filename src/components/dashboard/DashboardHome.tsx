@@ -15,7 +15,7 @@ interface PriorityAction {
   bgColor: string;
 }
 
-function getPriorityActions(phase: Phase | undefined, municipalityId: string): PriorityAction[] {
+function getPriorityActions(phase: Phase | undefined, municipalityId: string, municipalityName: string): PriorityAction[] {
   switch (phase) {
     case "decided":
       return [
@@ -111,7 +111,7 @@ function getPriorityActions(phase: Phase | undefined, municipalityId: string): P
         },
         {
           icon: "🏛",
-          title: "総社市の子育て支援制度を確認",
+          title: `${municipalityName}の子育て支援制度を確認`,
           sub: "給付金・医療費助成14種類",
           href: `/${municipalityId}?tab=gov`,
           color: "text-[#2d6eb0]",
@@ -203,7 +203,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
 
   const phase = answers?.phase;
   const phaseInfo = phase ? PHASE_LABELS[phase] : null;
-  const priorityActions = getPriorityActions(phase, municipalityId);
+  const priorityActions = getPriorityActions(phase, municipalityId, municipalityName);
 
   if (!isLoaded) {
     return <div className="p-4 space-y-4 animate-pulse">

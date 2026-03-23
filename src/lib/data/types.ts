@@ -14,7 +14,8 @@ export interface Municipality {
   default_zoom: number;
   contact: {
     department: string;
-    phone: string;
+    url?: string;
+    phone?: string;
   };
   data_sources: DataSource[];
   features_enabled: {

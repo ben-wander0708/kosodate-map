@@ -200,11 +200,13 @@ export default function MunicipalityHome({
         </p>
       </div>
 
-      {/* 自宅位置設定 */}
-      <AddressInput
-        onLocationSet={handleLocationSet}
-        defaultCenter={defaultCenter}
-      />
+      {/* 自宅位置設定（支援制度タブでは不要） */}
+      {activeTab !== "gov" && (
+        <AddressInput
+          onLocationSet={handleLocationSet}
+          defaultCenter={defaultCenter}
+        />
+      )}
 
       {/* マップ（支援制度タブでは非表示） */}
       {activeTab !== "gov" && <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100">
@@ -220,8 +222,8 @@ export default function MunicipalityHome({
         />
       </div>}
 
-      {/* 移動手段セレクター */}
-      {userLocation && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
+      {/* 移動手段セレクター（マップ表示タブのみ） */}
+      {userLocation && activeTab !== "gov" && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
 
       {/* 保育施設タブ */}
       {activeTab === "nursery" && (
@@ -438,13 +440,14 @@ export default function MunicipalityHome({
         </div>
       )}
 
-      {/* 注意書き */}
+      {/* 注意書き（タブ別） */}
       <div className="bg-yellow-50 rounded-xl p-3 text-xs text-yellow-700 border border-yellow-200">
         <p className="font-semibold mb-1">⚠ ご注意</p>
         <ul className="space-y-1 text-yellow-600">
-          <li>・ 距離は直線距離の概算です。</li>
-          <li>・ 診療時間・休診日は変更されることがあります。受診前に各施設にご確認ください。</li>
-          <li>・ 空き状況はデータ更新日時点のものです。</li>
+          {activeTab !== "gov" && <li>・ 距離は直線距離の概算です。</li>}
+          {activeTab === "nursery" && <li>・ 空き状況はデータ更新日時点のものです。</li>}
+          {activeTab === "clinic" && <li>・ 診療時間・休診日は変更されることがあります。受診前に各施設にご確認ください。</li>}
+          {activeTab === "gov" && <li>・ 制度の内容・金額は変更されることがあります。詳細は各窓口にご確認ください。</li>}
         </ul>
       </div>
 
@@ -452,15 +455,19 @@ export default function MunicipalityHome({
       {activeTab === "nursery" && (
         <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
           <p className="text-xs text-gray-500 mb-1">保育施設に関するお問い合わせ</p>
-          <p className="text-sm font-semibold text-gray-700">
+          <p className="text-sm font-semibold text-gray-700 mb-2">
             {municipality.contact.department}
           </p>
-          <a
-            href={`tel:${municipality.contact.phone}`}
-            className="inline-block mt-2 bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
-          >
-            📞 {municipality.contact.phone}
-          </a>
+          {municipality.contact.url && (
+            <a
+              href={municipality.contact.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
+            >
+              公式HPで確認 →
+            </a>
+          )}
         </div>
       )}
     </div>
