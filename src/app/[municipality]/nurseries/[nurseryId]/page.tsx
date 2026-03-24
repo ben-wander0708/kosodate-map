@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { dataRepository } from "@/lib/data/json-adapter";
 import AvailabilityBadge from "@/components/nursery/AvailabilityBadge";
+import NurseryDetailMap from "@/components/nursery/NurseryDetailMap";
 
 interface NurseryDetailPageProps {
   params: Promise<{ municipality: string; nurseryId: string }>;
@@ -86,6 +87,9 @@ export default async function NurseryDetailPage({
           </a>
         )}
       </div>
+
+      {/* 地図 */}
+      {nursery.location && <NurseryDetailMap nursery={nursery} />}
 
       {/* 定員・在籍状況 */}
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
