@@ -44,6 +44,60 @@ function getMonthLabel(enrollmentMonth: string, offset: number): string {
   return `${d.getFullYear()}年${d.getMonth() + 1}月`;
 }
 
+/** チェックリストアイテムのデフォルト日付を "YYYY-MM-DD" で返す */
+function getItemDefaultDate(
+  item: ChecklistItem,
+  movingDate: Date | null,
+  decisionDate: Date | null
+): string | null {
+  if (item.days_from_decision !== null && item.days_from_decision !== undefined && decisionDate) {
+    const d = new Date(decisionDate);
+    d.setDate(d.getDate() + item.days_from_decision);
+    return d.toISOString().slice(0, 10);
+  }
+  if (item.days_from_moving !== null && item.days_from_moving !== undefined && movingDate) {
+    const d = new Date(movingDate);
+    d.setDate(d.getDate() + item.days_from_moving);
+    return d.toISOString().slice(0, 10);
+  }
+  return null;
+}
+
+/** 入園後イベントのデフォルト日付を "YYYY-MM-DD" で返す（その月の1日） */
+function getEventDefaultDate(event: PostEnrollmentEvent, enrollmentMonth: string): string | null {
+  if (!enrollmentMonth) return null;
+  const [year, month] = enrollmentMonth.split("-").map(Number);
+  const d = new Date(year, month - 1 + event.month_offset, 1);
+  return d.toISOString().slice(0, 10);
+}
+
+/** .icsファイル（カレンダー読み込み用）の文字列を生成する */
+function generateICS(calItems: { id: string; title: string; date: string }[]): string {
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//こそだてマップ//kosodate-map//JA",
+    "CALSCALE:GREGORIAN",
+  ];
+  for (const item of calItems) {
+    const dateStr = item.date.replace(/-/g, "");
+    // 終日イベントとして登録（翌日をDTENDに設定）
+    const d = new Date(item.date);
+    d.setDate(d.getDate() + 1);
+    const endStr = d.toISOString().slice(0, 10).replace(/-/g, "");
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${item.id}@kosodate-map`,
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `DTEND;VALUE=DATE:${endStr}`,
+      `SUMMARY:${item.title}`,
+      "END:VEVENT"
+    );
+  }
+  lines.push("END:VCALENDAR");
+  return lines.join("\r\n");
+}
+
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   慣らし保育: { bg: "bg-blue-50",   text: "text-blue-700",  border: "border-blue-200" },
@@ -71,8 +125,9 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
   const [movingDateStr, setMovingDateStr] = useState<string>("");
   const [enrollmentMonth, setEnrollmentMonth] = useState<string>("");
   const [eventAssignees, setEventAssignees] = useState<Record<string, EventAssignee>>({});
+  const [itemDates, setItemDates] = useState<Record<string, string>>({});
   const [loaded, setLoaded] = useState(false);
-  const [activeTab, setActiveTab] = useState<"checklist" | "timeline">("checklist");
+  const [activeTab, setActiveTab] = useState<"checklist" | "timeline" | "calendar">("checklist");
 
   // Supabaseから読み込み
   const loadFromSupabase = useCallback(async (id: string) => {
@@ -90,6 +145,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
         if (data.decision_date) setDecisionDateStr(data.decision_date);
         if (data.enrollment_month) setEnrollmentMonth(data.enrollment_month);
         if (data.event_assignees) setEventAssignees(data.event_assignees as Record<string, EventAssignee>);
+        if (data.item_dates) setItemDates(data.item_dates as Record<string, string>);
       }
     } catch {
       // Supabase失敗時はlocalStorageにフォールバック
@@ -106,6 +162,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
       decision_date?: string;
       enrollment_month?: string;
       event_assignees?: Record<string, EventAssignee>;
+      item_dates?: Record<string, string>;
     }
   ) => {
     try {
@@ -201,6 +258,15 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     if (shareId) saveToSupabase(shareId, { enrollment_month: value });
   }, [shareId, saveToSupabase]);
 
+  const handleItemDateChange = useCallback((itemId: string, date: string) => {
+    setItemDates((prev) => {
+      const next = { ...prev };
+      if (date) { next[itemId] = date; } else { delete next[itemId]; }
+      if (shareId) saveToSupabase(shareId, { item_dates: next });
+      return next;
+    });
+  }, [shareId, saveToSupabase]);
+
   const handleAssigneeChange = useCallback((eventId: string, assignee: EventAssignee) => {
     setEventAssignees((prev) => {
       const next = { ...prev };
@@ -230,6 +296,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
       decision_date: decisionDateStr,
       enrollment_month: enrollmentMonth,
       event_assignees: eventAssignees,
+      item_dates: itemDates,
     });
     const url = `${window.location.origin}${window.location.pathname}?share=${shareId}`;
     try {
@@ -304,23 +371,33 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
       <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
         <button
           onClick={() => setActiveTab("checklist")}
-          className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
+          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
             activeTab === "checklist"
               ? "bg-white text-[#2d9e6b] shadow-sm"
               : "text-gray-500"
           }`}
         >
-          📋 保活チェックリスト
+          📋 保活
         </button>
         <button
           onClick={() => setActiveTab("timeline")}
-          className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all ${
+          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
             activeTab === "timeline"
               ? "bg-white text-[#2d9e6b] shadow-sm"
               : "text-gray-500"
           }`}
         >
-          📅 入園後タイムライン
+          🌱 入園後
+        </button>
+        <button
+          onClick={() => setActiveTab("calendar")}
+          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+            activeTab === "calendar"
+              ? "bg-white text-[#2d9e6b] shadow-sm"
+              : "text-gray-500"
+          }`}
+        >
+          🗓 カレンダー
         </button>
       </div>
 
@@ -581,6 +658,136 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
           </div>
         </>
       )}
+
+      {/* ===== カレンダービュー ===== */}
+      {activeTab === "calendar" && (() => {
+        // 全タスクを日付付きリストに変換
+        type CalEntry = { id: string; title: string; defaultDate: string | null; userDate: string; monthKey: string; isEvent: boolean };
+        const entries: CalEntry[] = [];
+
+        // チェックリストアイテム
+        if (selectedPersona) {
+          selectedPersona.sections.forEach((section) => {
+            section.items.forEach((item) => {
+              const def = getItemDefaultDate(item, movingDate, decisionDate);
+              const userDate = itemDates[item.id] || def || "";
+              const monthKey = userDate ? userDate.slice(0, 7) : "未設定";
+              entries.push({ id: item.id, title: item.text, defaultDate: def, userDate, monthKey, isEvent: false });
+            });
+          });
+        }
+
+        // 入園後イベント
+        timelineEvents.forEach((event) => {
+          const def = getEventDefaultDate(event, enrollmentMonth);
+          const userDate = itemDates[event.id] || def || "";
+          const monthKey = userDate ? userDate.slice(0, 7) : "未設定";
+          entries.push({ id: event.id, title: event.title, defaultDate: def, userDate, monthKey, isEvent: true });
+        });
+
+        // 月ごとにグループ化してソート
+        const grouped: Record<string, CalEntry[]> = {};
+        entries.forEach((e) => {
+          if (!grouped[e.monthKey]) grouped[e.monthKey] = [];
+          grouped[e.monthKey].push(e);
+        });
+        const sortedKeys = Object.keys(grouped).sort((a, b) => {
+          if (a === "未設定") return 1;
+          if (b === "未設定") return -1;
+          return a.localeCompare(b);
+        });
+
+        // .icsエクスポート
+        const handleExport = () => {
+          const items = entries
+            .filter((e) => e.userDate)
+            .map((e) => ({ id: e.id, title: e.title, date: e.userDate }));
+          if (items.length === 0) {
+            alert("日付が設定されたタスクがありません。先に日付を設定してください。");
+            return;
+          }
+          const ics = generateICS(items);
+          const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "kosodate-schedule.ics";
+          a.click();
+          URL.revokeObjectURL(url);
+        };
+
+        return (
+          <div className="space-y-4">
+            {/* 説明 + エクスポートボタン */}
+            <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-3">
+              <p className="text-xs text-gray-500 leading-relaxed">
+                各タスクに日付を設定すると、Googleカレンダーやほかのカレンダーアプリに一括で追加できます。
+              </p>
+              <button
+                onClick={handleExport}
+                className="w-full flex items-center justify-center gap-2 bg-[#4CAF82] text-white rounded-xl py-3 text-sm font-semibold hover:opacity-90 transition-opacity"
+              >
+                📅 Googleカレンダーに追加（.ics）
+              </button>
+            </div>
+
+            {/* 月別グループ */}
+            {sortedKeys.map((monthKey) => {
+              const label = monthKey === "未設定"
+                ? "📌 日付未設定"
+                : (() => {
+                    const [y, m] = monthKey.split("-");
+                    return `📅 ${y}年${parseInt(m)}月`;
+                  })();
+              return (
+                <div key={monthKey}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <h3 className="text-sm font-bold text-gray-700">{label}</h3>
+                    <div className="flex-1 h-px bg-gray-200" />
+                  </div>
+                  <div className="space-y-2">
+                    {grouped[monthKey].map((entry) => (
+                      <div key={entry.id} className="bg-white rounded-xl border border-gray-200 shadow-sm p-3">
+                        <div className="flex items-start gap-2 mb-2">
+                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${entry.isEvent ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-700"}`}>
+                            {entry.isEvent ? "入園後" : "保活"}
+                          </span>
+                          <p className="text-xs font-semibold text-gray-800 leading-tight flex-1">{entry.title}</p>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="date"
+                            value={itemDates[entry.id] || entry.defaultDate || ""}
+                            onChange={(e) => handleItemDateChange(entry.id, e.target.value)}
+                            className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                          />
+                          {itemDates[entry.id] && (
+                            <button
+                              onClick={() => handleItemDateChange(entry.id, "")}
+                              className="text-[10px] text-gray-400 underline whitespace-nowrap"
+                            >
+                              リセット
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+
+            {entries.length === 0 && (
+              <div className="bg-gray-50 rounded-xl p-6 text-center">
+                <p className="text-sm text-gray-400">
+                  「保活」タブでペルソナを選択するか、<br />
+                  引越し日・入園月を入力するとタスクが表示されます。
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      })()}
 
       {/* 注意書き */}
       <div className="bg-yellow-50 rounded-xl p-3 text-xs text-yellow-700 border border-yellow-200">
