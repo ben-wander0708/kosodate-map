@@ -211,15 +211,20 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     }
   }, [loadFromSupabase]);
 
-  // オンボーディングのwork_statusからペルソナを自動選択（未選択の場合のみ）
+  // オンボーディングの中央データから各値を自動反映（未設定の場合のみ）
   useEffect(() => {
     if (!onboarding.isLoaded) return;
     if (onboarding.suggestedPersonaId) {
       setSelectedPersonaId((prev) => prev ?? onboarding.suggestedPersonaId);
     }
-    // 入園月もオンボーディングから自動反映（未設定の場合のみ）
     if (onboarding.enrollmentMonth) {
       setEnrollmentMonth((prev) => prev || onboarding.enrollmentMonth!);
+    }
+    if (onboarding.movingDate) {
+      setMovingDateStr((prev) => prev || onboarding.movingDate!);
+    }
+    if (onboarding.decisionDate) {
+      setDecisionDateStr((prev) => prev || onboarding.decisionDate!);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onboarding.isLoaded]);
@@ -242,21 +247,21 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
 
   const handleDecisionDateChange = useCallback((value: string) => {
     setDecisionDateStr(value);
-    try { localStorage.setItem("kosodate_decision_date", value); } catch {}
+    onboarding.updateAnswers({ decision_date: value }); // 中央データストアに保存
     if (shareId) saveToSupabase(shareId, { decision_date: value });
-  }, [shareId, saveToSupabase]);
+  }, [shareId, saveToSupabase, onboarding]);
 
   const handleMovingDateChange = useCallback((value: string) => {
     setMovingDateStr(value);
-    try { localStorage.setItem("kosodate_moving_date", value); } catch {}
+    onboarding.updateAnswers({ moving_date: value }); // 中央データストアに保存
     if (shareId) saveToSupabase(shareId, { moving_date: value });
-  }, [shareId, saveToSupabase]);
+  }, [shareId, saveToSupabase, onboarding]);
 
   const handleEnrollmentMonthChange = useCallback((value: string) => {
     setEnrollmentMonth(value);
-    try { localStorage.setItem("kosodate_enrollment_month", value); } catch {}
+    onboarding.updateAnswers({ enrollment_month: value }); // 中央データストアに保存
     if (shareId) saveToSupabase(shareId, { enrollment_month: value });
-  }, [shareId, saveToSupabase]);
+  }, [shareId, saveToSupabase, onboarding]);
 
   const handleItemDateChange = useCallback((itemId: string, date: string) => {
     setItemDates((prev) => {

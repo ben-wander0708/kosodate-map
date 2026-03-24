@@ -24,6 +24,8 @@ export interface OnboardingAnswers {
   child_count?: ChildCount;
   children?: ChildInfo[];
   enrollment_month?: string; // "YYYY-MM" 形式
+  decision_date?: string;    // "YYYY-MM-DD" 転居を決めた日
+  moving_date?: string;      // "YYYY-MM-DD" 引越し予定日
 }
 
 interface OnboardingModalProps {
@@ -32,7 +34,7 @@ interface OnboardingModalProps {
   onClose: () => void;
 }
 
-type Step = 1 | 2 | 3 | 4 | 5 | "done";
+type Step = 1 | 2 | 3 | 4 | 5 | 6 | "done";
 
 /** child_count 文字列 → 人数 */
 function countToNumber(count: ChildCount): number {
@@ -197,13 +199,16 @@ export default function OnboardingModal({
       step: "children",
       value_category: children.map((c) => `${c.age}歳/${c.enrollment_status}`).join(","),
     });
-    // 保活中 or 在籍中の子がいればStep5（入園月）へ
+    // 保活中 or 在籍中の子がいればStep5（入園月）へ、なければStep6（引越し日程）へ
     const needsEnrollmentMonth = children.some(
       (c) => c.enrollment_status === "seeking" || c.enrollment_status === "enrolled"
     );
     if (needsEnrollmentMonth) {
       setAnswers(next);
       setStep(5);
+    } else if (next.phase && next.phase !== "exploring") {
+      setAnswers(next);
+      setStep(6);
     } else {
       saveDone(next);
       setStep("done");
@@ -221,11 +226,27 @@ export default function OnboardingModal({
     const next = { ...answers, enrollment_month: value };
     setAnswers(next);
     track("onboarding_step", { step: "enrollment_month", value_category: value });
-    saveDone(next);
-    setStep("done");
+    // 検討中以外ならStep6（引越し日程）へ
+    if (answers.phase && answers.phase !== "exploring") {
+      setAnswers(next);
+      setStep(6);
+    } else {
+      saveDone(next);
+      setStep("done");
+    }
   };
 
   const handleSkipEnrollmentMonth = () => {
+    if (answers.phase && answers.phase !== "exploring") {
+      setStep(6);
+    } else {
+      saveDone(answers);
+      setStep("done");
+    }
+  };
+
+  const handleDates = () => {
+    track("onboarding_step", { step: "dates", value_category: `decision:${!!answers.decision_date},moving:${!!answers.moving_date}` });
     saveDone(answers);
     setStep("done");
   };
@@ -242,9 +263,11 @@ export default function OnboardingModal({
     router.push(href);
   };
 
-  const totalSteps = answers.children?.some(
+  const needsEnrollmentStep = answers.children?.some(
     (c) => c.enrollment_status === "seeking" || c.enrollment_status === "enrolled"
-  ) ? 5 : 4;
+  ) ?? false;
+  const needsDateStep = !!answers.phase && answers.phase !== "exploring";
+  const totalSteps = 4 + (needsEnrollmentStep ? 1 : 0) + (needsDateStep ? 1 : 0);
   const progressPercent = step === "done" ? 100 : (Number(step) / totalSteps) * 100;
   const cta = getCtaForPhase(answers.phase, municipalityId);
   const allChildrenComplete = childDrafts.length > 0 &&
@@ -281,6 +304,7 @@ export default function OnboardingModal({
                 {step === 3 && "未就学児は何人いますか？"}
                 {step === 4 && "お子さんの情報を教えてください"}
                 {step === 5 && "入園月を教えてください"}
+                {step === 6 && "引越しの日程を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
               {step === 1 && (
@@ -296,6 +320,11 @@ export default function OnboardingModal({
               {step === 5 && (
                 <p className="text-xs text-gray-400 mt-1">
                   入園後のスケジュールを自動で表示します（予定月でもOK）
+                </p>
+              )}
+              {step === 6 && (
+                <p className="text-xs text-gray-400 mt-1">
+                  チェックリストの期限計算に使います（後で変更もできます）
                 </p>
               )}
             </div>
@@ -457,6 +486,42 @@ export default function OnboardingModal({
               <button
                 onClick={handleSkipEnrollmentMonth}
                 className="w-full text-gray-400 text-xs underline text-center pt-1"
+              >
+                まだ決まっていない・スキップ
+              </button>
+            </div>
+          )}
+
+          {/* Step 6: 引越し日程 */}
+          {step === 6 && (
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs font-semibold text-gray-600 mb-2">🏠 転居を決めた日（物件契約日）</p>
+                <input
+                  type="date"
+                  value={answers.decision_date || ""}
+                  onChange={(e) => setAnswers((prev) => ({ ...prev, decision_date: e.target.value }))}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-3 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-600 mb-2">📅 引越し予定日</p>
+                <input
+                  type="date"
+                  value={answers.moving_date || ""}
+                  onChange={(e) => setAnswers((prev) => ({ ...prev, moving_date: e.target.value }))}
+                  className="w-full border border-gray-200 rounded-xl px-3 py-3 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                />
+              </div>
+              <button
+                onClick={handleDates}
+                className="w-full bg-[#2d9e6b] text-white font-semibold text-sm py-3 rounded-xl active:scale-95 transition-all"
+              >
+                保存して完了 →
+              </button>
+              <button
+                onClick={() => { saveDone(answers); setStep("done"); }}
+                className="w-full text-gray-400 text-xs underline text-center"
               >
                 まだ決まっていない・スキップ
               </button>

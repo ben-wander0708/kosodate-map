@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ONBOARDING_DONE_KEY, type OnboardingAnswers } from "@/components/onboarding/OnboardingModal";
 
 interface UseOnboardingResult {
@@ -18,11 +18,17 @@ interface UseOnboardingResult {
   isOnLeave: boolean;
   /** 入園月（"YYYY-MM" 形式）。未設定なら null */
   enrollmentMonth: string | null;
+  /** 転居決定日（"YYYY-MM-DD"）。未設定なら null */
+  decisionDate: string | null;
+  /** 引越し予定日（"YYYY-MM-DD"）。未設定なら null */
+  movingDate: string | null;
   /**
    * work_status から推奨ペルソナIDを返す
    * dual-income / stay-at-home / single-parent
    */
   suggestedPersonaId: string | null;
+  /** 中央データストアに部分更新する */
+  updateAnswers: (partial: Partial<OnboardingAnswers>) => void;
 }
 
 export const ONBOARDING_DONE_EVENT = "kosodate_onboarding_done";
@@ -61,6 +67,21 @@ export function useOnboarding(): UseOnboardingResult {
   // work_status → ペルソナID のマッピング
   // fulltime / parttime / leave → 共働き世帯として扱う
   // （専業主婦・ひとり親はオンボーディングでは取得していないため手動選択に委ねる）
+  /** 中央データストアへの部分更新 */
+  const updateAnswers = useCallback((partial: Partial<OnboardingAnswers>) => {
+    try {
+      const raw = localStorage.getItem(ONBOARDING_DONE_KEY);
+      const current = raw ? JSON.parse(raw) : { done: true, answers: {} };
+      const updated = {
+        ...current,
+        done: true,
+        answers: { ...current.answers, ...partial },
+      };
+      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify(updated));
+      window.dispatchEvent(new Event(ONBOARDING_DONE_EVENT));
+    } catch {}
+  }, []);
+
   const suggestedPersonaId: string | null = (() => {
     if (!answers?.work_status) return null;
     switch (answers.work_status) {
@@ -82,6 +103,9 @@ export function useOnboarding(): UseOnboardingResult {
     isMultiChild,
     isOnLeave,
     enrollmentMonth: answers?.enrollment_month ?? null,
+    decisionDate: answers?.decision_date ?? null,
+    movingDate: answers?.moving_date ?? null,
     suggestedPersonaId,
+    updateAnswers,
   };
 }
