@@ -17,6 +17,7 @@ export default function OnboardingWrapper({
   municipalityName,
 }: OnboardingWrapperProps) {
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [modalMode, setModalMode] = useState<"wizard" | "settings">("wizard");
 
   useEffect(() => {
     try {
@@ -28,9 +29,18 @@ export default function OnboardingWrapper({
     } catch {}
   }, []);
 
-  // 「設定を変更する」ボタンからの再オープンイベントを受け取る
+  // ✏️ 設定変更ボタンからの再オープン：isDone の場合は設定変更モードで開く
   useEffect(() => {
-    const handler = () => setShowOnboarding(true);
+    const handler = () => {
+      try {
+        const raw = localStorage.getItem(ONBOARDING_DONE_KEY);
+        const isDone = raw ? JSON.parse(raw)?.done === true : false;
+        setModalMode(isDone ? "settings" : "wizard");
+      } catch {
+        setModalMode("wizard");
+      }
+      setShowOnboarding(true);
+    };
     window.addEventListener(ONBOARDING_OPEN_EVENT, handler);
     return () => window.removeEventListener(ONBOARDING_OPEN_EVENT, handler);
   }, []);
@@ -42,6 +52,7 @@ export default function OnboardingWrapper({
         <OnboardingModal
           municipalityName={municipalityName}
           municipalityId={municipalityId}
+          mode={modalMode}
           onClose={() => setShowOnboarding(false)}
         />
       )}
