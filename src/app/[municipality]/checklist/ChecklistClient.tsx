@@ -128,6 +128,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
   const [itemDates, setItemDates] = useState<Record<string, string>>({});
   const [loaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState<"checklist" | "timeline" | "calendar">("checklist");
+  const [expandedDateId, setExpandedDateId] = useState<string | null>(null);
 
   // Supabaseから読み込み
   const loadFromSupabase = useCallback(async (id: string) => {
@@ -751,32 +752,58 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
                     <div className="flex-1 h-px bg-gray-200" />
                   </div>
                   <div className="space-y-2">
-                    {grouped[monthKey].map((entry) => (
-                      <div key={entry.id} className="bg-white rounded-xl border border-gray-200 shadow-sm p-3">
-                        <div className="flex items-start gap-2 mb-2">
-                          <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${entry.isEvent ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-700"}`}>
-                            {entry.isEvent ? "入園後" : "保活"}
-                          </span>
-                          <p className="text-xs font-semibold text-gray-800 leading-tight flex-1">{entry.title}</p>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="date"
-                            value={itemDates[entry.id] || entry.defaultDate || ""}
-                            onChange={(e) => handleItemDateChange(entry.id, e.target.value)}
-                            className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-                          />
-                          {itemDates[entry.id] && (
-                            <button
-                              onClick={() => handleItemDateChange(entry.id, "")}
-                              className="text-[10px] text-gray-400 underline whitespace-nowrap"
-                            >
-                              リセット
-                            </button>
+                    {grouped[monthKey].map((entry) => {
+                      const setDate = itemDates[entry.id];
+                      const isExpanded = expandedDateId === entry.id;
+                      // 表示用の日付ラベル（例: 4月3日）
+                      const dateLabel = setDate
+                        ? (() => { const d = new Date(setDate); return `${d.getMonth()+1}月${d.getDate()}日`; })()
+                        : null;
+
+                      return (
+                        <div key={entry.id} className="bg-white rounded-xl border border-gray-200 shadow-sm p-3">
+                          {/* タスク名 + 日付表示 */}
+                          <button
+                            className="w-full text-left flex items-center gap-2"
+                            onClick={() => setExpandedDateId(isExpanded ? null : entry.id)}
+                          >
+                            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 ${entry.isEvent ? "bg-blue-50 text-blue-600" : "bg-green-50 text-green-700"}`}>
+                              {entry.isEvent ? "入園後" : "保活"}
+                            </span>
+                            <p className="text-xs font-semibold text-gray-800 leading-tight flex-1">{entry.title}</p>
+                            {dateLabel ? (
+                              <span className="text-[11px] text-[#2d9e6b] font-semibold whitespace-nowrap">📅 {dateLabel}</span>
+                            ) : (
+                              <span className="text-[10px] text-gray-300 whitespace-nowrap">日付設定 +</span>
+                            )}
+                          </button>
+
+                          {/* 展開時だけ日付入力を表示 */}
+                          {isExpanded && (
+                            <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-100">
+                              <input
+                                type="date"
+                                value={setDate || entry.defaultDate || ""}
+                                onChange={(e) => {
+                                  handleItemDateChange(entry.id, e.target.value);
+                                  setExpandedDateId(null);
+                                }}
+                                className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                                autoFocus
+                              />
+                              {setDate && (
+                                <button
+                                  onClick={() => { handleItemDateChange(entry.id, ""); setExpandedDateId(null); }}
+                                  className="text-[10px] text-gray-400 underline whitespace-nowrap"
+                                >
+                                  クリア
+                                </button>
+                              )}
+                            </div>
                           )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               );
