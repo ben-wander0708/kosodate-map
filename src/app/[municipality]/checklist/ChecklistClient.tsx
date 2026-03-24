@@ -44,6 +44,12 @@ function getMonthLabel(enrollmentMonth: string, offset: number): string {
   return `${d.getFullYear()}年${d.getMonth() + 1}月`;
 }
 
+/** Date を "YYYY-MM-DD" にローカルタイムで変換（toISOString はUTC変換でずれるため使わない） */
+function toLocalDateStr(d: Date): string {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
 /** チェックリストアイテムのデフォルト日付を "YYYY-MM-DD" で返す */
 function getItemDefaultDate(
   item: ChecklistItem,
@@ -53,12 +59,12 @@ function getItemDefaultDate(
   if (item.days_from_decision !== null && item.days_from_decision !== undefined && decisionDate) {
     const d = new Date(decisionDate);
     d.setDate(d.getDate() + item.days_from_decision);
-    return d.toISOString().slice(0, 10);
+    return toLocalDateStr(d);
   }
   if (item.days_from_moving !== null && item.days_from_moving !== undefined && movingDate) {
     const d = new Date(movingDate);
     d.setDate(d.getDate() + item.days_from_moving);
-    return d.toISOString().slice(0, 10);
+    return toLocalDateStr(d);
   }
   return null;
 }
@@ -68,7 +74,7 @@ function getEventDefaultDate(event: PostEnrollmentEvent, enrollmentMonth: string
   if (!enrollmentMonth) return null;
   const [year, month] = enrollmentMonth.split("-").map(Number);
   const d = new Date(year, month - 1 + event.month_offset, 1);
-  return d.toISOString().slice(0, 10);
+  return toLocalDateStr(d);
 }
 
 /** .icsファイル（カレンダー読み込み用）の文字列を生成する */
