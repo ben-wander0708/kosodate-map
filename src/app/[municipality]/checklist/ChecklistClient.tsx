@@ -90,7 +90,7 @@ function generateICS(calItems: { id: string; title: string; date: string }[]): s
     // 終日イベントとして登録（翌日をDTENDに設定）
     const d = new Date(item.date);
     d.setDate(d.getDate() + 1);
-    const endStr = d.toISOString().slice(0, 10).replace(/-/g, "");
+    const endStr = toLocalDateStr(d).replace(/-/g, "");
     lines.push(
       "BEGIN:VEVENT",
       `UID:${item.id}@kosodate-map`,
