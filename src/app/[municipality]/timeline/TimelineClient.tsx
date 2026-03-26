@@ -758,13 +758,13 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                             {dayEvents.slice(0, 2).map(({ event, isRange }, idx) => {
                               const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["手続き"];
                               return (
-                                <div key={idx} className={`text-[8px] font-medium px-0.5 py-0.5 rounded leading-tight truncate ${colors.bg} ${colors.text}`}>
+                                <div key={idx} className={`text-[10px] font-medium px-0.5 py-0.5 rounded leading-tight truncate ${colors.bg} ${colors.text}`}>
                                   {isRange && <span className="mr-0.5">↔</span>}{event.title}
                                 </div>
                               );
                             })}
                             {dayEvents.length > 2 && (
-                              <div className="text-[8px] text-gray-400 text-center">+{dayEvents.length - 2}</div>
+                              <div className="text-[10px] text-gray-400 text-center">+{dayEvents.length - 2}</div>
                             )}
                           </div>
                         </div>
