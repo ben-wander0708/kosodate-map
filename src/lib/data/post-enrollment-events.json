@@ -6,7 +6,8 @@
       "title": "入園式",
       "note": "持ち物・服装を事前に確認。写真撮影の準備も忘れずに。",
       "month_offset": 0,
-      "multi_child_note": null
+      "multi_child_note": null,
+      "is_milestone": true
     },
     {
       "id": "trial-care-early",

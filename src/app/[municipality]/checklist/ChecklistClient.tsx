@@ -44,6 +44,16 @@ function getMonthLabel(enrollmentMonth: string, offset: number): string {
   return `${d.getFullYear()}年${d.getMonth() + 1}月`;
 }
 
+/** 入園月文字列 ("2026-04") から今日までの日数を返す（正=未来、0=今日、負=過去） */
+function getDaysUntilEnrollment(enrollmentMonth: string | null): number | null {
+  if (!enrollmentMonth) return null;
+  const [y, m] = enrollmentMonth.split("-").map(Number);
+  const target = new Date(y, m - 1, 1);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+}
+
 /** Date を "YYYY-MM-DD" にローカルタイムで変換（toISOString はUTC変換でずれるため使わない） */
 function toLocalDateStr(d: Date): string {
   const pad = (n: number) => String(n).padStart(2, "0");
@@ -135,6 +145,10 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
   const [loaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState<"checklist" | "timeline" | "calendar">("checklist");
   const [expandedDateId, setExpandedDateId] = useState<string | null>(null);
+  const [milestoneMemos, setMilestoneMemos] = useState<Record<string, string>>(() => {
+    if (typeof window === "undefined") return {};
+    try { return JSON.parse(localStorage.getItem("milestone_memos") ?? "{}"); } catch { return {}; }
+  });
 
   // Supabaseから読み込み
   const loadFromSupabase = useCallback(async (id: string) => {
@@ -604,6 +618,97 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
                       const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["手続き"];
                       const assignee = eventAssignees[event.id] ?? null;
 
+                      // --- マイルストーンカード（入園式など） ---
+                      if (event.is_milestone) {
+                        const daysLeft = getDaysUntilEnrollment(enrollmentMonth || null);
+                        return (
+                          <div
+                            key={event.id}
+                            className="rounded-2xl overflow-hidden shadow-md border border-pink-200 bg-white"
+                          >
+                            {/* ヒーローバナー */}
+                            <div className="bg-gradient-to-r from-pink-100 to-rose-50 px-4 py-5">
+                              <div className="flex items-start justify-between gap-2">
+                                <div>
+                                  <span className="text-2xl">🌸</span>
+                                  <h3 className="text-lg font-bold text-rose-700 mt-1">{event.title}</h3>
+                                  {enrollmentMonth && (
+                                    <p className="text-sm text-rose-400 mt-0.5">{getMonthLabel(enrollmentMonth, 0)}</p>
+                                  )}
+                                </div>
+                                {daysLeft !== null && (
+                                  <div className="text-right flex-shrink-0">
+                                    {daysLeft > 0 ? (
+                                      <p className="text-3xl font-bold text-rose-600 leading-none">あと{daysLeft}日</p>
+                                    ) : daysLeft === 0 ? (
+                                      <p className="text-xl font-bold text-rose-600">今日！🎉</p>
+                                    ) : (
+                                      <p className="text-sm text-gray-400">入園済み</p>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
+
+                              {/* 担当者バッジ（ヒーロー内） */}
+                              <div className="mt-3 flex gap-2 flex-wrap">
+                                {ASSIGNEE_OPTIONS.map((opt) => (
+                                  <button
+                                    key={opt.value}
+                                    onClick={() => handleAssigneeChange(event.id, opt.value)}
+                                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                                      assignee === opt.value
+                                        ? "bg-rose-500 text-white"
+                                        : "bg-white text-gray-500 border border-gray-200"
+                                    }`}
+                                  >
+                                    {opt.emoji} {opt.label}{assignee === opt.value ? " ✓" : ""}
+                                  </button>
+                                ))}
+                                {assignee && (
+                                  <button
+                                    onClick={() => handleAssigneeChange(event.id, assignee)}
+                                    className="text-[11px] text-rose-400 underline self-center"
+                                  >
+                                    解除
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* 準備メモ */}
+                            {event.note && (
+                              <div className="px-4 py-3 bg-amber-50 border-t border-amber-100">
+                                <p className="text-xs text-amber-700">📝 {event.note}</p>
+                              </div>
+                            )}
+
+                            {/* 多子注意 */}
+                            {onboarding.isMultiChild && event.multi_child_note && (
+                              <div className="px-4 py-2 bg-orange-50 border-t border-orange-100">
+                                <p className="text-xs text-orange-700">👶👶 {event.multi_child_note}</p>
+                              </div>
+                            )}
+
+                            {/* 想い出メモ */}
+                            <div className="px-4 py-3 border-t border-gray-100">
+                              <p className="text-xs text-gray-400 mb-1.5">想い出メモ</p>
+                              <textarea
+                                className="w-full text-sm text-gray-700 bg-gray-50 border border-gray-200 rounded-lg p-2 resize-none focus:outline-none focus:border-rose-300"
+                                rows={2}
+                                placeholder="この日の記録を残しておこう…"
+                                value={milestoneMemos[event.id] ?? ""}
+                                onChange={(e) => {
+                                  const updated = { ...milestoneMemos, [event.id]: e.target.value };
+                                  setMilestoneMemos(updated);
+                                  localStorage.setItem("milestone_memos", JSON.stringify(updated));
+                                }}
+                              />
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      // --- 通常カード ---
                       return (
                         <div
                           key={event.id}

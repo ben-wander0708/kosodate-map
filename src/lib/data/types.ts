@@ -321,6 +321,8 @@ export interface PostEnrollmentEvent {
   multi_child_note: string | null;
   /** 育休中の場合にのみ表示 */
   for_leave_only?: boolean;
+  /** trueのとき通常カードではなくマイルストーンカードで表示 */
+  is_milestone?: boolean;
 }
 
 /** 入園後タイムライン全体（テンプレート） */
