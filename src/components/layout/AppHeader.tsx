@@ -25,21 +25,11 @@ const NAV_ITEMS = [
   {
     tab: "nursery",
     icon: "🏫",
-    title: "保育施設",
+    title: "保活マップ",
     description: "認可保育所・こども園の空き状況と距離ランキング",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
     href: (municipalityId: string) => `/${municipalityId}?tab=nursery`,
-    type: "tab",
-  },
-  {
-    tab: "clinic",
-    icon: "🏥",
-    title: "医療機関",
-    description: "クリニック・病院を診療科別に絞り込み検索",
-    activeColor: "text-[#e05a2b]",
-    activeBg: "bg-orange-50 border border-orange-200",
-    href: (municipalityId: string) => `/${municipalityId}?tab=clinic`,
     type: "tab",
   },
   {
@@ -56,7 +46,7 @@ const NAV_ITEMS = [
     tab: "checklist",
     icon: "✅",
     title: "転入チェックリスト",
-    description: "転入後の手続き・生活セットアップを管理",
+    description: "転入後の手続きをフェーズ別に管理",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
     href: (municipalityId: string) => `/${municipalityId}/checklist`,
@@ -73,42 +63,20 @@ const NAV_ITEMS = [
     type: "page",
   },
   {
-    tab: "shops",
-    icon: "🛒",
-    title: "生活インフラガイド",
-    description: "スーパー・ドラッグのポイント戦略を比較",
-    activeColor: "text-orange-600",
+    tab: "clinic",
+    icon: "🏥",
+    title: "医療機関",
+    description: "近くのクリニック・病院を診療科で絞り込み",
+    activeColor: "text-[#e05a2b]",
     activeBg: "bg-orange-50 border border-orange-200",
-    href: (municipalityId: string) => `/${municipalityId}/shops`,
-    type: "page",
-    badge: "試作中",
-  },
-  {
-    tab: "giveaway",
-    icon: "🎁",
-    title: "お譲り",
-    description: "子ども用品を譲り合えるマッチング",
-    activeColor: "text-[#e05a8c]",
-    activeBg: "bg-pink-50 border border-pink-200",
-    href: (municipalityId: string) => `/${municipalityId}/giveaway`,
-    type: "page",
-    badge: "準備中",
-  },
-  {
-    tab: "community",
-    icon: "🤝",
-    title: "コミュニティ",
-    description: "子育て拠点・お譲り・移住者ネットワーク",
-    activeColor: "text-[#7c3aed]",
-    activeBg: "bg-purple-50 border border-purple-200",
-    href: (municipalityId: string) => `/${municipalityId}/community`,
-    type: "page",
+    href: (municipalityId: string) => `/${municipalityId}?tab=clinic`,
+    type: "tab",
   },
   {
     tab: "faq",
     icon: "❓",
     title: "よくある質問",
-    description: "保育園の申込み・転入手続きなど疑問を解決",
+    description: "保育園申込み・転入手続きの疑問を解決",
     activeColor: "text-gray-700",
     activeBg: "bg-gray-100 border border-gray-200",
     href: (municipalityId: string) => `/${municipalityId}/faq`,
@@ -249,11 +217,6 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
                         >
                           {item.title}
                         </span>
-                        {"badge" in item && item.badge && (
-                          <span className="text-[10px] bg-gray-100 text-gray-500 rounded-full px-1.5 py-0.5 font-medium">
-                            {item.badge}
-                          </span>
-                        )}
                       </div>
                       <div className="text-xs text-gray-500 mt-0.5 leading-snug">
                         {item.description}

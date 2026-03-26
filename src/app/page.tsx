@@ -1,8 +1,14 @@
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { dataRepository } from "@/lib/data/json-adapter";
 
 export default async function HomePage() {
   const municipalities = await dataRepository.getMunicipalities();
+
+  // 自治体が1件のみの場合は直接そのページへ
+  if (municipalities.length === 1) {
+    redirect(`/${municipalities[0].id}`);
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#f0faf5] to-[#f7f9fc]">
@@ -59,7 +65,7 @@ export default async function HomePage() {
                       </span>
                     </div>
                     <div className="text-xs text-gray-500 mt-1 ml-7">
-                      {m.features_enabled.nursery_map && "保育施設マップ"}
+                      {m.features_enabled.nursery_map && "保活マップ"}
                       {m.features_enabled.clinic_search && " ・ 医療機関検索"}
                       {m.features_enabled.gov_support && " ・ 行政支援"}
                     </div>
