@@ -223,7 +223,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
 
         <button
           onClick={handleShare}
-          className="mt-3 w-full bg-white/20 hover:bg-white/30 rounded-lg px-3 py-2 text-xs text-white font-semibold flex items-center justify-center gap-2 transition-all"
+          className="mt-3 w-full bg-white/20 hover:bg-white/30 rounded-lg px-3 py-3 text-xs text-white font-semibold flex items-center justify-center gap-2 transition-all min-h-[44px]"
         >
           {isCopied ? "✅ URLをコピーしました！" : "👫 パートナーと共有する"}
         </button>
