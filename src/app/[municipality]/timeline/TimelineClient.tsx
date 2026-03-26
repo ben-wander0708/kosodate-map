@@ -79,6 +79,28 @@ function generateICS(calItems: { id: string; title: string; date: string }[]): s
   return lines.join("\r\n");
 }
 
+/** 保存された日付文字列（単日 or "start/end"）から表示ラベルを生成 */
+function getDateLabel(val: string | undefined): string | null {
+  if (!val) return null;
+  if (val.includes("/")) {
+    const [s, e] = val.split("/");
+    const sd = new Date(s), ed = new Date(e);
+    if (sd.getMonth() === ed.getMonth()) {
+      return `${sd.getMonth()+1}月${sd.getDate()}〜${ed.getDate()}日`;
+    }
+    return `${sd.getMonth()+1}月${sd.getDate()}日〜${ed.getMonth()+1}月${ed.getDate()}日`;
+  }
+  const d = new Date(val);
+  return `${d.getMonth()+1}月${d.getDate()}日`;
+}
+
+/** YYYY-MM を delta ヶ月ずらした YYYY-MM を返す */
+function shiftMonth(ym: string, delta: number): string {
+  const [y, m] = ym.split("-").map(Number);
+  const d = new Date(y, m - 1 + delta, 1);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+}
+
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
   慣らし保育: { bg: "bg-blue-50",   text: "text-blue-700",  border: "border-blue-200" },
   行事:       { bg: "bg-amber-50",  text: "text-amber-700", border: "border-amber-200" },
@@ -105,6 +127,8 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
   const [loaded, setLoaded] = useState(false);
   const [activeTab, setActiveTab] = useState<"timeline" | "calendar">("timeline");
   const [expandedDateId, setExpandedDateId] = useState<string | null>(null);
+  const [expandedDateType, setExpandedDateType] = useState<"single" | "range">("single");
+  const [calendarMonth, setCalendarMonth] = useState<string>("");
   const [milestoneMemos, setMilestoneMemos] = useState<Record<string, string>>(() => {
     if (typeof window === "undefined") return {};
     try { return JSON.parse(localStorage.getItem("milestone_memos") ?? "{}"); } catch { return {}; }
@@ -534,34 +558,77 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
 
                           {/* 日付設定（任意） */}
                           {(() => {
-                            const setDate = itemDates[event.id];
+                            const val = itemDates[event.id];
                             const isExpanded = expandedDateId === event.id;
+                            const label = getDateLabel(val);
                             const defaultDate = enrollmentMonth ? getEventDefaultDate(event, enrollmentMonth) : null;
-                            const dateLabel = setDate
-                              ? (() => { const d = new Date(setDate); return `${d.getMonth()+1}月${d.getDate()}日`; })()
-                              : null;
+                            const rangeStart = val?.includes("/") ? val.split("/")[0] : (val || "");
+                            const rangeEnd   = val?.includes("/") ? val.split("/")[1] : "";
                             return (
                               <div className="mt-2 pt-2 border-t border-gray-100">
                                 {isExpanded ? (
-                                  <div className="flex items-center gap-2">
-                                    <input
-                                      type="date"
-                                      value={setDate || defaultDate || ""}
-                                      onChange={(e) => { handleItemDateChange(event.id, e.target.value); setExpandedDateId(null); }}
-                                      className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-                                      autoFocus
-                                    />
-                                    {setDate && (
-                                      <button onClick={() => { handleItemDateChange(event.id, ""); setExpandedDateId(null); }} className="text-[10px] text-gray-400 underline whitespace-nowrap">クリア</button>
+                                  <div className="space-y-2">
+                                    {/* 単日/期間 トグル */}
+                                    <div className="flex bg-gray-100 rounded-lg p-0.5 gap-0.5">
+                                      <button
+                                        onClick={() => setExpandedDateType("single")}
+                                        className={`flex-1 py-1 text-[11px] font-semibold rounded-md transition-all ${expandedDateType === "single" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-400"}`}
+                                      >単日</button>
+                                      <button
+                                        onClick={() => setExpandedDateType("range")}
+                                        className={`flex-1 py-1 text-[11px] font-semibold rounded-md transition-all ${expandedDateType === "range" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-400"}`}
+                                      >期間</button>
+                                    </div>
+
+                                    {expandedDateType === "single" ? (
+                                      <input
+                                        type="date"
+                                        value={rangeStart || defaultDate || ""}
+                                        onChange={(e) => { handleItemDateChange(event.id, e.target.value); setExpandedDateId(null); }}
+                                        className="w-full border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                                        autoFocus
+                                      />
+                                    ) : (
+                                      <div className="flex items-center gap-1.5">
+                                        <input
+                                          type="date"
+                                          value={rangeStart || defaultDate || ""}
+                                          onChange={(e) => {
+                                            const end = rangeEnd || e.target.value;
+                                            handleItemDateChange(event.id, `${e.target.value}/${end}`);
+                                          }}
+                                          className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                                          autoFocus
+                                        />
+                                        <span className="text-[10px] text-gray-400 flex-shrink-0">〜</span>
+                                        <input
+                                          type="date"
+                                          value={rangeEnd || rangeStart || ""}
+                                          onChange={(e) => {
+                                            const start = rangeStart || e.target.value;
+                                            handleItemDateChange(event.id, `${start}/${e.target.value}`);
+                                          }}
+                                          className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                                        />
+                                      </div>
                                     )}
-                                    <button onClick={() => setExpandedDateId(null)} className="text-[10px] text-gray-400 whitespace-nowrap">閉じる</button>
+
+                                    <div className="flex items-center gap-3">
+                                      {val && (
+                                        <button onClick={() => { handleItemDateChange(event.id, ""); setExpandedDateId(null); }} className="text-[10px] text-gray-400 underline">クリア</button>
+                                      )}
+                                      <button onClick={() => setExpandedDateId(null)} className="text-[10px] text-gray-400">閉じる</button>
+                                    </div>
                                   </div>
                                 ) : (
                                   <button
-                                    onClick={() => setExpandedDateId(event.id)}
-                                    className={`text-[10px] transition-colors ${dateLabel ? "text-[#2d9e6b] font-semibold" : "text-gray-300 hover:text-gray-500"}`}
+                                    onClick={() => {
+                                      setExpandedDateType(val?.includes("/") ? "range" : "single");
+                                      setExpandedDateId(event.id);
+                                    }}
+                                    className={`text-[10px] transition-colors ${label ? "text-[#2d9e6b] font-semibold" : "text-gray-300 hover:text-gray-500"}`}
                                   >
-                                    {dateLabel ? `📅 ${dateLabel}` : "📅 日付を設定（任意）"}
+                                    {label ? `📅 ${label}` : "📅 日付を設定（任意）"}
                                   </button>
                                 )}
                               </div>
@@ -578,134 +645,152 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         </>
       )}
 
-      {/* ===== カレンダービュー ===== */}
+      {/* ===== カレンダービュー（月別グリッド） ===== */}
       {activeTab === "calendar" && (() => {
-        type CalEntry = { id: string; title: string; defaultDate: string | null; userDate: string; monthKey: string };
-        const entries: CalEntry[] = [];
+        const now = new Date();
+        const currentYM = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+        const displayMonth = calendarMonth || enrollmentMonth || currentYM;
+        const [cy, cm] = displayMonth.split("-").map(Number);
 
-        // 日付が明示的に設定されたイベントのみ表示
-        timelineEvents
-          .filter((event) => !!itemDates[event.id])
-          .forEach((event) => {
-            const userDate = itemDates[event.id];
-            const def = enrollmentMonth ? getEventDefaultDate(event, enrollmentMonth) : null;
-            const monthKey = userDate.slice(0, 7);
-            entries.push({ id: event.id, title: event.title, defaultDate: def, userDate, monthKey });
-          });
+        // 週グリッドを生成（日曜始まり）
+        const firstDow = new Date(cy, cm - 1, 1).getDay();
+        const daysInMonth = new Date(cy, cm, 0).getDate();
+        const weeks: (number | null)[][] = [];
+        let week: (number | null)[] = Array(firstDow).fill(null);
+        for (let d = 1; d <= daysInMonth; d++) {
+          week.push(d);
+          if (week.length === 7) { weeks.push(week); week = []; }
+        }
+        if (week.length > 0) weeks.push([...week, ...Array(7 - week.length).fill(null)]);
 
-        const grouped: Record<string, CalEntry[]> = {};
-        entries.forEach((e) => {
-          if (!grouped[e.monthKey]) grouped[e.monthKey] = [];
-          grouped[e.monthKey].push(e);
-        });
-        const sortedKeys = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
-
-        const handleExport = () => {
-          const items = entries
-            .filter((e) => e.userDate)
-            .map((e) => ({ id: e.id, title: e.title, date: e.userDate }));
-          if (items.length === 0) {
-            alert("日付が設定されたタスクがありません。先に日付を設定してください。");
-            return;
+        // 各日にどのイベントが該当するかを収集
+        type DayEvent = { event: PostEnrollmentEvent; isRange: boolean };
+        const eventsByDay: Record<number, DayEvent[]> = {};
+        const addToDay = (day: number, event: PostEnrollmentEvent, isRange: boolean) => {
+          if (!eventsByDay[day]) eventsByDay[day] = [];
+          eventsByDay[day].push({ event, isRange });
+        };
+        timelineEvents.forEach((event) => {
+          const val = itemDates[event.id];
+          if (!val) return;
+          if (val.includes("/")) {
+            const [startStr, endStr] = val.split("/");
+            const cur = new Date(startStr);
+            const end = new Date(endStr);
+            while (cur <= end) {
+              if (cur.getFullYear() === cy && cur.getMonth() === cm - 1) addToDay(cur.getDate(), event, true);
+              cur.setDate(cur.getDate() + 1);
+            }
+          } else {
+            const d = new Date(val);
+            if (d.getFullYear() === cy && d.getMonth() === cm - 1) addToDay(d.getDate(), event, false);
           }
+        });
+
+        // ICSエクスポート
+        const handleExport = () => {
+          const items = timelineEvents
+            .filter((e) => itemDates[e.id])
+            .map((e) => {
+              const val = itemDates[e.id];
+              if (val.includes("/")) {
+                const [startDate, endDate] = val.split("/");
+                return { id: e.id, title: e.title, date: startDate, endDate };
+              }
+              return { id: e.id, title: e.title, date: val };
+            });
+          if (items.length === 0) { alert("日付が設定されたタスクがありません。"); return; }
           const ics = generateICS(items);
           const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
           const url = URL.createObjectURL(blob);
           const a = document.createElement("a");
-          a.href = url;
-          a.download = "kosodate-schedule.ics";
-          a.click();
+          a.href = url; a.download = "kosodate-schedule.ics"; a.click();
           URL.revokeObjectURL(url);
         };
 
+        const hasAnyDates = timelineEvents.some((e) => itemDates[e.id]);
+
         return (
           <div className="space-y-4">
-            <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-3">
-              <p className="text-xs text-gray-500 leading-relaxed">
-                「入園後」タブで日付を設定したイベントだけが表示されます。Googleカレンダーなどに一括追加できます。
-              </p>
-              <button
-                onClick={handleExport}
-                className="w-full flex items-center justify-center gap-2 bg-[#4CAF82] text-white rounded-xl py-3 text-sm font-semibold hover:opacity-90 transition-opacity"
-              >
-                📅 Googleカレンダーに追加（.ics）
-              </button>
-            </div>
+            {/* カレンダー本体 */}
+            <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+              {/* 月ナビゲーション */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
+                <button
+                  onClick={() => setCalendarMonth(shiftMonth(displayMonth, -1))}
+                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 text-xl leading-none"
+                >‹</button>
+                <span className="text-sm font-bold text-gray-800">{cy}年{cm}月</span>
+                <button
+                  onClick={() => setCalendarMonth(shiftMonth(displayMonth, 1))}
+                  className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 text-xl leading-none"
+                >›</button>
+              </div>
 
-            {sortedKeys.map((monthKey) => {
-              const label = monthKey === "未設定"
-                ? "📌 日付未設定"
-                : (() => {
-                    const [y, m] = monthKey.split("-");
-                    return `📅 ${y}年${parseInt(m)}月`;
-                  })();
-              return (
-                <div key={monthKey}>
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-sm font-bold text-gray-700">{label}</h3>
-                    <div className="flex-1 h-px bg-gray-200" />
+              {/* 曜日ヘッダー */}
+              <div className="grid grid-cols-7 border-b border-gray-100">
+                {["日","月","火","水","木","金","土"].map((label, i) => (
+                  <div key={label} className={`py-2 text-center text-[11px] font-semibold ${i === 0 ? "text-red-400" : i === 6 ? "text-blue-400" : "text-gray-400"}`}>
+                    {label}
                   </div>
-                  <div className="space-y-2">
-                    {grouped[monthKey].map((entry) => {
-                      const setDate = itemDates[entry.id];
-                      const isExpanded = expandedDateId === entry.id;
-                      const dateLabel = setDate
-                        ? (() => { const d = new Date(setDate); return `${d.getMonth()+1}月${d.getDate()}日`; })()
-                        : null;
+                ))}
+              </div>
 
+              {/* 日付グリッド */}
+              <div>
+                {weeks.map((wk, wi) => (
+                  <div key={wi} className="grid grid-cols-7 border-b border-gray-50 last:border-0">
+                    {wk.map((day, di) => {
+                      if (!day) return <div key={di} className="min-h-[52px] bg-gray-50/50" />;
+                      const dayEvents = eventsByDay[day] ?? [];
+                      const isToday = now.getFullYear() === cy && now.getMonth() === cm - 1 && now.getDate() === day;
                       return (
-                        <div key={entry.id} className="bg-white rounded-xl border border-gray-200 shadow-sm p-3">
-                          <button
-                            className="w-full text-left flex items-center gap-2"
-                            onClick={() => setExpandedDateId(isExpanded ? null : entry.id)}
-                          >
-                            <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium flex-shrink-0 bg-blue-50 text-blue-600">
-                              入園後
-                            </span>
-                            <p className="text-xs font-semibold text-gray-800 leading-tight flex-1">{entry.title}</p>
-                            {dateLabel ? (
-                              <span className="text-[11px] text-[#2d9e6b] font-semibold whitespace-nowrap">📅 {dateLabel}</span>
-                            ) : (
-                              <span className="text-[10px] text-gray-300 whitespace-nowrap">日付設定 +</span>
+                        <div key={di} className={`min-h-[52px] p-0.5 border-l border-gray-50 first:border-0 ${di === 0 ? "bg-red-50/20" : di === 6 ? "bg-blue-50/20" : ""}`}>
+                          {/* 日付番号 */}
+                          <div className="flex justify-center mb-0.5">
+                            <span className={`text-[11px] font-semibold w-5 h-5 flex items-center justify-center rounded-full ${
+                              isToday ? "bg-[#2d9e6b] text-white" :
+                              di === 0 ? "text-red-400" : di === 6 ? "text-blue-400" : "text-gray-600"
+                            }`}>{day}</span>
+                          </div>
+                          {/* イベントチップ */}
+                          <div className="space-y-0.5">
+                            {dayEvents.slice(0, 2).map(({ event, isRange }, idx) => {
+                              const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["手続き"];
+                              return (
+                                <div key={idx} className={`text-[8px] font-medium px-0.5 py-0.5 rounded leading-tight truncate ${colors.bg} ${colors.text}`}>
+                                  {isRange && <span className="mr-0.5">↔</span>}{event.title}
+                                </div>
+                              );
+                            })}
+                            {dayEvents.length > 2 && (
+                              <div className="text-[8px] text-gray-400 text-center">+{dayEvents.length - 2}</div>
                             )}
-                          </button>
-                          {isExpanded && (
-                            <div className="flex items-center gap-2 mt-2 pt-2 border-t border-gray-100">
-                              <input
-                                type="date"
-                                value={setDate || entry.defaultDate || ""}
-                                onChange={(e) => {
-                                  handleItemDateChange(entry.id, e.target.value);
-                                  setExpandedDateId(null);
-                                }}
-                                className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-                                autoFocus
-                              />
-                              {setDate && (
-                                <button
-                                  onClick={() => { handleItemDateChange(entry.id, ""); setExpandedDateId(null); }}
-                                  className="text-[10px] text-gray-400 underline whitespace-nowrap"
-                                >
-                                  クリア
-                                </button>
-                              )}
-                            </div>
-                          )}
+                          </div>
                         </div>
                       );
                     })}
                   </div>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            </div>
 
-            {entries.length === 0 && (
-              <div className="bg-gray-50 rounded-xl p-6 text-center">
-                <p className="text-2xl mb-2">📅</p>
+            {/* エクスポートボタン */}
+            {hasAnyDates ? (
+              <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-2">
+                <p className="text-xs text-gray-400 leading-relaxed">設定した日付をカレンダーアプリに一括追加できます。</p>
+                <button
+                  onClick={handleExport}
+                  className="w-full flex items-center justify-center gap-2 bg-[#4CAF82] text-white rounded-xl py-3 text-sm font-semibold"
+                >
+                  📅 Googleカレンダーに追加（.ics）
+                </button>
+              </div>
+            ) : (
+              <div className="bg-gray-50 rounded-xl p-5 text-center">
+                <p className="text-xl mb-1">📅</p>
                 <p className="text-sm text-gray-500 font-semibold mb-1">まだ日付が設定されていません</p>
-                <p className="text-xs text-gray-400 leading-relaxed">
-                  「入園後」タブの各イベントで<br />日付を設定するとここに表示されます
-                </p>
+                <p className="text-xs text-gray-400">「入園後」タブの各イベントで日付を設定するとここに表示されます</p>
               </div>
             )}
           </div>
