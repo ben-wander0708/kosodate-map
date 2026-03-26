@@ -142,7 +142,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         .from("checklist_sessions")
         .select("enrollment_month, event_assignees, item_dates")
         .eq("id", id)
-        .single();
+        .maybeSingle();
       if (data) {
         if (data.enrollment_month) setEnrollmentMonth(data.enrollment_month);
         if (data.event_assignees) setEventAssignees(data.event_assignees as Record<string, EventAssignee>);

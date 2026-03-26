@@ -110,7 +110,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
           .from("checklist_sessions")
           .select("event_assignees, checked_items")
           .eq("id", sid)
-          .single();
+          .maybeSingle();
         if (data?.event_assignees) setEventAssignees(data.event_assignees as Record<string, EventAssignee>);
         if (data?.checked_items)   setCheckedCount((data.checked_items as string[]).length);
       } catch {}

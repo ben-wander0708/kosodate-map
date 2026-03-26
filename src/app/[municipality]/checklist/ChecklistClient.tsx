@@ -52,7 +52,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
         .from("checklist_sessions")
         .select("*")
         .eq("id", id)
-        .single();
+        .maybeSingle();
       if (data) {
         if (data.persona_id) setSelectedPersonaId(data.persona_id);
         if (data.checked_items) setCheckedItems(new Set(data.checked_items as string[]));
