@@ -372,7 +372,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
             activeTab === "timeline" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
           }`}
         >
-          🌱 入園後
+          📋 タイムライン
         </button>
         <button
           onClick={() => setActiveTab("calendar")}
