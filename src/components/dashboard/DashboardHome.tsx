@@ -203,7 +203,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
 
           <button
             onClick={() => window.dispatchEvent(new Event(ONBOARDING_OPEN_EVENT))}
-            className="mt-3 text-xs bg-white/20 hover:bg-white/30 rounded-full px-3 py-1 transition-colors"
+            className="mt-3 text-xs bg-white/20 hover:bg-white/30 rounded-full px-3 py-1.5 transition-colors min-h-[32px]"
           >
             ✏️ 設定変更
           </button>
@@ -225,7 +225,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
               )}
               <button
                 onClick={() => window.dispatchEvent(new Event(ONBOARDING_OPEN_EVENT))}
-                className="text-xs bg-white/20 hover:bg-white/30 rounded-full px-2 py-0.5 transition-colors"
+                className="text-xs bg-white/20 hover:bg-white/30 rounded-full px-3 py-1.5 transition-colors min-h-[32px]"
               >
                 ✏️ {isDone ? "設定変更" : "回答する"}
               </button>
@@ -256,7 +256,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
 
           {phaseInfo && (
             <div className="mt-3">
-              <div className="flex justify-between text-[10px] text-white/60 mb-1">
+              <div className="flex justify-between text-[11px] text-white/60 mb-1">
                 <span>検討中</span><span>物件決定</span><span>引越し準備</span><span>転入済み</span>
               </div>
               <div className="w-full bg-white/20 rounded-full h-1.5">
@@ -451,7 +451,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
               try { localStorage.removeItem("kosodate_onboarding_v2"); } catch {}
               window.location.reload();
             }}
-            className="w-full bg-amber-500 text-white text-sm font-semibold py-2 rounded-lg active:scale-95 transition-transform"
+            className="w-full bg-amber-500 text-white text-sm font-semibold py-3 rounded-lg active:scale-95 transition-transform min-h-[44px]"
           >
             質問に答える（30秒）
           </button>
