@@ -531,6 +531,42 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                               </button>
                             )}
                           </div>
+
+                          {/* 日付設定（任意） */}
+                          {(() => {
+                            const setDate = itemDates[event.id];
+                            const isExpanded = expandedDateId === event.id;
+                            const defaultDate = enrollmentMonth ? getEventDefaultDate(event, enrollmentMonth) : null;
+                            const dateLabel = setDate
+                              ? (() => { const d = new Date(setDate); return `${d.getMonth()+1}月${d.getDate()}日`; })()
+                              : null;
+                            return (
+                              <div className="mt-2 pt-2 border-t border-gray-100">
+                                {isExpanded ? (
+                                  <div className="flex items-center gap-2">
+                                    <input
+                                      type="date"
+                                      value={setDate || defaultDate || ""}
+                                      onChange={(e) => { handleItemDateChange(event.id, e.target.value); setExpandedDateId(null); }}
+                                      className="flex-1 border border-gray-200 rounded-lg px-2 py-1.5 text-xs text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+                                      autoFocus
+                                    />
+                                    {setDate && (
+                                      <button onClick={() => { handleItemDateChange(event.id, ""); setExpandedDateId(null); }} className="text-[10px] text-gray-400 underline whitespace-nowrap">クリア</button>
+                                    )}
+                                    <button onClick={() => setExpandedDateId(null)} className="text-[10px] text-gray-400 whitespace-nowrap">閉じる</button>
+                                  </div>
+                                ) : (
+                                  <button
+                                    onClick={() => setExpandedDateId(event.id)}
+                                    className={`text-[10px] transition-colors ${dateLabel ? "text-[#2d9e6b] font-semibold" : "text-gray-300 hover:text-gray-500"}`}
+                                  >
+                                    {dateLabel ? `📅 ${dateLabel}` : "📅 日付を設定（任意）"}
+                                  </button>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </div>
                       );
                     })}
@@ -547,23 +583,22 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         type CalEntry = { id: string; title: string; defaultDate: string | null; userDate: string; monthKey: string };
         const entries: CalEntry[] = [];
 
-        timelineEvents.forEach((event) => {
-          const def = getEventDefaultDate(event, enrollmentMonth);
-          const userDate = itemDates[event.id] || def || "";
-          const monthKey = userDate ? userDate.slice(0, 7) : "未設定";
-          entries.push({ id: event.id, title: event.title, defaultDate: def, userDate, monthKey });
-        });
+        // 日付が明示的に設定されたイベントのみ表示
+        timelineEvents
+          .filter((event) => !!itemDates[event.id])
+          .forEach((event) => {
+            const userDate = itemDates[event.id];
+            const def = enrollmentMonth ? getEventDefaultDate(event, enrollmentMonth) : null;
+            const monthKey = userDate.slice(0, 7);
+            entries.push({ id: event.id, title: event.title, defaultDate: def, userDate, monthKey });
+          });
 
         const grouped: Record<string, CalEntry[]> = {};
         entries.forEach((e) => {
           if (!grouped[e.monthKey]) grouped[e.monthKey] = [];
           grouped[e.monthKey].push(e);
         });
-        const sortedKeys = Object.keys(grouped).sort((a, b) => {
-          if (a === "未設定") return 1;
-          if (b === "未設定") return -1;
-          return a.localeCompare(b);
-        });
+        const sortedKeys = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
 
         const handleExport = () => {
           const items = entries
@@ -587,7 +622,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
           <div className="space-y-4">
             <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-3">
               <p className="text-xs text-gray-500 leading-relaxed">
-                各タスクに日付を設定すると、Googleカレンダーやほかのカレンダーアプリに一括で追加できます。
+                「入園後」タブで日付を設定したイベントだけが表示されます。Googleカレンダーなどに一括追加できます。
               </p>
               <button
                 onClick={handleExport}
@@ -666,8 +701,10 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
 
             {entries.length === 0 && (
               <div className="bg-gray-50 rounded-xl p-6 text-center">
-                <p className="text-sm text-gray-400">
-                  入園月を入力するとタスクが表示されます。
+                <p className="text-2xl mb-2">📅</p>
+                <p className="text-sm text-gray-500 font-semibold mb-1">まだ日付が設定されていません</p>
+                <p className="text-xs text-gray-400 leading-relaxed">
+                  「入園後」タブの各イベントで<br />日付を設定するとここに表示されます
                 </p>
               </div>
             )}
