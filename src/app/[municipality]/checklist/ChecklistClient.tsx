@@ -250,6 +250,16 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onboarding.isLoaded]);
 
+  // フェーズに応じてデフォルトタブを自動切替
+  useEffect(() => {
+    if (!loaded || !onboarding.isLoaded) return;
+    // 夫が開いた場合 or 入園済みの子どもがいる場合 → タイムラインがデフォルト
+    if (isShared || onboarding.hasEnrolled) {
+      setActiveTab("timeline");
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loaded, onboarding.isLoaded]);
+
   const handlePersonaSelect = useCallback((personaId: string) => {
     setSelectedPersonaId(personaId);
     try { localStorage.setItem("kosodate_checklist_persona", personaId); } catch {}
@@ -463,38 +473,63 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
         </div>
       )}
 
-      {/* タブ切り替え */}
+      {/* タブ切り替え（フェーズ・共有状態に応じて構成変化） */}
       <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
-        <button
-          onClick={() => setActiveTab("checklist")}
-          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-            activeTab === "checklist"
-              ? "bg-white text-[#2d9e6b] shadow-sm"
-              : "text-gray-500"
-          }`}
-        >
-          📋 保活
-        </button>
-        <button
-          onClick={() => setActiveTab("timeline")}
-          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-            activeTab === "timeline"
-              ? "bg-white text-[#2d9e6b] shadow-sm"
-              : "text-gray-500"
-          }`}
-        >
-          🌱 入園後
-        </button>
+        {/* 入園後タブ: 入園済み or 共有URLの場合は先頭に */}
+        {(onboarding.hasEnrolled || isShared) && (
+          <button
+            onClick={() => setActiveTab("timeline")}
+            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "timeline" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
+            }`}
+          >
+            🌱 入園後
+          </button>
+        )}
+
+        {/* カレンダータブ */}
         <button
           onClick={() => setActiveTab("calendar")}
           className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
-            activeTab === "calendar"
-              ? "bg-white text-[#2d9e6b] shadow-sm"
-              : "text-gray-500"
+            activeTab === "calendar" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
           }`}
         >
           🗓 カレンダー
         </button>
+
+        {/* 保活タブ: 保活中は先頭・通常表示 / 入園済みは最後・格下げ / 共有URLでは非表示 */}
+        {!isShared && !onboarding.hasEnrolled && (
+          <button
+            onClick={() => setActiveTab("checklist")}
+            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "checklist" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
+            }`}
+          >
+            📋 保活
+          </button>
+        )}
+        {!isShared && !onboarding.hasEnrolled && (
+          <button
+            onClick={() => setActiveTab("timeline")}
+            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "timeline" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
+            }`}
+          >
+            🌱 入園後
+          </button>
+        )}
+        {onboarding.hasEnrolled && !isShared && (
+          <button
+            onClick={() => setActiveTab("checklist")}
+            className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "checklist"
+                ? "bg-white text-gray-400 shadow-sm"
+                : "text-gray-300"
+            }`}
+          >
+            ✅ 保活
+          </button>
+        )}
       </div>
 
       {/* ===== 保活チェックリスト ===== */}
