@@ -349,6 +349,10 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
     return true;
   });
 
+  // 夫ビュー用: パパ担当 / 未割り当て イベントを抽出
+  const fatherTasks    = timelineEvents.filter((e) => eventAssignees[e.id] === "father");
+  const unassignedTasks = timelineEvents.filter((e) => !eventAssignees[e.id]);
+
   // month_offset でグルーピング
   const eventsByOffset = timelineEvents.reduce<Record<number, PostEnrollmentEvent[]>>((acc, e) => {
     if (!acc[e.month_offset]) acc[e.month_offset] = [];
@@ -381,7 +385,7 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
 
         {isShared ? (
           <div className="mt-3 bg-white/20 rounded-lg px-3 py-2 text-xs text-green-100">
-            👥 パートナーと共有中のリストです
+            👥 パートナーから共有されたリストです
           </div>
         ) : (
           <button
@@ -392,6 +396,72 @@ export default function ChecklistClient({ checklist, municipalityName }: Checkli
           </button>
         )}
       </div>
+
+      {/* ===== パパダッシュボード（共有URLでアクセス時のみ） ===== */}
+      {isShared && (
+        <div className="space-y-3">
+          {/* パパのタスク */}
+          {fatherTasks.length > 0 && (
+            <div className="bg-white rounded-xl border border-blue-100 shadow-sm overflow-hidden">
+              <div className="bg-blue-50 px-4 py-2.5 flex items-center gap-2">
+                <span className="text-base">👨</span>
+                <p className="text-sm font-bold text-blue-700">パパのタスク（{fatherTasks.length}件）</p>
+              </div>
+              <div className="divide-y divide-gray-100">
+                {fatherTasks.map((event) => (
+                  <div key={event.id} className="px-4 py-3 flex items-center justify-between gap-2">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">{event.title}</p>
+                      {enrollmentMonth && (
+                        <p className="text-[11px] text-gray-400 mt-0.5">{getMonthLabel(enrollmentMonth, event.month_offset)}</p>
+                      )}
+                    </div>
+                    <span className="text-[11px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full flex-shrink-0 font-semibold">パパ ✓</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 未割り当てタスク */}
+          {unassignedTasks.length > 0 && (
+            <div className="bg-white rounded-xl border border-amber-100 shadow-sm overflow-hidden">
+              <div className="bg-amber-50 px-4 py-2.5 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">📋</span>
+                  <p className="text-sm font-bold text-amber-700">まだ誰も担当していない（{unassignedTasks.length}件）</p>
+                </div>
+              </div>
+              <div className="divide-y divide-gray-100">
+                {unassignedTasks.map((event) => (
+                  <div key={event.id} className="px-4 py-3 flex items-center justify-between gap-2">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-800">{event.title}</p>
+                      {enrollmentMonth && (
+                        <p className="text-[11px] text-gray-400 mt-0.5">{getMonthLabel(enrollmentMonth, event.month_offset)}</p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => handleAssigneeChange(event.id, "father")}
+                      className="flex-shrink-0 text-xs font-semibold bg-[#2d9e6b] text-white px-3 py-1.5 rounded-lg active:scale-95 transition-all"
+                    >
+                      引き受ける
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 全部担当済みの場合 */}
+          {fatherTasks.length === 0 && unassignedTasks.length === 0 && (
+            <div className="bg-green-50 rounded-xl border border-green-100 px-4 py-4 text-center">
+              <p className="text-2xl mb-1">🎉</p>
+              <p className="text-sm font-bold text-green-700">全タスクの担当が決まっています</p>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* タブ切り替え */}
       <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
