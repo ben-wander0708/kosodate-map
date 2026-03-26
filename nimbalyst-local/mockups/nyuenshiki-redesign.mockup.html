@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>入園式画面 Before / After — こそだてMAP</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', sans-serif;
+    background: #eef1f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+  }
+  .subtitle {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 40px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .comparison {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .phone-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 5px 16px;
+    border-radius: 20px;
+  }
+  .label-before {
+    background: #e5e7eb;
+    color: #6b7280;
+  }
+  .label-after {
+    background: #fce7f3;
+    color: #be185d;
+  }
+
+  /* iPhone frame */
+  .phone {
+    width: 320px;
+    background: #f7f9fc;
+    border-radius: 44px;
+    border: 8px solid #1a1a2e;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  .phone::before {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 24px;
+    background: #1a1a2e;
+    border-radius: 0 0 16px 16px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .screen {
+    height: 580px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+
+  /* ===== BEFORE STYLES ===== */
+  .before-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 0 12px;
+    border-bottom: 1px solid #e5e7eb;
+    margin-bottom: 12px;
+  }
+  .before-header span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+  }
+  .before-header .month-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2d9e6b;
+    flex-shrink: 0;
+  }
+
+  .timeline-wrapper {
+    margin-left: 12px;
+    border-left: 2px solid #e5e7eb;
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .timeline-item {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    padding: 10px 12px;
+  }
+  .timeline-item .item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  .category-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .badge-amber { background: #fffbeb; color: #b45309; }
+  .badge-green { background: #f0fdf4; color: #15803d; }
+  .badge-rose  { background: #fff1f2; color: #be123c; }
+
+  .item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1f2937;
+    line-height: 1.4;
+  }
+  .item-note {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+  .assignee-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .assignee-label {
+    font-size: 10px;
+    color: #9ca3af;
+  }
+  .assignee-btn {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 8px;
+    border: 1px solid;
+  }
+  .assignee-active {
+    background: #2d9e6b;
+    color: white;
+    border-color: #2d9e6b;
+  }
+  .assignee-inactive {
+    background: #f9fafb;
+    color: #6b7280;
+    border-color: #e5e7eb;
+  }
+
+  /* dimmed items */
+  .dimmed { opacity: 0.45; }
+
+  /* ===== AFTER STYLES ===== */
+  .milestone-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(244,114,182,0.18), 0 1px 4px rgba(0,0,0,0.06);
+    margin-bottom: 12px;
+  }
+
+  .milestone-hero {
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 60%, #fbcfe8 100%);
+    padding: 20px 16px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .milestone-hero::before {
+    content: '🌸🌸🌸';
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    font-size: 48px;
+    opacity: 0.25;
+    letter-spacing: -4px;
+  }
+
+  .countdown-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: white;
+    border: 1.5px solid #f9a8d4;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #be185d;
+    margin-bottom: 8px;
+  }
+  .countdown-chip .dot {
+    width: 6px;
+    height: 6px;
+    background: #f472b6;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .milestone-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .milestone-date {
+    font-size: 12px;
+    color: #9d174d;
+    font-weight: 600;
+  }
+
+  .milestone-body {
+    padding: 14px 16px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #f3f4f6;
+  }
+
+  .prep-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 14px;
+  }
+  .prep-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #374151;
+    font-weight: 500;
+  }
+  .prep-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 800;
+  }
+  .check-empty { border-color: #f9a8d4; }
+  .check-done  { border-color: #2d9e6b; background: #2d9e6b; color: white; }
+  .prep-by {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    color: #9d174d;
+    background: #fce7f3;
+    padding: 2px 7px;
+    border-radius: 10px;
+    flex-shrink: 0;
+  }
+  .prep-by-green {
+    color: #15803d;
+    background: #dcfce7;
+  }
+
+  .partner-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 7px 10px;
+    margin-bottom: 14px;
+  }
+  .partner-avatar {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, #2d9e6b, #1a7a52);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+  .partner-text {
+    font-size: 11px;
+    font-weight: 700;
+    color: #15803d;
+    flex: 1;
+  }
+  .partner-check {
+    font-size: 13px;
+  }
+
+  .memo-area {
+    background: #fffbeb;
+    border: 1.5px dashed #fcd34d;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+  .memo-cta {
+    font-size: 11px;
+    font-weight: 700;
+    color: #92400e;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .memo-input {
+    background: white;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 11px;
+    color: #6b7280;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .photo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    background: white;
+    border: 1.5px dashed #fcd34d;
+    border-radius: 8px;
+    padding: 7px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #b45309;
+    cursor: pointer;
+  }
+
+  .calendar-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #2d9e6b, #1a7a52);
+    color: white;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* Other timeline items in After - dimmed */
+  .after-other {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mini-item {
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    padding: 9px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.55;
+  }
+  .mini-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+  }
+  .mini-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  .annotation {
+    font-size: 11px;
+    color: #6b7280;
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.6;
+    max-width: 280px;
+  }
+</style>
+</head>
+<body>
+
+<h1>入園式画面 — Before / After</h1>
+<p class="subtitle">
+  製品コンセプト「家族の物語の入口」<br>
+  JTBD: 限られた期間を、ふたりで経験する
+</p>
+
+<div class="comparison">
+
+  <!-- ===== BEFORE ===== -->
+  <div class="phone-wrapper">
+    <div class="label label-before">今の画面</div>
+    <div class="phone">
+      <div class="screen">
+        <!-- Month header -->
+        <div class="before-header">
+          <div class="month-dot"></div>
+          <span>2026年4月</span>
+        </div>
+
+        <div class="timeline-wrapper">
+
+          <!-- 入園式 item (highlighted) -->
+          <div class="timeline-item" style="border-color: #fca5a5; background: #fff5f5;">
+            <div class="item-header">
+              <span class="category-badge badge-amber">行事</span>
+              <span class="item-title">🎒 入園式</span>
+            </div>
+            <p class="item-note">保育園の入園式に参加する</p>
+            <div class="assignee-row">
+              <span class="assignee-label">担当：</span>
+              <button class="assignee-btn assignee-active">👩 ママ</button>
+              <button class="assignee-btn assignee-inactive">👨 パパ</button>
+              <button class="assignee-btn assignee-inactive">👫 ふたり</button>
+            </div>
+          </div>
+
+          <!-- other items, dimmed -->
+          <div class="timeline-item dimmed">
+            <div class="item-header">
+              <span class="category-badge badge-green">手続き</span>
+              <span class="item-title">慣らし保育 開始</span>
+            </div>
+            <div class="assignee-row">
+              <span class="assignee-label">担当：</span>
+              <button class="assignee-btn assignee-inactive">👩 ママ</button>
+              <button class="assignee-btn assignee-inactive">👨 パパ</button>
+              <button class="assignee-btn assignee-active">👫 ふたり</button>
+            </div>
+          </div>
+
+          <div class="timeline-item dimmed">
+            <div class="item-header">
+              <span class="category-badge badge-rose">復職準備</span>
+              <span class="item-title">職場復帰</span>
+            </div>
+            <div class="assignee-row">
+              <span class="assignee-label">担当：</span>
+              <button class="assignee-btn assignee-active">👩 ママ</button>
+              <button class="assignee-btn assignee-inactive">👨 パパ</button>
+              <button class="assignee-btn assignee-inactive">👫 ふたり</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <p class="annotation">入園式がタイムラインの<br>1行に過ぎない。感情ゼロ。</p>
+  </div>
+
+  <!-- ===== AFTER ===== -->
+  <div class="phone-wrapper">
+    <div class="label label-after">あるべき画面</div>
+    <div class="phone">
+      <div class="screen">
+
+        <!-- Milestone card -->
+        <div class="milestone-card">
+          <!-- Hero -->
+          <div class="milestone-hero">
+            <div class="countdown-chip">
+              <div class="dot"></div>
+              入園式まで あと 6日
+            </div>
+            <div class="milestone-title">りんちゃんの<br>初めての入園式 🌸</div>
+            <div class="milestone-date">📅 2026年4月1日（水）</div>
+          </div>
+
+          <!-- Body -->
+          <div class="milestone-body">
+
+            <!-- Partner badge -->
+            <div class="partner-badge">
+              <div class="partner-avatar">👨</div>
+              <span class="partner-text">パパも確認済み</span>
+              <span class="partner-check">✅</span>
+            </div>
+
+            <!-- Prep checklist -->
+            <div class="section-label">準備リスト</div>
+            <div class="prep-list">
+              <div class="prep-item">
+                <div class="prep-check check-empty"></div>
+                <span>記念写真の服を準備</span>
+                <span class="prep-by">ママ</span>
+              </div>
+              <div class="prep-item">
+                <div class="prep-check check-empty"></div>
+                <span>入園グッズに名前を書く</span>
+                <span class="prep-by">ママ</span>
+              </div>
+              <div class="prep-item">
+                <div class="prep-check check-done">✓</div>
+                <span style="color:#9ca3af; text-decoration: line-through;">パパのスケジュール確認</span>
+                <span class="prep-by prep-by-green">パパ ✓</span>
+              </div>
+            </div>
+
+            <!-- Memo area -->
+            <div class="section-label">想い出メモ</div>
+            <div class="memo-area">
+              <div class="memo-cta">📝 この日のことを記録しよう</div>
+              <div class="memo-input">緊張してたけど笑顔で教室に入ってった...</div>
+              <div class="photo-btn">📷 写真を追加</div>
+            </div>
+
+            <!-- Calendar btn -->
+            <div class="calendar-btn">
+              📅 カレンダーに登録する
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Other items (dimmed) -->
+        <div class="section-label" style="font-size:11px;font-weight:700;color:#9ca3af;margin-bottom:6px;">4月 その他のイベント</div>
+        <div class="after-other">
+          <div class="mini-item">
+            <span class="mini-badge badge-green">手続き</span>
+            <span class="mini-title">慣らし保育 開始</span>
+          </div>
+          <div class="mini-item">
+            <span class="mini-badge badge-rose">復職準備</span>
+            <span class="mini-title">職場復帰</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <p class="annotation">節目が「物語の1ページ」に。<br>準備・記録・共有が一体化。</p>
+  </div>
+
+</div>
+
+</body>
+</html>

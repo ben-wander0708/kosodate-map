@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { dataRepository } from "@/lib/data/json-adapter";
-import ChecklistClient from "./ChecklistClient";
+import TimelineClient from "./TimelineClient";
 
-interface ChecklistPageProps {
+interface TimelinePageProps {
   params: Promise<{ municipality: string }>;
 }
 
@@ -11,20 +11,14 @@ export async function generateStaticParams() {
   return municipalities.map((m) => ({ municipality: m.id }));
 }
 
-export default async function ChecklistPage({ params }: ChecklistPageProps) {
+export default async function TimelinePage({ params }: TimelinePageProps) {
   const { municipality: municipalityId } = await params;
 
-  const [municipality, checklist] = await Promise.all([
-    dataRepository.getMunicipality(municipalityId),
-    dataRepository.getChecklist(municipalityId),
-  ]);
-
+  const municipality = await dataRepository.getMunicipality(municipalityId);
   if (!municipality) notFound();
-  if (!checklist) notFound();
 
   return (
-    <ChecklistClient
-      checklist={checklist}
+    <TimelineClient
       municipalityName={municipality.name_ja}
       municipalityId={municipalityId}
     />

@@ -63,6 +63,16 @@ const NAV_ITEMS = [
     type: "page",
   },
   {
+    tab: "timeline",
+    icon: "🌱",
+    title: "入園後タイムライン",
+    description: "入園後のイベントと担当をパートナーと共有",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}/timeline`,
+    type: "page",
+  },
+  {
     tab: "shops",
     icon: "🛒",
     title: "生活インフラガイド",
@@ -115,6 +125,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
 
   // サブページの判定
   const isChecklistPage  = pathname?.endsWith("/checklist")  ?? false;
+  const isTimelinePage   = pathname?.endsWith("/timeline")   ?? false;
   const isShopsPage      = pathname?.endsWith("/shops")       ?? false;
   const isGiveawayPage   = pathname?.includes("/giveaway")    ?? false;
   const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
@@ -122,6 +133,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
 
   const isHomePage =
     !isChecklistPage &&
+    !isTimelinePage &&
     !isShopsPage &&
     !isGiveawayPage &&
     !isCommunityPage &&
@@ -130,6 +142,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
 
   const isActive = (item: typeof NAV_ITEMS[number]) => {
     if (isChecklistPage) return item.tab === "checklist";
+    if (isTimelinePage)  return item.tab === "timeline";
     if (isShopsPage)     return item.tab === "shops";
     if (isGiveawayPage)  return item.tab === "giveaway";
     if (isCommunityPage) return item.tab === "community";
