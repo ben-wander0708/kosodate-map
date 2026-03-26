@@ -368,7 +368,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
       <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
         <button
           onClick={() => setActiveTab("timeline")}
-          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+          className={`flex-1 py-3 text-xs font-semibold rounded-lg transition-all min-h-[44px] ${
             activeTab === "timeline" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
           }`}
         >
@@ -376,7 +376,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         </button>
         <button
           onClick={() => setActiveTab("calendar")}
-          className={`flex-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+          className={`flex-1 py-3 text-xs font-semibold rounded-lg transition-all min-h-[44px] ${
             activeTab === "calendar" ? "bg-white text-[#2d9e6b] shadow-sm" : "text-gray-500"
           }`}
         >
@@ -467,7 +467,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                                   <button
                                     key={opt.value}
                                     onClick={() => handleAssigneeChange(event.id, opt.value)}
-                                    className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                                    className={`px-4 py-2 rounded-full text-xs font-semibold transition-all min-h-[36px] ${
                                       assignee === opt.value
                                         ? "bg-rose-500 text-white"
                                         : "bg-white text-gray-500 border border-gray-200"
@@ -479,7 +479,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                                 {assignee && (
                                   <button
                                     onClick={() => handleAssigneeChange(event.id, assignee)}
-                                    className="text-[11px] text-rose-400 underline self-center"
+                                    className="text-xs text-rose-400 underline self-center py-2 px-1"
                                   >
                                     解除
                                   </button>
@@ -537,7 +537,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                               <button
                                 key={opt.value}
                                 onClick={() => handleAssigneeChange(event.id, opt.value)}
-                                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-semibold border transition-all ${
+                                className={`flex items-center gap-1 px-3 py-2 rounded-lg text-[11px] font-semibold border transition-all min-h-[36px] ${
                                   assignee === opt.value
                                     ? "bg-[#2d9e6b] text-white border-[#2d9e6b]"
                                     : "bg-gray-50 text-gray-500 border-gray-200"
@@ -549,7 +549,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                             {assignee && (
                               <button
                                 onClick={() => handleAssigneeChange(event.id, assignee)}
-                                className="text-[10px] text-gray-400 underline ml-1"
+                                className="text-[11px] text-gray-400 underline ml-1 py-2 px-1 min-h-[36px]"
                               >
                                 解除
                               </button>
@@ -626,7 +626,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                                       setExpandedDateType(val?.includes("/") ? "range" : "single");
                                       setExpandedDateId(event.id);
                                     }}
-                                    className={`text-[10px] transition-colors ${label ? "text-[#2d9e6b] font-semibold" : "text-gray-300 hover:text-gray-500"}`}
+                                    className={`text-[11px] transition-colors py-1.5 px-1 min-h-[32px] ${label ? "text-[#2d9e6b] font-semibold" : "text-gray-400 hover:text-gray-600"}`}
                                   >
                                     {label ? `📅 ${label}` : "📅 日付を設定（任意）"}
                                   </button>
