@@ -209,7 +209,18 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
   }
 
   return (
-    <div className="space-y-4 p-4">
+    <>
+    {progress === 100 && (
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white border-t border-[#c8ead8] shadow-lg">
+        <Link
+          href={`/${municipalityId}/timeline`}
+          className="flex items-center justify-center gap-2 w-full bg-[#2d9e6b] text-white text-sm font-bold py-3 rounded-xl"
+        >
+          🌱 入園後タイムラインへ進む →
+        </Link>
+      </div>
+    )}
+    <div className={`space-y-4 p-4${progress === 100 ? " pb-20" : ""}`}>
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <div className="flex items-start justify-between">
@@ -310,7 +321,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
             <div className="w-full bg-gray-100 rounded-full h-2">
               <div
                 className="h-2 rounded-full transition-all duration-300"
-                style={{ width: `${progress}%`, backgroundColor: selectedPersona.color }}
+                style={{ width: `${progress}%`, backgroundColor: progress === 100 ? "#f59e0b" : selectedPersona.color }}
               />
             </div>
             <div className="flex items-center justify-between mt-2">
@@ -351,15 +362,15 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
           })}
 
           {progress === 100 && (
-            <div className="bg-[#f0faf5] border border-[#c8ead8] rounded-xl p-4 text-center">
-              <p className="text-2xl mb-1">🎉</p>
-              <p className="text-sm font-bold text-[#2d9e6b]">すべての手続きが完了しました！</p>
-              <p className="text-xs text-green-600 mt-1">{municipalityName}での新生活をお楽しみください</p>
+            <div className="bg-gradient-to-b from-[#f0faf5] to-[#e0f5eb] border border-[#a8ddc0] rounded-xl p-5 text-center">
+              <p className="text-3xl mb-2">🎉</p>
+              <p className="text-base font-bold text-[#2d9e6b]">すべての手続きが完了しました！</p>
+              <p className="text-xs text-green-600 mt-1 mb-4">{municipalityName}での新生活、準備万端です</p>
               <Link
                 href={`/${municipalityId}/timeline`}
-                className="mt-3 block w-full bg-[#2d9e6b] text-white text-xs font-semibold py-2 rounded-lg text-center"
+                className="block w-full bg-[#2d9e6b] text-white text-sm font-bold py-3 rounded-xl text-center"
               >
-                🌱 入園後タイムラインを確認する →
+                🌱 入園後タイムラインへ進む →
               </Link>
             </div>
           )}
@@ -382,6 +393,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
         </ul>
       </div>
     </div>
+    </>
   );
 }
 
