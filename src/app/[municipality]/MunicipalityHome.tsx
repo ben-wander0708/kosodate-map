@@ -223,8 +223,8 @@ export default function MunicipalityHome({
         />
       </div>}
 
-      {/* 移動手段セレクター（マップ表示タブのみ） */}
-      {userLocation && activeTab !== "gov" && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
+      {/* 移動手段セレクター（クリニックタブのみここに表示） */}
+      {userLocation && activeTab === "clinic" && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
 
       {/* 保育施設タブ：地図／リスト トグル */}
       {activeTab === "nursery" && (
@@ -248,35 +248,54 @@ export default function MunicipalityHome({
         </div>
       )}
 
-      {/* 地図モード：選択中の施設カード */}
-      {activeTab === "nursery" && nurseryViewMode === "map" && selectedNurseryId && (() => {
-        const nursery = nurseries.find((n) => n.id === selectedNurseryId);
-        if (!nursery) return null;
-        const hasAvailability = Object.values(nursery.availability).some((v) => v === "○" || v === "△");
-        return (
-          <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="font-bold text-sm text-gray-900 truncate">{nursery.name}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{nursery.type} · {nursery.sub_area}</p>
-                {hasAvailability && (
-                  <p className="text-xs text-green-600 font-semibold mt-1">空きあり（要確認）</p>
-                )}
+      {/* 地図モード：移動手段セレクター + 選択中の施設カード */}
+      {activeTab === "nursery" && nurseryViewMode === "map" && (
+        <>
+          {userLocation && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
+          {selectedNurseryId && (() => {
+            const ranked = rankedNurseries ?? [];
+            const nursery = ranked.find((n) => n.id === selectedNurseryId)
+              ?? nurseries.find((n) => n.id === selectedNurseryId);
+            if (!nursery) return null;
+            const hasAvailability = Object.values(nursery.availability).some((v) => v === "○" || v === "△");
+            const withDist = nursery as typeof ranked[0];
+            const minutes = rankedNurseries
+              ? (transportMode === "walk" ? withDist.walk_minutes : transportMode === "bike" ? withDist.bike_minutes : withDist.car_minutes)
+              : null;
+            const transportIcons: Record<string, string> = { walk: "🚶", bike: "🚲", car: "🚗" };
+            return (
+              <div className="bg-white rounded-xl border border-gray-200 shadow-lg p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-bold text-sm text-gray-900 truncate">{nursery.name}</p>
+                    <p className="text-xs text-gray-500 mt-0.5">{nursery.type} · {nursery.sub_area}</p>
+                    {minutes !== null && (
+                      <p className="text-sm font-bold text-[#2d9e6b] mt-1">
+                        {transportIcons[transportMode]} {minutes}分
+                      </p>
+                    )}
+                    {hasAvailability && (
+                      <p className="text-xs text-green-600 font-semibold mt-1">空きあり（要確認）</p>
+                    )}
+                  </div>
+                  <a
+                    href={`/${municipality.id}/nurseries/${nursery.id}`}
+                    className="flex-shrink-0 bg-[#2d9e6b] text-white text-xs font-bold px-3 py-2 rounded-lg whitespace-nowrap"
+                  >
+                    詳細を見る →
+                  </a>
+                </div>
               </div>
-              <a
-                href={`/${municipality.id}/nurseries/${nursery.id}`}
-                className="flex-shrink-0 bg-[#2d9e6b] text-white text-xs font-bold px-3 py-2 rounded-lg whitespace-nowrap"
-              >
-                詳細を見る →
-              </a>
-            </div>
-          </div>
-        );
-      })()}
+            );
+          })()}
+        </>
+      )}
 
       {/* 保育施設タブ */}
       {activeTab === "nursery" && nurseryViewMode === "list" && (
         <div>
+          {/* 移動手段セレクター（リストモード） */}
+          {userLocation && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
           {/* 年齢フィルター */}
           <div className="overflow-x-auto pb-2 -mx-4 px-4">
             <div className="flex gap-2 min-w-max">

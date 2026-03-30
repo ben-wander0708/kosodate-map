@@ -30,6 +30,15 @@ export default function LeafletMap({
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
 
+  // className（高さ）が変わったら地図サイズを再計算
+  useEffect(() => {
+    if (!mapInstanceRef.current) return;
+    const timer = setTimeout(() => {
+      mapInstanceRef.current?.invalidateSize();
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [className]);
+
   useEffect(() => {
     if (!mapRef.current || mapInstanceRef.current) return;
 
