@@ -105,26 +105,16 @@ export default async function FaqPage({ params }: FaqPageProps) {
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
         <p className="text-xs text-gray-500 mb-1">入園手続き・書類・時期など正式なご質問はこちらへ</p>
         <p className="text-sm font-semibold text-gray-700">{municipality.contact.department}</p>
-        <div className="flex flex-col gap-2 mt-2">
-          {municipality.contact.url && (
-            <a
-              href={municipality.contact.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
-            >
-              🌐 公式サイトで確認する
-            </a>
-          )}
+        {municipality.contact.url && (
           <a
-            href="https://page.line.me/230nidad"
+            href={municipality.contact.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[#06C755]/10 text-[#06C755] rounded-lg px-4 py-2 text-sm font-semibold"
+            className="inline-block mt-2 bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
           >
-            💬 総社市LINEで相談する
+            🌐 公式サイトで確認する
           </a>
-        </div>
+        )}
       </div>
 
       {/* 免責事項 */}
