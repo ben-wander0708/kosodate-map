@@ -304,9 +304,10 @@ export type EventAssignee = "mother" | "father" | "both" | null;
 /** 入園後イベントのカテゴリ */
 export type PostEnrollmentCategory =
   | "慣らし保育"
-  | "行事"
-  | "手続き"
-  | "年次更新"
+  | "行事・発表"
+  | "園との関わり"
+  | "書類・手続き"
+  | "健康・緊急対応"
   | "復職準備";
 
 /** 入園後イベント（テンプレート） */

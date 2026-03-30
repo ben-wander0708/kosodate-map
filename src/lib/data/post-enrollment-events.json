@@ -2,7 +2,7 @@
   "events": [
     {
       "id": "enrollment-ceremony",
-      "category": "行事",
+      "category": "行事・発表",
       "title": "入園式",
       "note": "持ち物・服装を事前に確認。写真撮影の準備も忘れずに。",
       "month_offset": 0,
@@ -35,7 +35,7 @@
     },
     {
       "id": "health-insurance-register",
-      "category": "手続き",
+      "category": "書類・手続き",
       "title": "健康保険証を保育園に登録・コピー提出",
       "note": "入園時書類の一つ。提出漏れが多いので確認を。",
       "month_offset": 0,
@@ -43,7 +43,7 @@
     },
     {
       "id": "contact-app-register",
-      "category": "手続き",
+      "category": "書類・手続き",
       "title": "連絡帳アプリの登録（保育園指定のアプリ）",
       "note": "kirala・HoiClueなど保育園によって異なる。両親ともに登録を。",
       "month_offset": 0,
@@ -51,18 +51,26 @@
     },
     {
       "id": "fever-contact-check",
-      "category": "手続き",
+      "category": "健康・緊急対応",
       "title": "発熱時の緊急連絡フローを夫婦で確認",
-      "note": "「誰が呼び出しを受けるか」「どちらが迎えに行くか」を事前に決めておく。",
+      "note": "「誰が呼び出しを受けるか」「どちらが迎えに行くか」を事前に決めておく。急病時は小児救急電話相談 #8000（086-801-0018）、消防・救急なんでも相談 ☎0866-93-1191。",
       "month_offset": 0,
       "multi_child_note": "複数の子が同時に発熱するケースも。優先順位を話し合っておく。"
     },
     {
       "id": "sick-childcare-register",
-      "category": "手続き",
+      "category": "健康・緊急対応",
       "title": "病児保育・ファミサポへの登録",
-      "note": "発熱時に使えるサービスを事前に登録しておく。登録なしでは当日利用不可。",
+      "note": "発熱時に使えるサービスを事前に登録しておく。登録なしでは当日利用不可。病児保育室 ☎090-1196-1151、ファミリーサポートセンター ☎0866-94-5665。",
       "month_offset": 0,
+      "multi_child_note": null
+    },
+    {
+      "id": "vaccination-reminder",
+      "category": "健康・緊急対応",
+      "title": "予防接種スケジュールの確認",
+      "note": "入園後も接種が続く。ロタウイルス・B型肝炎・BCG・小児肺炎球菌・麻しん風しん（MR）・日本脳炎など。かかりつけ医と接種計画を確認しておく。",
+      "month_offset": 1,
       "multi_child_note": null
     },
     {
@@ -85,7 +93,7 @@
     },
     {
       "id": "tuition-debit",
-      "category": "手続き",
+      "category": "書類・手続き",
       "title": "保育料の口座振替設定を確認",
       "note": "初回引き落としの前月末までに手続きが必要なケースが多い。",
       "month_offset": 1,
@@ -93,7 +101,7 @@
     },
     {
       "id": "parents-meeting",
-      "category": "行事",
+      "category": "園との関わり",
       "title": "保護者会（全体）",
       "note": "入園後最初の保護者会。役員選出が行われることが多い。",
       "month_offset": 1,
@@ -101,15 +109,23 @@
     },
     {
       "id": "room-parent-election",
-      "category": "行事",
+      "category": "園との関わり",
       "title": "役員選出への対応",
       "note": "新入園クラスは対象になりやすい。夫婦で方針を決めておく。",
       "month_offset": 1,
       "multi_child_note": null
     },
     {
+      "id": "checkup-4m",
+      "category": "健康・緊急対応",
+      "title": "4か月児健康診査",
+      "note": "場所：清音総合センター（清音軽部1135）。問い合わせ：こども課母子保健係 ☎0866-92-8261。内容：身体測定・内科診査・育児相談など。",
+      "month_offset": 3,
+      "multi_child_note": null
+    },
+    {
       "id": "physical-checkup",
-      "category": "行事",
+      "category": "園との関わり",
       "title": "身体測定・健康診断（園内）",
       "note": "年数回実施。結果票を受け取って保管を。",
       "month_offset": 2,
@@ -117,7 +133,7 @@
     },
     {
       "id": "sports-day",
-      "category": "行事",
+      "category": "行事・発表",
       "title": "運動会（秋）",
       "note": "土曜開催が多い。有給取得・祖父母への連絡を早めに調整。",
       "month_offset": 6,
@@ -125,7 +141,7 @@
     },
     {
       "id": "individual-meeting",
-      "category": "行事",
+      "category": "園との関わり",
       "title": "個人面談",
       "note": "保育士と子どもの様子を共有。平日昼間が多いため有給調整が必要なことも。",
       "month_offset": 6,
@@ -133,7 +149,7 @@
     },
     {
       "id": "recital",
-      "category": "行事",
+      "category": "行事・発表",
       "title": "生活発表会（冬）",
       "note": "子どもの練習成果を見る場。早めに有給申請を。",
       "month_offset": 9,
@@ -141,7 +157,7 @@
     },
     {
       "id": "next-year-enrollment-apply",
-      "category": "年次更新",
+      "category": "書類・手続き",
       "title": "翌年度継続入所申請",
       "note": "11〜12月が申請期間のことが多い。忘れると翌年の入所が保証されない。",
       "month_offset": 8,
@@ -149,10 +165,26 @@
     },
     {
       "id": "next-year-enrollment-confirm",
-      "category": "年次更新",
+      "category": "書類・手続き",
       "title": "翌年度継続入所の確定通知を確認",
       "note": "2〜3月に通知が届く。状況変化（就労証明の更新等）も確認。",
       "month_offset": 11,
+      "multi_child_note": null
+    },
+    {
+      "id": "checkup-18m",
+      "category": "健康・緊急対応",
+      "title": "1歳6か月児健康診査",
+      "note": "場所：清音総合センター（清音軽部1135）。問い合わせ：こども課母子保健係 ☎0866-92-8261。内容：身体測定・歯科診査・育児相談など。",
+      "month_offset": 15,
+      "multi_child_note": null
+    },
+    {
+      "id": "checkup-3y",
+      "category": "健康・緊急対応",
+      "title": "3歳児健康診査",
+      "note": "場所：清音総合センター（清音軽部1135）。問い合わせ：こども課母子保健係 ☎0866-92-8261。内容：身体測定・内科・歯科・眼科・聴覚・発達確認など。",
+      "month_offset": 35,
       "multi_child_note": null
     }
   ]

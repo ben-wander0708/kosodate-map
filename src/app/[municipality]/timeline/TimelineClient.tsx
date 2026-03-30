@@ -102,12 +102,23 @@ function shiftMonth(ym: string, delta: number): string {
 }
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  慣らし保育: { bg: "bg-blue-50",   text: "text-blue-700",  border: "border-blue-200" },
-  行事:       { bg: "bg-amber-50",  text: "text-amber-700", border: "border-amber-200" },
-  手続き:     { bg: "bg-green-50",  text: "text-green-700", border: "border-green-200" },
-  年次更新:   { bg: "bg-purple-50", text: "text-purple-700",border: "border-purple-200" },
-  復職準備:   { bg: "bg-rose-50",   text: "text-rose-700",  border: "border-rose-200" },
+  慣らし保育:   { bg: "bg-blue-50",   text: "text-blue-700",   border: "border-blue-200" },
+  "行事・発表": { bg: "bg-amber-50",  text: "text-amber-700",  border: "border-amber-200" },
+  "園との関わり":{ bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
+  "書類・手続き":{ bg: "bg-green-50",  text: "text-green-700",  border: "border-green-200" },
+  "健康・緊急対応":{ bg: "bg-red-50", text: "text-red-700",    border: "border-red-200" },
+  復職準備:     { bg: "bg-rose-50",   text: "text-rose-700",   border: "border-rose-200" },
 };
+
+const CATEGORY_CHIPS: { label: string; icon: string; value: string | null }[] = [
+  { label: "すべて",     icon: "",   value: null },
+  { label: "慣らし保育", icon: "🌱", value: "慣らし保育" },
+  { label: "行事・発表", icon: "🎪", value: "行事・発表" },
+  { label: "園との関わり",icon:"🏫", value: "園との関わり" },
+  { label: "書類・手続き",icon:"📋", value: "書類・手続き" },
+  { label: "健康・緊急", icon: "🏥", value: "健康・緊急対応" },
+  { label: "復職準備",   icon: "💼", value: "復職準備" },
+];
 
 const ASSIGNEE_OPTIONS: { value: EventAssignee; label: string; emoji: string }[] = [
   { value: "mother", label: "母",  emoji: "👩" },
@@ -128,6 +139,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
   const [activeTab, setActiveTab] = useState<"timeline" | "calendar">("timeline");
   const [expandedDateId, setExpandedDateId] = useState<string | null>(null);
   const [expandedDateType, setExpandedDateType] = useState<"single" | "range">("single");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [calendarMonth, setCalendarMonth] = useState<string>("");
   const [milestoneMemos, setMilestoneMemos] = useState<Record<string, string>>(() => {
     if (typeof window === "undefined") return {};
@@ -416,10 +428,36 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
             </div>
           )}
 
+          {/* カテゴリフィルター */}
+          <div className="overflow-x-auto -mx-4 px-4">
+            <div className="flex gap-2 pb-1" style={{ width: "max-content" }}>
+              {CATEGORY_CHIPS.map((chip) => {
+                const isActive = selectedCategory === chip.value;
+                return (
+                  <button
+                    key={chip.label}
+                    onClick={() => setSelectedCategory(chip.value)}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all ${
+                      isActive
+                        ? "bg-[#2d9e6b] text-white border-[#2d9e6b]"
+                        : "bg-white text-gray-600 border-gray-200"
+                    }`}
+                  >
+                    {chip.icon && <span>{chip.icon}</span>}
+                    {chip.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {/* タイムライン本体 */}
           <div className="space-y-4">
             {sortedOffsets.map((offset) => {
-              const events = eventsByOffset[offset];
+              const events = eventsByOffset[offset].filter(
+                (e) => !selectedCategory || e.category === selectedCategory
+              );
+              if (events.length === 0) return null;
               const monthLabel = enrollmentMonth
                 ? getMonthLabel(enrollmentMonth, offset)
                 : `入園${offset === 0 ? "月" : `から${offset}ヶ月後`}`;
@@ -433,7 +471,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
 
                   <div className="space-y-2 ml-4 border-l-2 border-gray-100 pl-3">
                     {events.map((event) => {
-                      const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["手続き"];
+                      const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["書類・手続き"];
                       const assignee = eventAssignees[event.id] ?? null;
 
                       // --- マイルストーンカード ---
@@ -756,7 +794,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                           {/* イベントチップ */}
                           <div className="space-y-0.5">
                             {dayEvents.slice(0, 2).map(({ event, isRange }, idx) => {
-                              const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["手続き"];
+                              const colors = CATEGORY_COLORS[event.category] ?? CATEGORY_COLORS["書類・手続き"];
                               return (
                                 <div key={idx} className={`text-[10px] font-medium px-0.5 py-0.5 rounded leading-tight truncate ${colors.bg} ${colors.text}`}>
                                   {isRange && <span className="mr-0.5">↔</span>}{event.title}
