@@ -94,6 +94,25 @@ function getDateLabel(val: string | undefined): string | null {
   return `${d.getMonth()+1}月${d.getDate()}日`;
 }
 
+/** テキスト中のURLを <a> リンクに変換して返す */
+function NoteWithLinks({ text, className }: { text: string; className?: string }) {
+  const parts = text.split(/(https?:\/\/[^\s　]+)/g);
+  return (
+    <p className={className}>
+      {parts.map((part, i) =>
+        part.match(/^https?:\/\//) ? (
+          <a key={i} href={part} target="_blank" rel="noopener noreferrer"
+            className="underline text-[#2d9e6b] break-all">
+            詳細を見る
+          </a>
+        ) : (
+          part
+        )
+      )}
+    </p>
+  );
+}
+
 /** YYYY-MM を delta ヶ月ずらした YYYY-MM を返す */
 function shiftMonth(ym: string, delta: number): string {
   const [y, m] = ym.split("-").map(Number);
@@ -526,7 +545,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                             </div>
                             {event.note && (
                               <div className="px-4 py-3 bg-amber-50 border-t border-amber-100">
-                                <p className="text-xs text-amber-700">📝 {event.note}</p>
+                                <NoteWithLinks text={`📝 ${event.note}`} className="text-xs text-amber-700" />
                               </div>
                             )}
                             {onboarding.isMultiChild && event.multi_child_note && (
@@ -562,7 +581,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
                             <p className="text-sm font-semibold text-gray-800 leading-tight">{event.title}</p>
                           </div>
                           {event.note && (
-                            <p className="text-[11px] text-gray-400 mb-2 leading-relaxed pl-1">{event.note}</p>
+                            <NoteWithLinks text={event.note} className="text-[11px] text-gray-400 mb-2 leading-relaxed pl-1" />
                           )}
                           {onboarding.isMultiChild && event.multi_child_note && (
                             <div className="bg-amber-50 border border-amber-100 rounded-lg px-2 py-1.5 mb-2">

@@ -53,7 +53,7 @@
       "id": "fever-contact-check",
       "category": "健康・緊急対応",
       "title": "発熱時の緊急連絡フローを夫婦で確認",
-      "note": "「誰が呼び出しを受けるか」「どちらが迎えに行くか」を事前に決めておく。急病時は小児救急電話相談 #8000（086-801-0018）、消防・救急なんでも相談 ☎0866-93-1191。",
+      "note": "「誰が呼び出しを受けるか」「どちらが迎えに行くか」を事前に決めておく。急病時の受診先は総社市HPで確認を。https://www.city.soja.okayama.jp/s/kenkouiryou/iryou_fukushi/iryoutaisei_shokuiku/shinryou_jikangai.html",
       "month_offset": 0,
       "multi_child_note": "複数の子が同時に発熱するケースも。優先順位を話し合っておく。"
     },
@@ -61,7 +61,7 @@
       "id": "sick-childcare-register",
       "category": "健康・緊急対応",
       "title": "病児保育・ファミサポへの登録",
-      "note": "発熱時に使えるサービスを事前に登録しておく。登録なしでは当日利用不可。病児保育室 ☎090-1196-1151、ファミリーサポートセンター ☎0866-94-5665。",
+      "note": "発熱時に使えるサービスを事前に登録しておく。登録なしでは当日利用不可。病児保育 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/byouji_hoiku.html　ファミサポ → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/family_suport.html",
       "month_offset": 0,
       "multi_child_note": null
     },
@@ -119,7 +119,7 @@
       "id": "checkup-4m",
       "category": "健康・緊急対応",
       "title": "4か月児健康診査",
-      "note": "場所：清音総合センター（清音軽部1135）。問い合わせ：こども課母子保健係 ☎0866-92-8261。内容：身体測定・内科診査・育児相談など。",
+      "note": "場所：清音総合センター（清音軽部1135）。内容：身体測定・内科診査・育児相談など。詳細 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/ninsin_shusan/nyuuyoujikennkousinnsa.html",
       "month_offset": 3,
       "multi_child_note": null
     },
@@ -175,7 +175,7 @@
       "id": "checkup-18m",
       "category": "健康・緊急対応",
       "title": "1歳6か月児健康診査",
-      "note": "場所：清音総合センター（清音軽部1135）。問い合わせ：こども課母子保健係 ☎0866-92-8261。内容：身体測定・歯科診査・育児相談など。",
+      "note": "場所：清音総合センター（清音軽部1135）。内容：身体測定・歯科診査・育児相談など。詳細 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/ninsin_shusan/nyuuyoujikennkousinnsa.html",
       "month_offset": 15,
       "multi_child_note": null
     },
@@ -183,7 +183,7 @@
       "id": "checkup-3y",
       "category": "健康・緊急対応",
       "title": "3歳児健康診査",
-      "note": "場所：清音総合センター（清音軽部1135）。問い合わせ：こども課母子保健係 ☎0866-92-8261。内容：身体測定・内科・歯科・眼科・聴覚・発達確認など。",
+      "note": "場所：清音総合センター（清音軽部1135）。内容：身体測定・内科・歯科・眼科・聴覚・発達確認など。詳細 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/ninsin_shusan/nyuuyoujikennkousinnsa.html",
       "month_offset": 35,
       "multi_child_note": null
     }
