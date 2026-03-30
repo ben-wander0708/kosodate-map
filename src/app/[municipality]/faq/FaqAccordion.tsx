@@ -7,6 +7,24 @@ interface FaqItem {
   answer: string;
 }
 
+function AnswerText({ text }: { text: string }) {
+  const parts = text.split(/(https?:\/\/[^\s　）]+)/g);
+  return (
+    <>
+      {parts.map((part, i) =>
+        part.match(/^https?:\/\//) ? (
+          <a key={i} href={part} target="_blank" rel="noopener noreferrer"
+            className="underline text-[#2d9e6b]">
+            詳細を見る
+          </a>
+        ) : (
+          part
+        )
+      )}
+    </>
+  );
+}
+
 export default function FaqAccordion({ items }: { items: FaqItem[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -54,7 +72,7 @@ export default function FaqAccordion({ items }: { items: FaqItem[] }) {
             >
               <div className="px-4 pb-4 flex gap-3 border-t border-gray-100">
                 <span className="text-orange-500 font-bold text-sm shrink-0 mt-3">A</span>
-                <p className="text-sm text-gray-600 leading-relaxed mt-3">{item.answer}</p>
+                <p className="text-sm text-gray-600 leading-relaxed mt-3"><AnswerText text={item.answer} /></p>
               </div>
             </div>
           </div>

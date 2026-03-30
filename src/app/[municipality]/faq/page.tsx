@@ -28,7 +28,7 @@ export async function generateStaticParams() {
 const FAQ_ITEMS = [
   {
     question: "総社市に引越す前に保育園を探せますか？",
-    answer: "こそだてマップでは住所が決まった段階から保育園の空き状況・場所・特徴を確認できます。入園申込みの手続きや必要書類・時期については、総社市教育委員会こども夢づくり課（0866-92-8265）に直接ご確認ください。"
+    answer: "こそだてマップでは住所が決まった段階から保育園の空き状況・場所・特徴を確認できます。入園申込みの手続きや必要書類・時期については、総社市こども夢づくり課に直接ご確認ください。https://www.city.soja.okayama.jp/kodomo_yumedukuri/sisei_kodomo_yume/kodomo_yume.html"
   },
   {
     question: "保育園の空き状況の「○△×」はどういう意味ですか？",
@@ -40,11 +40,11 @@ const FAQ_ITEMS = [
   },
   {
     question: "転入後の保育園申込みはどこに相談すればいいですか？",
-    answer: "総社市教育委員会こども夢づくり課が窓口です。申込み時期・必要書類・保育料の計算方法など、入園に関する正式な情報はすべて市役所にご確認ください。こそだてマップはあくまで施設の場所・特徴・空き状況を事前に把握するためのツールです。"
+    answer: "総社市こども夢づくり課が窓口です。申込み時期・必要書類・保育料の計算方法など、入園に関する正式な情報はすべて市役所にご確認ください。こそだてマップはあくまで施設の場所・特徴・空き状況を事前に把握するためのツールです。https://www.city.soja.okayama.jp/kodomo_yumedukuri/sisei_kodomo_yume/kodomo_yume.html"
   },
   {
     question: "こそだてマップのデータはいつ更新されますか？",
-    answer: "保育園の空き状況データは令和7年1月時点の情報をもとにしています。実際の空き状況は日々変化するため、最終確認は各保育園または総社市教育委員会（0866-92-8265）にお問い合わせください。"
+    answer: "保育園の空き状況データは令和7年1月時点の情報をもとにしています。実際の空き状況は日々変化するため、最終確認は各保育園または総社市こども夢づくり課にお問い合わせください。https://www.city.soja.okayama.jp/kodomo_yumedukuri/sisei_kodomo_yume/kodomo_yume.html"
   },
   {
     question: "こそだてマップに掲載されている行政支援の情報はどこから来ていますか？",
@@ -105,12 +105,26 @@ export default async function FaqPage({ params }: FaqPageProps) {
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
         <p className="text-xs text-gray-500 mb-1">入園手続き・書類・時期など正式なご質問はこちらへ</p>
         <p className="text-sm font-semibold text-gray-700">{municipality.contact.department}</p>
-        <a
-          href={`tel:${municipality.contact.phone}`}
-          className="inline-block mt-2 bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
-        >
-          📞 {municipality.contact.phone}
-        </a>
+        <div className="flex flex-col gap-2 mt-2">
+          {municipality.contact.url && (
+            <a
+              href={municipality.contact.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-[#f0faf5] text-[#2d9e6b] rounded-lg px-4 py-2 text-sm font-semibold"
+            >
+              🌐 公式サイトで確認する
+            </a>
+          )}
+          <a
+            href="https://page.line.me/230nidad"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-[#06C755]/10 text-[#06C755] rounded-lg px-4 py-2 text-sm font-semibold"
+          >
+            💬 総社市LINEで相談する
+          </a>
+        </div>
       </div>
 
       {/* 免責事項 */}
