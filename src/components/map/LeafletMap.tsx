@@ -193,7 +193,6 @@ export default function LeafletMap({
     <div
       ref={mapRef}
       className={`w-full ${className}`}
-      style={{ minHeight: "250px" }}
     />
   );
 }

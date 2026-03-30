@@ -210,18 +210,21 @@ export default function MunicipalityHome({
       )}
 
       {/* マップ（支援制度タブでは非表示） */}
-      {activeTab !== "gov" && <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100">
-        <LeafletMap
-          nurseries={activeTab === "nursery" ? nurseries : []}
-          clinics={activeTab === "clinic" ? filteredClinics : []}
-          center={defaultCenter}
-          zoom={municipality.default_zoom}
-          userLocation={userLocation}
-          selectedNurseryId={selectedNurseryId}
-          onNurseryClick={setSelectedNurseryId}
-          className={nurseryViewMode === "map" && activeTab === "nursery" ? "h-[60vh]" : "h-[250px]"}
-        />
-      </div>}
+      {activeTab !== "gov" && (
+        <div className={`rounded-xl overflow-hidden shadow-sm border border-gray-100 ${nurseryViewMode === "map" && activeTab === "nursery" ? "h-[60vh]" : "h-[250px]"}`}>
+          <LeafletMap
+            key={activeTab === "nursery" ? nurseryViewMode : "stable"}
+            nurseries={activeTab === "nursery" ? nurseries : []}
+            clinics={activeTab === "clinic" ? filteredClinics : []}
+            center={defaultCenter}
+            zoom={municipality.default_zoom}
+            userLocation={userLocation}
+            selectedNurseryId={selectedNurseryId}
+            onNurseryClick={setSelectedNurseryId}
+            className="h-full"
+          />
+        </div>
+      )}
 
       {/* 移動手段セレクター（クリニックタブのみここに表示） */}
       {userLocation && activeTab === "clinic" && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
@@ -251,7 +254,7 @@ export default function MunicipalityHome({
       {/* 地図モード：移動手段セレクター + 選択中の施設カード */}
       {activeTab === "nursery" && nurseryViewMode === "map" && (
         <>
-          {userLocation && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
+          <TransportSelector selected={transportMode} onChange={setTransportMode} />
           {selectedNurseryId && (() => {
             const ranked = rankedNurseries ?? [];
             const nursery = ranked.find((n) => n.id === selectedNurseryId)
@@ -295,7 +298,7 @@ export default function MunicipalityHome({
       {activeTab === "nursery" && nurseryViewMode === "list" && (
         <div>
           {/* 移動手段セレクター（リストモード） */}
-          {userLocation && <TransportSelector selected={transportMode} onChange={setTransportMode} />}
+          <TransportSelector selected={transportMode} onChange={setTransportMode} />
           {/* 年齢フィルター */}
           <div className="overflow-x-auto pb-2 -mx-4 px-4">
             <div className="flex gap-2 min-w-max">
