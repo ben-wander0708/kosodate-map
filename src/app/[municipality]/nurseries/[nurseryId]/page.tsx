@@ -246,6 +246,18 @@ export default async function NurseryDetailPage({
         </ul>
       </div>
 
+      {/* 申請書類診断への導線 */}
+      <Link
+        href={`/${municipalityId}/apply`}
+        className="flex items-center justify-between bg-[#f0faf5] border border-[#c8ead8] rounded-xl p-4 active:scale-[0.99] transition-transform"
+      >
+        <div>
+          <p className="text-sm font-bold text-[#2d7a5a]">📋 この施設への申請書類を確認する</p>
+          <p className="text-xs text-[#2d9e6b] mt-0.5">3問に答えるだけで必要書類リストを作成</p>
+        </div>
+        <span className="text-[#2d9e6b] text-xl flex-shrink-0">›</span>
+      </Link>
+
       {/* 施設タイプの説明 */}
       {typeTip && (
         <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">

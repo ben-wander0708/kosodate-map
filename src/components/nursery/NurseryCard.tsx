@@ -3,6 +3,10 @@
 import Link from "next/link";
 import type { NurseryWithDistance, TransportMode } from "@/lib/data/types";
 import AvailabilityBadge from "./AvailabilityBadge";
+import { useOnboarding } from "@/hooks/useOnboarding";
+
+// 市の点数制審査でひとり親が優先される施設タイプ
+const PRIORITY_TYPES_FOR_SINGLE = ["認可保育所", "認定こども園", "小規模保育", "事業所内保育"];
 
 interface NurseryCardProps {
   nursery: NurseryWithDistance;
@@ -38,6 +42,10 @@ export default function NurseryCard({
       : transportMode === "bike"
         ? nursery.bike_minutes
         : nursery.car_minutes;
+
+  const { answers } = useOnboarding();
+  const isSingleParent = answers?.family_type === "single";
+  const showPriorityBadge = isSingleParent && PRIORITY_TYPES_FOR_SINGLE.includes(nursery.type);
 
   const typeColor = typeColors[nursery.type] ?? "bg-gray-100 text-gray-700";
 
@@ -119,6 +127,13 @@ export default function NurseryCard({
         {hasAvailability && (
           <div className="mt-2 text-xs font-medium text-green-600 bg-green-50 rounded-lg px-3 py-1.5 text-center">
             空きあり（要確認）
+          </div>
+        )}
+
+        {/* ひとり親優先バッジ */}
+        {showPriorityBadge && (
+          <div className="mt-2 text-xs font-medium text-purple-700 bg-purple-50 rounded-lg px-3 py-1.5 text-center border border-purple-100">
+            👤 ひとり親は入所審査で優先されやすい施設です
           </div>
         )}
       </div>
