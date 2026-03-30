@@ -18,9 +18,12 @@ export interface ChildInfo {
   enrollment_status: EnrollmentStatus;
 }
 
+export type FamilyType = "dual" | "stay_home" | "single" | "leave";
+
 export interface OnboardingAnswers {
   phase?: Phase;
   work_status?: WorkStatus;
+  family_type?: FamilyType;
   child_count?: ChildCount;
   children?: ChildInfo[];
   enrollment_month?: string; // "YYYY-MM"
@@ -36,14 +39,21 @@ interface OnboardingModalProps {
   mode?: "wizard" | "settings";
 }
 
-/** ウィザードのステップ（3ステップ） */
-type WizardStep = 1 | 2 | 3 | "done";
+/** ウィザードのステップ（4ステップ） */
+type WizardStep = 1 | 2 | 3 | 4 | "done";
 
 function countToNumber(count: ChildCount): number {
   if (count === "1人") return 1;
   if (count === "2人") return 2;
   return 3;
 }
+
+const FAMILY_TYPE_OPTIONS: { value: FamilyType; label: string; sub: string }[] = [
+  { value: "dual",       label: "👫 共働き",         sub: "両親ともに就労中（フルタイム・パートを含む）" },
+  { value: "stay_home",  label: "🏠 専業主婦・主夫",  sub: "主に家庭で育児中・就労していない" },
+  { value: "single",     label: "👤 ひとり親",        sub: "就労中・支援制度の活用も確認したい" },
+  { value: "leave",      label: "🍼 育休中",          sub: "育休後に復職予定" },
+];
 
 const PHASE_OPTIONS: { label: string; sub: string; value: Phase }[] = [
   { label: "🏠 物件が決まった",  sub: "転居先が確定している",      value: "decided" },
@@ -164,12 +174,18 @@ function WizardView({
     setStep(2);
   };
 
+  const handleFamilyType = (value: FamilyType) => {
+    setAnswers((prev) => ({ ...prev, family_type: value }));
+    track("onboarding_step", { step: "family_type", value_category: value });
+    setStep(3);
+  };
+
   const handleChildCount = (value: ChildCount) => {
     const n = countToNumber(value);
     setAnswers((prev) => ({ ...prev, child_count: value }));
     setChildDrafts(Array(n).fill(null).map(() => ({ age: null, enrollment_status: null })));
     track("onboarding_step", { step: "child_count", value_category: value });
-    setStep(3);
+    setStep(4);
   };
 
   const handleChildAge = (index: number, age: number) => {
@@ -206,7 +222,7 @@ function WizardView({
     onClose();
   };
 
-  const progressPercent = step === "done" ? 100 : (Number(step) / 3) * 100;
+  const progressPercent = step === "done" ? 100 : (Number(step) / 4) * 100;
   const cta = getCtaForPhase(answers.phase, municipalityId);
   const allChildrenComplete = childDrafts.length > 0 && childDrafts.every((d) => d.age !== null && d.enrollment_status !== null);
 
@@ -218,7 +234,7 @@ function WizardView({
           <div className="flex items-center gap-2 flex-1">
             {step !== 1 && step !== "done" && (
               <button
-                onClick={() => setStep((s) => (s === 3 ? 2 : 1) as WizardStep)}
+                onClick={() => setStep((s) => (s === 4 ? 3 : s === 3 ? 2 : 1) as WizardStep)}
                 className="text-gray-400 text-sm hover:text-gray-600 flex-shrink-0"
                 aria-label="戻る"
               >
@@ -227,16 +243,18 @@ function WizardView({
             )}
             <div className="flex-1">
               {step !== "done" && (
-                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/3</p>
+                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/4</p>
               )}
               <h3 className="text-base font-bold text-gray-900">
                 {step === 1 && "今の状況を教えてください"}
-                {step === 2 && "未就学児は何人いますか？"}
-                {step === 3 && "お子さんの情報を教えてください"}
+                {step === 2 && "世帯の状況を教えてください"}
+                {step === 3 && "未就学児は何人いますか？"}
+                {step === 4 && "お子さんの情報を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
               {step === 1 && <p className="text-xs text-gray-400 mt-1">{municipalityName}への転居フェーズに合わせた情報をお届けします</p>}
-              {step === 3 && <p className="text-xs text-gray-400 mt-1">年齢と保育園の状況をそれぞれ教えてください</p>}
+              {step === 2 && <p className="text-xs text-gray-400 mt-1">チェックリストや書類案内がご状況に合わせて変わります</p>}
+              {step === 4 && <p className="text-xs text-gray-400 mt-1">年齢と保育園の状況をそれぞれ教えてください</p>}
             </div>
           </div>
           {step !== "done" && (
@@ -272,8 +290,31 @@ function WizardView({
           </div>
         )}
 
-        {/* Step 2: 人数 */}
+        {/* Step 2: 世帯の状況 */}
         {step === 2 && (
+          <div className="space-y-2">
+            {FAMILY_TYPE_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                onClick={() => handleFamilyType(opt.value)}
+                className={`w-full text-left p-4 rounded-xl border-2 transition-all active:scale-95 flex items-center justify-between gap-3 ${
+                  answers.family_type === opt.value
+                    ? "border-[#2d9e6b] bg-[#f0faf5]"
+                    : "border-gray-200 bg-white hover:border-[#2d9e6b] hover:bg-[#f0faf5]"
+                }`}
+              >
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{opt.sub}</p>
+                </div>
+                <span className="text-gray-300 text-xl flex-shrink-0">›</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Step 3: 人数 */}
+        {step === 3 && (
           <div className="grid grid-cols-3 gap-2">
             {COUNT_OPTIONS.map((opt) => (
               <button
@@ -291,8 +332,8 @@ function WizardView({
           </div>
         )}
 
-        {/* Step 3: 各子どもの情報 */}
-        {step === 3 && (
+        {/* Step 4: 各子どもの情報 */}
+        {step === 4 && (
           <div className="space-y-5">
             {childDrafts.map((draft, index) => (
               <div key={index} className="bg-gray-50 rounded-xl p-3 border border-gray-100">

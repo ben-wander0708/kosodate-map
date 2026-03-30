@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { ONBOARDING_DONE_KEY, type OnboardingAnswers } from "@/components/onboarding/OnboardingModal";
+import { ONBOARDING_DONE_KEY, type OnboardingAnswers, type FamilyType } from "@/components/onboarding/OnboardingModal";
 
 interface UseOnboardingResult {
   answers: OnboardingAnswers | null;
@@ -64,9 +64,6 @@ export function useOnboarding(): UseOnboardingResult {
   const isMultiChild = (answers?.child_count === "2人" || answers?.child_count === "3人以上");
   const isOnLeave   = answers?.work_status === "leave";
 
-  // work_status → ペルソナID のマッピング
-  // fulltime / parttime / leave → 共働き世帯として扱う
-  // （専業主婦・ひとり親はオンボーディングでは取得していないため手動選択に委ねる）
   /** 中央データストアへの部分更新 */
   const updateAnswers = useCallback((partial: Partial<OnboardingAnswers>) => {
     try {
@@ -82,9 +79,20 @@ export function useOnboarding(): UseOnboardingResult {
     } catch {}
   }, []);
 
+  // family_type（ウィザードで取得）→ チェックリストのペルソナIDに変換
+  // family_type が未設定の場合は work_status にフォールバック
   const suggestedPersonaId: string | null = (() => {
-    if (!answers?.work_status) return null;
-    switch (answers.work_status) {
+    if (answers?.family_type) {
+      const map: Record<FamilyType, string> = {
+        dual:       "dual-income",
+        stay_home:  "stay-at-home",
+        single:     "single-parent",
+        leave:      "dual-income",
+      };
+      return map[answers.family_type];
+    }
+    // fallback: 旧来の work_status から推定
+    switch (answers?.work_status) {
       case "fulltime":
       case "parttime":
       case "leave":
