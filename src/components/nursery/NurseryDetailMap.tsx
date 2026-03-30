@@ -28,13 +28,15 @@ export default function NurseryDetailMap({ nursery }: NurseryDetailMapProps) {
           <p className="text-xs text-yellow-600 mt-0.5">※ 位置は概算です</p>
         )}
       </div>
-      <LeafletMap
-        nurseries={[nursery]}
-        center={nursery.location}
-        zoom={15}
-        selectedNurseryId={nursery.id}
-        className="h-52 w-full"
-      />
+      <div className="h-52">
+        <LeafletMap
+          nurseries={[nursery]}
+          center={nursery.location}
+          zoom={15}
+          selectedNurseryId={nursery.id}
+          className="h-full w-full"
+        />
+      </div>
     </div>
   );
 }

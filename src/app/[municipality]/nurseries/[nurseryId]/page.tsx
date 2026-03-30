@@ -22,6 +22,16 @@ export async function generateStaticParams() {
   return params;
 }
 
+// 施設タイプ別の転入者向け説明
+const TYPE_TIPS: Record<string, string> = {
+  "認可保育所": "市が運営・認可する保育所。保育料は収入に応じて決まります。入所は市への申請を通じて行います（直接申込不可）。",
+  "認定こども園": "保育所と幼稚園の機能を合わせ持つ施設。1号認定（幼稚園利用）と2号・3号認定（保育所利用）があります。",
+  "小規模保育": "0〜2歳専用の少人数施設（定員6〜19名）。3歳になると別の施設へ転園が必要です。",
+  "事業所内保育": "企業が従業員向けに設置する保育施設。地域枠があれば外部の方も利用できますが、定員は非常に少数です。",
+  "幼稚園": "主に3〜5歳対象の教育施設。保育時間は短め（通常14時頃まで）ですが、延長預かり保育を実施している園もあります。",
+  "認可外保育施設": "認可外ですが行政に届出済み。認可施設に入れない場合の選択肢として機能します。保育料は施設によって異なります。",
+};
+
 export default async function NurseryDetailPage({
   params,
 }: NurseryDetailPageProps) {
@@ -45,6 +55,28 @@ export default async function NurseryDetailPage({
   const occupancyRate = Math.round(
     (nursery.current_enrollment / nursery.capacity) * 100
   );
+
+  const occupancyColor =
+    occupancyRate > 100
+      ? "text-red-500"
+      : occupancyRate >= 90
+        ? "text-orange-500"
+        : "text-green-600";
+
+  const gaugeColor =
+    occupancyRate > 100
+      ? "bg-red-400"
+      : occupancyRate >= 90
+        ? "bg-orange-400"
+        : "bg-green-400";
+
+  const gaugeWidth = Math.min(occupancyRate, 100);
+
+  const hasAvailability = Object.values(nursery.availability).some(
+    (v) => v === "○" || v === "△"
+  );
+
+  const typeTip = TYPE_TIPS[nursery.type];
 
   return (
     <div className="p-4 space-y-4">
@@ -86,15 +118,43 @@ export default async function NurseryDetailPage({
             📞 {nursery.tel}
           </a>
         )}
+
+        {/* 開所時間 */}
+        {nursery.hours.open && (
+          <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-600">
+            <span>🕐 {nursery.hours.open}〜{nursery.hours.close}</span>
+            {nursery.hours.extended_close && (
+              <span>（延長〜{nursery.hours.extended_close}）</span>
+            )}
+          </div>
+        )}
+
+        {/* 給食・延長保育 */}
+        {(nursery.school_lunch !== null || nursery.extended_care !== null) && (
+          <div className="mt-2 flex gap-2">
+            {nursery.school_lunch !== null && (
+              <span className={`text-xs px-2 py-0.5 rounded-full ${nursery.school_lunch ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                {nursery.school_lunch ? "✓ 給食あり" : "✗ 給食なし"}
+              </span>
+            )}
+            {nursery.extended_care !== null && (
+              <span className={`text-xs px-2 py-0.5 rounded-full ${nursery.extended_care ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"}`}>
+                {nursery.extended_care ? "✓ 延長保育あり" : "✗ 延長保育なし"}
+              </span>
+            )}
+          </div>
+        )}
       </div>
 
       {/* 地図 */}
       {nursery.location && <NurseryDetailMap nursery={nursery} />}
 
-      {/* 定員・在籍状況 */}
+      {/* 競争率・充足率 */}
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-        <h2 className="text-sm font-bold text-gray-900 mb-3">定員・在籍状況</h2>
-        <div className="grid grid-cols-3 gap-3">
+        <h2 className="text-sm font-bold text-gray-900 mb-4">定員・競争率</h2>
+
+        {/* 数値3列 */}
+        <div className="grid grid-cols-3 gap-3 mb-4">
           <div className="text-center bg-gray-50 rounded-lg p-3">
             <div className="text-2xl font-bold text-gray-900">
               {nursery.capacity}
@@ -102,28 +162,39 @@ export default async function NurseryDetailPage({
             <div className="text-xs text-gray-500">定員</div>
           </div>
           <div className="text-center bg-gray-50 rounded-lg p-3">
-            <div
-              className={`text-2xl font-bold ${
-                nursery.current_enrollment > nursery.capacity
-                  ? "text-red-500"
-                  : "text-gray-900"
-              }`}
-            >
+            <div className={`text-2xl font-bold ${occupancyColor}`}>
               {nursery.current_enrollment}
             </div>
             <div className="text-xs text-gray-500">在籍</div>
           </div>
           <div className="text-center bg-gray-50 rounded-lg p-3">
-            <div
-              className={`text-2xl font-bold ${
-                occupancyRate > 100 ? "text-red-500" : "text-green-600"
-              }`}
-            >
+            <div className={`text-2xl font-bold ${occupancyColor}`}>
               {occupancyRate}%
             </div>
             <div className="text-xs text-gray-500">充足率</div>
           </div>
         </div>
+
+        {/* 充足率ゲージ */}
+        <div className="mb-1 flex justify-between text-xs text-gray-400">
+          <span>0%</span>
+          <span className="text-gray-600 font-medium">定員ライン 100%</span>
+        </div>
+        <div className="w-full bg-gray-100 rounded-full h-3 relative">
+          <div
+            className={`h-3 rounded-full transition-all ${gaugeColor}`}
+            style={{ width: `${gaugeWidth}%` }}
+          />
+          {/* 100%マーカー */}
+          <div className="absolute top-0 bottom-0 w-px bg-gray-400" style={{ left: "100%" }} />
+        </div>
+        <p className="mt-2 text-xs text-gray-500">
+          {occupancyRate > 100
+            ? `定員を${occupancyRate - 100}%超過しています。新規入所の空きは非常に限られます。`
+            : occupancyRate >= 90
+              ? "定員に近い状態です。空きがあっても枠は少数です。"
+              : "定員に余裕があります。"}
+        </p>
       </div>
 
       {/* 年齢別空き状況 */}
@@ -149,10 +220,44 @@ export default async function NurseryDetailPage({
         </div>
       </div>
 
+      {/* 転入者向けポイント */}
+      <div className="bg-amber-50 rounded-xl p-4 border border-amber-200">
+        <p className="text-sm font-bold text-amber-800 mb-2">⚠️ 転入を検討中の方へ</p>
+        <ul className="text-xs text-amber-700 space-y-2">
+          {hasAvailability ? (
+            <>
+              <li>・ 空きがある場合でも、転入者は「途中入所」として毎月審査があります。</li>
+              <li>・ 入所希望月の前月中旬までに総社市こども夢づくり課へ申請が必要です。</li>
+              <li>・ 空き状況はデータ更新日時点のものです。実際の空き状況は窓口でご確認ください。</li>
+            </>
+          ) : (
+            <>
+              <li>・ 現在、全年齢で空きがありません。ただし途中入所の申請は随時受け付けています。</li>
+              <li>・ 申請を出しておくことで、空きが出た際に連絡が来る場合があります。</li>
+              <li>・ 第1〜3希望まで施設を記入できます。複数の施設に申請しておくと入所できる可能性が高まります。</li>
+            </>
+          )}
+          <li className="pt-1 border-t border-amber-200">
+            📞 総社市こども夢づくり課：
+            <a href="https://www.city.soja.okayama.jp/kodomo_yumedukuri/sisei_kodomo_yume/kodomo_yume.html"
+              target="_blank" rel="noopener noreferrer"
+              className="underline ml-1">公式サイトで確認する</a>
+          </li>
+        </ul>
+      </div>
+
+      {/* 施設タイプの説明 */}
+      {typeTip && (
+        <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
+          <p className="text-xs font-bold text-blue-700 mb-1">💡 {nursery.type}とは</p>
+          <p className="text-xs text-blue-600 leading-relaxed">{typeTip}</p>
+        </div>
+      )}
+
       {/* 備考 */}
       {nursery.notes && (
         <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-          <h2 className="text-sm font-bold text-gray-900 mb-2">備考</h2>
+          <h2 className="text-sm font-bold text-gray-900 mb-2">施設メモ</h2>
           <p className="text-sm text-gray-600 leading-relaxed">
             {nursery.notes}
           </p>

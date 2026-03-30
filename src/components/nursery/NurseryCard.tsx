@@ -46,6 +46,17 @@ export default function NurseryCard({
     (v) => v === "○" || v === "△"
   );
 
+  // 競争率バッジ
+  const occupancyRate = nursery.capacity > 0
+    ? Math.round((nursery.current_enrollment / nursery.capacity) * 100)
+    : 0;
+  const occupancyBadge =
+    occupancyRate > 100
+      ? { text: `定員超過 ${occupancyRate}%`, cls: "bg-red-50 text-red-500" }
+      : occupancyRate >= 90
+        ? { text: `充足率 ${occupancyRate}%`, cls: "bg-orange-50 text-orange-500" }
+        : { text: `充足率 ${occupancyRate}%`, cls: "bg-gray-50 text-gray-500" };
+
   return (
     <Link href={`/${municipalityId}/nurseries/${nursery.id}`}>
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
@@ -84,7 +95,7 @@ export default function NurseryCard({
           </div>
         </div>
 
-        {/* 下段: 空き状況 + 定員 */}
+        {/* 下段: 空き状況 + 競争率 */}
         <div className="mt-3 flex items-center justify-between">
           <div className="flex gap-1 flex-wrap">
             {(["age_0", "age_1", "age_2", "age_3", "age_4", "age_5"] as const).map((key) => {
@@ -99,14 +110,9 @@ export default function NurseryCard({
               );
             })}
           </div>
-          <div className="text-xs text-gray-400">
-            定員 {nursery.capacity}名
-            {nursery.current_enrollment > nursery.capacity && (
-              <span className="text-red-400 ml-1">
-                ({nursery.current_enrollment}名在籍)
-              </span>
-            )}
-          </div>
+          <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${occupancyBadge.cls}`}>
+            {occupancyBadge.text}
+          </span>
         </div>
 
         {/* 空きあり表示 */}
