@@ -241,6 +241,7 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
             <p className="text-base font-bold text-gray-900">ご家庭の就労状況は？</p>
             <p className="text-xs text-gray-500 mt-1">申請に必要な書類が変わります</p>
           </div>
+          <p className="text-xs text-gray-400 px-1">↓ タップして選んでください</p>
           <div className="space-y-2">
             {WORK_STATUS_OPTIONS.map((opt) => (
               <button
@@ -249,10 +250,13 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
                   setAnswers((a) => ({ ...a, workStatus: opt.value }));
                   setStep(2);
                 }}
-                className="w-full bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-left hover:border-[#4CAF82] hover:shadow-md transition-all active:scale-[0.99]"
+                className="w-full bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-left hover:border-[#4CAF82] hover:bg-[#f9fffe] hover:shadow-md transition-all active:scale-[0.99] flex items-center justify-between gap-3"
               >
-                <p className="font-semibold text-gray-900">{opt.label}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{opt.sub}</p>
+                <div>
+                  <p className="font-semibold text-gray-900">{opt.label}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{opt.sub}</p>
+                </div>
+                <span className="text-gray-300 text-xl flex-shrink-0">›</span>
               </button>
             ))}
           </div>
@@ -267,6 +271,7 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
             <p className="text-base font-bold text-gray-900">希望する入所時期は？</p>
             <p className="text-xs text-gray-500 mt-1">申請の締め切りと手順が変わります</p>
           </div>
+          <p className="text-xs text-gray-400 px-1">↓ タップして選んでください</p>
           <div className="space-y-2">
             {TIMING_OPTIONS.map((opt) => (
               <button
@@ -275,10 +280,13 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
                   setAnswers((a) => ({ ...a, timing: opt.value }));
                   setStep(3);
                 }}
-                className="w-full bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-left hover:border-[#4CAF82] hover:shadow-md transition-all active:scale-[0.99]"
+                className="w-full bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-left hover:border-[#4CAF82] hover:bg-[#f9fffe] hover:shadow-md transition-all active:scale-[0.99] flex items-center justify-between gap-3"
               >
-                <p className="font-semibold text-gray-900">{opt.label}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{opt.sub}</p>
+                <div>
+                  <p className="font-semibold text-gray-900">{opt.label}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{opt.sub}</p>
+                </div>
+                <span className="text-gray-300 text-xl flex-shrink-0">›</span>
               </button>
             ))}
           </div>
@@ -299,6 +307,7 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
             <p className="text-base font-bold text-gray-900">お子さまの年齢は？</p>
             <p className="text-xs text-gray-500 mt-1">選べる施設の種類が変わります</p>
           </div>
+          <p className="text-xs text-gray-400 px-1">↓ タップして選んでください</p>
           <div className="space-y-2">
             {AGE_OPTIONS.map((opt) => (
               <button
@@ -307,10 +316,13 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
                   setAnswers((a) => ({ ...a, childAge: opt.value }));
                   setStep(4);
                 }}
-                className="w-full bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-left hover:border-[#4CAF82] hover:shadow-md transition-all active:scale-[0.99]"
+                className="w-full bg-white rounded-xl p-4 shadow-sm border border-gray-200 text-left hover:border-[#4CAF82] hover:bg-[#f9fffe] hover:shadow-md transition-all active:scale-[0.99] flex items-center justify-between gap-3"
               >
-                <p className="font-semibold text-gray-900">{opt.label}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{opt.sub}</p>
+                <div>
+                  <p className="font-semibold text-gray-900">{opt.label}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{opt.sub}</p>
+                </div>
+                <span className="text-gray-300 text-xl flex-shrink-0">›</span>
               </button>
             ))}
           </div>
