@@ -73,6 +73,16 @@ const NAV_ITEMS = [
     type: "tab",
   },
   {
+    tab: "apply",
+    icon: "📋",
+    title: "申請書類 診断",
+    description: "3問に答えるだけで必要書類リストを作成",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}/apply`,
+    type: "page",
+  },
+  {
     tab: "faq",
     icon: "❓",
     title: "よくある質問",
@@ -98,6 +108,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const isGiveawayPage   = pathname?.includes("/giveaway")    ?? false;
   const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
   const isFaqPage        = pathname?.endsWith("/faq")         ?? false;
+  const isApplyPage      = pathname?.endsWith("/apply")       ?? false;
 
   const isHomePage =
     !isChecklistPage &&
@@ -106,6 +117,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
     !isGiveawayPage &&
     !isCommunityPage &&
     !isFaqPage &&
+    !isApplyPage &&
     !searchParams.get("tab");
 
   const isActive = (item: typeof NAV_ITEMS[number]) => {
@@ -115,6 +127,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
     if (isGiveawayPage)  return item.tab === "giveaway";
     if (isCommunityPage) return item.tab === "community";
     if (isFaqPage)       return item.tab === "faq";
+    if (isApplyPage)     return item.tab === "apply";
     if (isHomePage)      return item.tab === "home";
     return item.type === "tab" && activeTab === item.tab;
   };
