@@ -24,6 +24,40 @@ function generateId(): string {
   return crypto.randomUUID();
 }
 
+function getEmploymentCertReminder(enrollmentMonth: string, hasApplied: boolean) {
+  if (!enrollmentMonth || hasApplied) return null;
+
+  const [yearStr, monthStr] = enrollmentMonth.split("-");
+  const year = Number(yearStr);
+  const month = Number(monthStr);
+
+  // 締め切り日を算出：4月入所は前年11月28日、途中入所は入所希望月の前月1日
+  let deadlineDate: Date;
+  if (month === 4) {
+    deadlineDate = new Date(year - 1, 10, 28); // 0-indexed month
+  } else {
+    const prevMonth = month === 1 ? 12 : month - 1;
+    const prevYear  = month === 1 ? year - 1 : year;
+    deadlineDate = new Date(prevYear, prevMonth - 1, 1);
+  }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  deadlineDate.setHours(0, 0, 0, 0);
+
+  const daysUntilDeadline = Math.ceil(
+    (deadlineDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  );
+
+  // 42日前（約6週間）から表示。締め切り7日後に非表示
+  if (daysUntilDeadline > 42 || daysUntilDeadline < -7) return null;
+
+  return {
+    daysUntilDeadline,
+    deadlineStr: `${deadlineDate.getMonth() + 1}月${deadlineDate.getDate()}日`,
+  };
+}
+
 function getDaysLeft(movingDate: Date, daysFromMoving: number): number {
   const deadline = new Date(movingDate);
   deadline.setDate(deadline.getDate() + daysFromMoving);
@@ -287,6 +321,52 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
           />
         </div>
       </div>
+
+      {/* 就労証明書リマインダー */}
+      {(() => {
+        const reminder = getEmploymentCertReminder(enrollmentMonth, hasApplied);
+        if (!reminder) return null;
+        const { daysUntilDeadline, deadlineStr } = reminder;
+        const isPast    = daysUntilDeadline < 0;
+        const isUrgent  = !isPast && daysUntilDeadline <= 7;
+        const isWarning = !isPast && daysUntilDeadline <= 14;
+
+        const bgBorder = isPast    ? "bg-gray-50 border-gray-200"
+                       : isUrgent  ? "bg-red-50 border-red-200"
+                       : isWarning ? "bg-orange-50 border-orange-200"
+                       : "bg-yellow-50 border-yellow-200";
+        const titleColor = isPast    ? "text-gray-600"
+                         : isUrgent  ? "text-red-700"
+                         : isWarning ? "text-orange-700"
+                         : "text-yellow-700";
+        const subColor = isPast    ? "text-gray-500"
+                       : isUrgent  ? "text-red-600"
+                       : isWarning ? "text-orange-600"
+                       : "text-yellow-600";
+
+        return (
+          <div className={`rounded-xl p-4 border ${bgBorder}`}>
+            <div className="flex items-start gap-3">
+              <span className="text-xl flex-shrink-0">{isPast ? "⚠️" : "📋"}</span>
+              <div>
+                <p className={`text-sm font-bold ${titleColor}`}>
+                  {isPast ? "就労証明書の提出期限が過ぎています" : "就労証明書の準備を始めましょう"}
+                </p>
+                <p className={`text-xs mt-0.5 ${subColor}`}>
+                  {isPast
+                    ? `申込み締め切り（${deadlineStr}）が${Math.abs(daysUntilDeadline)}日前に過ぎました`
+                    : `申込み締め切りまで約${daysUntilDeadline}日（${deadlineStr}）`}
+                </p>
+                {!isPast && (
+                  <p className="text-xs text-gray-500 mt-1.5">
+                    💡 発行まで1〜2週間かかることがあります。早めに職場へ依頼を。
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ペルソナ選択 */}
       <div>
