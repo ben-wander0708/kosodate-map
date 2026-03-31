@@ -47,3 +47,22 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* キオスク（窓口提示）モード：文字を少し大きく */
+.kiosk-mode {
+  font-size: 112%;
+}
+
+/* 印刷CSS：ヘッダー・ボタン類を非表示にしてクリーンに */
+@media print {
+  header,
+  .no-print {
+    display: none !important;
+  }
+  .kiosk-mode {
+    font-size: 100%;
+  }
+  body {
+    background: white;
+  }
+}

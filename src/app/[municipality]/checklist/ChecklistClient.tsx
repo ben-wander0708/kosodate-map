@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
+import { useSearchParams, usePathname } from "next/navigation";
 import { getSupabase } from "@/lib/supabase/client";
 import type { MunicipalityChecklist, ChecklistItem } from "@/lib/data/types";
 import { useOnboarding } from "@/hooks/useOnboarding";
@@ -75,6 +76,10 @@ function getDeadlineDate(movingDate: Date, daysFromMoving: number): string {
 
 export default function ChecklistClient({ checklist, municipalityName, municipalityId }: ChecklistClientProps) {
   const onboarding = useOnboarding();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const isKioskMode = searchParams.get("mode") === "kiosk";
+  const kioskUrl = `${pathname}?mode=kiosk`;
 
   const [shareId, setShareId] = useState<string | null>(null);
   const [isCopied, setIsCopied] = useState(false);
@@ -251,6 +256,30 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
 
   return (
     <>
+    {/* 窓口提示モード：固定上部バー */}
+    {isKioskMode && (
+      <div className="fixed top-0 left-0 right-0 z-50 bg-[#2d9e6b] text-white px-4 py-3 flex items-center justify-between shadow-md no-print">
+        <div className="flex items-center gap-2">
+          <span className="text-base">🖥</span>
+          <span className="text-sm font-bold">窓口提示モード</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => window.print()}
+            className="text-xs bg-white/20 rounded-lg px-3 py-1.5 font-medium"
+          >
+            🖨 印刷
+          </button>
+          <a
+            href={pathname}
+            className="text-xs bg-white/20 rounded-lg px-3 py-1.5 font-medium"
+          >
+            ✕ 終了
+          </a>
+        </div>
+      </div>
+    )}
+
     {progress === 100 && (
       <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white border-t border-[#c8ead8] shadow-lg">
         <Link
@@ -261,7 +290,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
         </Link>
       </div>
     )}
-    <div className={`space-y-4 p-4${progress === 100 ? " pb-20" : ""}`}>
+    <div className={`space-y-4 p-4${progress === 100 ? " pb-20" : ""}${isKioskMode ? " kiosk-mode pt-20" : ""}`}>
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <div className="flex items-start justify-between">
@@ -273,12 +302,22 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
           </div>
         </div>
 
-        <button
-          onClick={handleShare}
-          className="mt-3 w-full bg-white/20 hover:bg-white/30 rounded-lg px-3 py-3 text-xs text-white font-semibold flex items-center justify-center gap-2 transition-all min-h-[44px]"
-        >
-          {isCopied ? "✅ URLをコピーしました！" : "👫 パートナーと共有する"}
-        </button>
+        <div className="flex gap-2 mt-3">
+          <button
+            onClick={handleShare}
+            className="flex-1 bg-white/20 hover:bg-white/30 rounded-lg px-3 py-3 text-xs text-white font-semibold flex items-center justify-center gap-2 transition-all min-h-[44px]"
+          >
+            {isCopied ? "✅ URLをコピーしました！" : "👫 パートナーと共有する"}
+          </button>
+          {!isKioskMode && (
+            <a
+              href={kioskUrl}
+              className="bg-white/20 hover:bg-white/30 rounded-lg px-3 py-3 text-xs text-white font-semibold flex items-center justify-center gap-1 transition-all min-h-[44px] whitespace-nowrap no-print"
+            >
+              🖥 窓口で開く
+            </a>
+          )}
+        </div>
       </div>
 
       {/* 日付入力 */}

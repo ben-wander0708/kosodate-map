@@ -101,6 +101,9 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const { isLoggedIn, profile, loading: liffLoading } = useLiff();
   const activeTab = searchParams.get("tab") ?? "nursery";
 
+  // 窓口提示モード中はヘッダーを非表示
+  if (searchParams.get("mode") === "kiosk") return null;
+
   // サブページの判定
   const isChecklistPage  = pathname?.endsWith("/checklist")  ?? false;
   const isTimelinePage   = pathname?.endsWith("/timeline")   ?? false;

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { dataRepository } from "@/lib/data/json-adapter";
 import ChecklistClient from "./ChecklistClient";
 
@@ -23,10 +24,17 @@ export default async function ChecklistPage({ params }: ChecklistPageProps) {
   if (!checklist) notFound();
 
   return (
-    <ChecklistClient
-      checklist={checklist}
-      municipalityName={municipality.name_ja}
-      municipalityId={municipalityId}
-    />
+    <Suspense fallback={
+      <div className="p-4 space-y-4 animate-pulse">
+        <div className="h-8 bg-gray-200 rounded-xl" />
+        <div className="h-24 bg-gray-100 rounded-xl" />
+      </div>
+    }>
+      <ChecklistClient
+        checklist={checklist}
+        municipalityName={municipality.name_ja}
+        municipalityId={municipalityId}
+      />
+    </Suspense>
   );
 }
