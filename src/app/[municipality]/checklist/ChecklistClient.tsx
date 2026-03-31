@@ -14,6 +14,12 @@ interface ChecklistClientProps {
 
 const LOCAL_SHARE_KEY = "kosodate_share_id";
 
+// 保育園の入所申込みを示すアイテムID（チェック済み → 待機ダッシュボードを表示）
+const APPLICATION_ITEM_IDS = new Set([
+  "di-u-4-april", "di-u-4-midyear",
+  "sp-a-3-april", "sp-a-3-midyear",
+]);
+
 function generateId(): string {
   return crypto.randomUUID();
 }
@@ -198,6 +204,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
   const doneItems = selectedPersona
     ? selectedPersona.sections.flatMap((s) => s.items).filter((item) => checkedItems.has(item.id)).length : 0;
   const progress = totalItems > 0 ? Math.round((doneItems / totalItems) * 100) : 0;
+  const hasApplied = [...APPLICATION_ITEM_IDS].some((id) => checkedItems.has(id));
 
   if (!loaded) {
     return (
@@ -333,6 +340,9 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
               )}
             </div>
           </div>
+
+          {/* 申請後 待機ダッシュボード */}
+          {hasApplied && <WaitingDashboard enrollmentMonth={enrollmentMonth} />}
 
           {selectedPersona.sections.map((section) => {
             const isPreMove = section.id === "pre-move";
@@ -499,5 +509,74 @@ function ChecklistItemCard({
         </div>
       </div>
     </button>
+  );
+}
+
+function WaitingDashboard({ enrollmentMonth }: { enrollmentMonth: string }) {
+  let resultDateStr = "";
+  let daysUntilResult: number | null = null;
+  let resultPassed = false;
+
+  if (enrollmentMonth) {
+    // 入園月の45日前を結果通知予定日とする
+    const enrollDate = new Date(enrollmentMonth + "-01");
+    const resultDate = new Date(enrollDate);
+    resultDate.setDate(resultDate.getDate() - 45);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    resultDate.setHours(0, 0, 0, 0);
+
+    daysUntilResult = Math.ceil((resultDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    resultDateStr = `${resultDate.getMonth() + 1}月${resultDate.getDate()}日頃`;
+    resultPassed = daysUntilResult <= 0;
+  }
+
+  const todos = [
+    { icon: "🏫", text: "施設への見学訪問・入所説明会の日程を確認する" },
+    { icon: "📝", text: "入所時に必要な持ち物リストを施設に確認する" },
+    { icon: "💼", text: "職場への復帰時期・時短勤務について相談する" },
+    { icon: "📋", text: "補欠・2次募集に備え、他の希望施設も検討しておく" },
+    { icon: "💰", text: "保育料の目安を確認する（無償化・収入による変動あり）" },
+  ];
+
+  return (
+    <div className="bg-gradient-to-br from-[#f0faf5] to-[#e6f7ef] rounded-xl p-4 border border-[#a8ddc0]">
+      <div className="flex items-start gap-3 mb-3">
+        <span className="text-2xl flex-shrink-0">{resultPassed ? "📬" : "⏳"}</span>
+        <div>
+          <p className="text-sm font-bold text-[#2d7a5a]">申込み完了！審査待ち中</p>
+          {daysUntilResult !== null ? (
+            resultPassed ? (
+              <p className="text-xs text-[#2d9e6b] font-semibold mt-0.5">
+                結果通知の時期です。郵便・窓口をご確認ください
+              </p>
+            ) : (
+              <p className="text-xs text-[#2d9e6b] mt-0.5">
+                結果通知まで約{" "}
+                <span className="font-bold text-base text-[#2d7a5a]">{daysUntilResult}</span>
+                {" "}日（{resultDateStr}）
+              </p>
+            )
+          ) : (
+            <p className="text-xs text-gray-500 mt-0.5">
+              入園月を設定すると結果通知日のカウントダウンが表示されます
+            </p>
+          )}
+        </div>
+      </div>
+
+      <div className="border-t border-[#c8ead8] pt-3">
+        <p className="text-xs font-semibold text-[#2d7a5a] mb-2">📌 この間にできること</p>
+        <ul className="space-y-2">
+          {todos.map((todo, i) => (
+            <li key={i} className="flex items-start gap-2 text-xs text-[#3a7a5c]">
+              <span className="flex-shrink-0 mt-0.5">{todo.icon}</span>
+              <span>{todo.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }
