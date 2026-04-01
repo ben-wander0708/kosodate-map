@@ -215,6 +215,14 @@ function WizardView({
     setStep("done");
   };
 
+  // 完了画面で入園月を選んだとき即時保存
+  const handleEnrollmentMonthInDone = (value: string) => {
+    const toggled = value === answers.enrollment_month ? undefined : value;
+    const updated = { ...answers, enrollment_month: toggled };
+    setAnswers(updated);
+    saveDone(updated);
+  };
+
   const handleSkip = () => {
     // スキップ時もそれまでに入力した回答（family_typeなど）を保持する
     try {
@@ -400,16 +408,43 @@ function WizardView({
         {step === "done" && (
           <div className="space-y-4">
             <p className="text-sm text-gray-600 leading-relaxed">{cta.message}</p>
+
+            {/* 入園月ピッカー（保活中のユーザーのみ） */}
+            {(answers.phase === "moved" || answers.phase === "moving_soon" || answers.phase === "decided") && (
+              <div className="bg-[#f0faf5] border border-[#c8ead8] rounded-xl p-3">
+                <p className="text-xs font-semibold text-[#2d7a5a] mb-2">
+                  🏫 保育園の入園希望月はいつ頃ですか？
+                  <span className="font-normal text-gray-400 ml-1">（任意）</span>
+                </p>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {MONTH_OPTIONS.filter((_, i) => i >= 3).map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => handleEnrollmentMonthInDone(opt.value)}
+                      className={`py-2 px-1 rounded-xl border-2 text-xs font-semibold text-center transition-all active:scale-95 ${
+                        answers.enrollment_month === opt.value
+                          ? "border-[#2d9e6b] bg-[#2d9e6b] text-white"
+                          : "border-gray-200 bg-white text-gray-700"
+                      }`}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+                {answers.enrollment_month && (
+                  <p className="text-xs text-[#2d9e6b] mt-2 font-medium">
+                    ✅ {MONTH_OPTIONS.find((m) => m.value === answers.enrollment_month)?.label}に設定しました
+                  </p>
+                )}
+              </div>
+            )}
+
             <button
               onClick={() => { onClose(); router.push(cta.href); }}
               className="w-full bg-[#2d9e6b] text-white font-semibold text-sm py-3 rounded-xl active:scale-95 transition-all"
             >
               {cta.buttonLabel}
             </button>
-            <p className="text-center text-xs text-gray-400">
-              入園月・引越し日などは<br />
-              画面右上の <span className="font-semibold text-gray-500">✏️ 設定変更</span> からいつでも追加できます
-            </p>
             <button onClick={onClose} className="w-full text-gray-400 text-xs underline text-center">
               あとで見る
             </button>
