@@ -104,7 +104,7 @@ function getCtaForPhase(phase: Phase | undefined, municipalityId: string) {
     case "moving_soon":
       return { message: "引越しまでにやることと転入後の手続きをまとめて確認できます。", buttonLabel: "チェックリストを確認する →", href: `/${municipalityId}/checklist` };
     case "moved":
-      return { message: "転入届の提出はお済みですか？保育施設の申込みも早めに。", buttonLabel: "保育施設の空きを確認する →", href: `/${municipalityId}` };
+      return { message: "転入届の提出はお済みですか？保育施設の申込みも早めに。", buttonLabel: "保育施設の空きを確認する →", href: `/${municipalityId}?tab=nursery` };
     default:
       return { message: "気になるエリアの保育施設の空き状況を先に確認しておきましょう。", buttonLabel: "保育施設マップを見る →", href: `/${municipalityId}` };
   }
@@ -216,8 +216,9 @@ function WizardView({
   };
 
   const handleSkip = () => {
+    // スキップ時もそれまでに入力した回答（family_typeなど）を保持する
     try {
-      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, skipped: true }));
+      localStorage.setItem(ONBOARDING_DONE_KEY, JSON.stringify({ done: true, skipped: true, answers }));
     } catch {}
     onClose();
   };

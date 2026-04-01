@@ -133,7 +133,7 @@ export default function NurseryCard({
         {/* ひとり親優先バッジ */}
         {showPriorityBadge && (
           <div className="mt-2 text-xs font-medium text-purple-700 bg-purple-50 rounded-lg px-3 py-1.5 text-center border border-purple-100">
-            👤 ひとり親は入所審査で優先されやすい施設です
+            👤 総社市の選考基準でひとり親加点があります（点数制）
           </div>
         )}
       </div>

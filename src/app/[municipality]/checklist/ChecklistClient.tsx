@@ -320,6 +320,16 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
         </div>
       </div>
 
+      {/* 転居済みユーザーへの入園月設定促進バナー */}
+      {onboarding.answers?.phase === "moved" && !enrollmentMonth && (
+        <div className="bg-blue-50 border border-blue-100 rounded-xl p-3 flex items-start gap-2">
+          <span className="text-base flex-shrink-0">💡</span>
+          <p className="text-xs text-blue-700 leading-relaxed">
+            転居済みの方は<span className="font-bold">「保育園の入園月」</span>を設定すると、申込み後の審査待ちカウントダウンと就労証明書リマインダーが表示されます。
+          </p>
+        </div>
+      )}
+
       {/* 日付入力 */}
       <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-3">
         <div>
