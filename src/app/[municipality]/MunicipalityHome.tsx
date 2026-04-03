@@ -54,6 +54,8 @@ export default function MunicipalityHome({
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [transportMode, setTransportMode] = useState<TransportMode>("bike");
   const [selectedNurseryId, setSelectedNurseryId] = useState<string | null>(null);
+  const [travelTimeData, setTravelTimeData] = useState<Record<string, { walk_minutes: number | null; bike_minutes: number | null; car_minutes: number | null }> | null>(null);
+  const [isFetchingTravelTime, setIsFetchingTravelTime] = useState(false);
   const [nurseryViewMode, setNurseryViewMode] = useState<"list" | "map">("list");
   const searchParams = useSearchParams();
   const activeTab = (searchParams.get("tab") as TabType | null) ?? "nursery";
@@ -99,19 +101,80 @@ export default function MunicipalityHome({
 
   const rankedNurseries = useMemo(() => {
     if (!userLocation) return null;
-    return rankNurseriesByDistance(filteredNurseries, userLocation);
-  }, [filteredNurseries, userLocation]);
+    const base = rankNurseriesByDistance(filteredNurseries, userLocation);
+    if (!travelTimeData) return base;
+    return base
+      .map((n) => ({
+        ...n,
+        walk_minutes: travelTimeData[n.id]?.walk_minutes ?? n.walk_minutes,
+        bike_minutes: travelTimeData[n.id]?.bike_minutes ?? n.bike_minutes,
+        car_minutes:  travelTimeData[n.id]?.car_minutes  ?? n.car_minutes,
+      }))
+      .sort((a, b) => {
+        const aMin = transportMode === "walk" ? a.walk_minutes : transportMode === "bike" ? a.bike_minutes : a.car_minutes;
+        const bMin = transportMode === "walk" ? b.walk_minutes : transportMode === "bike" ? b.bike_minutes : b.car_minutes;
+        return (aMin ?? 999) - (bMin ?? 999);
+      });
+  }, [filteredNurseries, userLocation, travelTimeData, transportMode]);
 
   const rankedClinics = useMemo(() => {
     if (!userLocation) return null;
-    return rankClinicsByDistance(filteredClinics, userLocation);
-  }, [filteredClinics, userLocation]);
+    const base = rankClinicsByDistance(filteredClinics, userLocation);
+    if (!travelTimeData) return base;
+    return base
+      .map((c) => ({
+        ...c,
+        walk_minutes: travelTimeData[c.id]?.walk_minutes ?? c.walk_minutes,
+        bike_minutes: travelTimeData[c.id]?.bike_minutes ?? c.bike_minutes,
+        car_minutes:  travelTimeData[c.id]?.car_minutes  ?? c.car_minutes,
+      }))
+      .sort((a, b) => {
+        const aMin = transportMode === "walk" ? a.walk_minutes : transportMode === "bike" ? a.bike_minutes : a.car_minutes;
+        const bMin = transportMode === "walk" ? b.walk_minutes : transportMode === "bike" ? b.bike_minutes : b.car_minutes;
+        return (aMin ?? 999) - (bMin ?? 999);
+      });
+  }, [filteredClinics, userLocation, travelTimeData, transportMode]);
 
   const handleLocationSet = useCallback((location: Location) => {
     setUserLocation(location);
-    // ユーザー位置をトラッカーに反映（H3インデックス計算に使用）
     updateLocation(location.lat, location.lng);
   }, []);
+
+  // 位置が設定されたらGoogle Maps Distance Matrix APIで実所要時間を取得
+  useEffect(() => {
+    if (!userLocation) return;
+
+    setIsFetchingTravelTime(true);
+    setTravelTimeData(null);
+
+    const destinations = [
+      ...nurseries.filter((n) => n.location).map((n) => ({ id: n.id, lat: n.location!.lat, lng: n.location!.lng })),
+      ...clinics.filter((c) => c.location).map((c) => ({ id: c.id, lat: c.location!.lat, lng: c.location!.lng })),
+    ];
+
+    fetch("/api/travel-time", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ origin: userLocation, destinations }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        const map: Record<string, { walk_minutes: number | null; bike_minutes: number | null; car_minutes: number | null }> = {};
+        for (const r of data.results) {
+          map[r.id] = { walk_minutes: r.walk_minutes, bike_minutes: r.bike_minutes, car_minutes: r.car_minutes };
+        }
+        setTravelTimeData(map);
+      })
+      .catch((err) => {
+        console.error("travel-time fetch failed:", err);
+        // フォールバック：haversine推定値をそのまま使用
+      })
+      .finally(() => {
+        setIsFetchingTravelTime(false);
+      });
+  // nurseries/clinics は初期値から変わらないため除外
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userLocation]);
 
   // ===================================
   // トラッキング: 初回マウント（セッション開始は AnalyticsProvider が担当）
@@ -203,10 +266,23 @@ export default function MunicipalityHome({
 
       {/* 自宅位置設定（支援制度タブでは不要） */}
       {activeTab !== "gov" && (
-        <AddressInput
-          onLocationSet={handleLocationSet}
-          defaultCenter={defaultCenter}
-        />
+        <>
+          <AddressInput
+            onLocationSet={handleLocationSet}
+            defaultCenter={defaultCenter}
+          />
+          {isFetchingTravelTime && (
+            <div className="flex items-center gap-2 bg-blue-50 rounded-xl px-4 py-3 text-xs text-blue-600 border border-blue-100">
+              <span className="animate-spin">⏳</span>
+              各施設への所要時間を計算中...
+            </div>
+          )}
+          {!isFetchingTravelTime && travelTimeData && (
+            <div className="bg-green-50 rounded-xl px-4 py-3 text-xs text-green-700 border border-green-100">
+              ✅ Googleマップの経路データで所要時間を表示しています
+            </div>
+          )}
+        </>
       )}
 
       {/* マップ（支援制度タブでは非表示） */}
@@ -515,7 +591,9 @@ export default function MunicipalityHome({
       <div className="bg-yellow-50 rounded-xl p-3 text-xs text-yellow-700 border border-yellow-200">
         <p className="font-semibold mb-1">⚠ ご注意</p>
         <ul className="space-y-1 text-yellow-600">
-          {activeTab !== "gov" && <li>・ 距離は直線距離の概算です。</li>}
+          {activeTab !== "gov" && (
+            <li>・ {travelTimeData ? "所要時間はGoogleマップの経路データを使用しています。実際の交通状況により変動することがあります。" : "起点未設定時の所要時間は直線距離からの概算です。"}</li>
+          )}
           {activeTab === "nursery" && <li>・ 空き状況はデータ更新日時点のものです。</li>}
           {activeTab === "clinic" && <li>・ 診療時間・休診日は変更されることがあります。受診前に各施設にご確認ください。</li>}
           {activeTab === "gov" && <li>・ 制度の内容・金額は変更されることがあります。詳細は各窓口にご確認ください。</li>}
