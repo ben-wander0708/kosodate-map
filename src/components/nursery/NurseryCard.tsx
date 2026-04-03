@@ -1,9 +1,19 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { NurseryWithDistance, TransportMode } from "@/lib/data/types";
 import AvailabilityBadge from "./AvailabilityBadge";
 import { useOnboarding } from "@/hooks/useOnboarding";
+
+function getGoogleMapsUrl(nursery: NurseryWithDistance): string | null {
+  if (nursery.location) {
+    return `https://www.google.com/maps?q=${nursery.location.lat},${nursery.location.lng}`;
+  }
+  if (nursery.address) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(nursery.address)}`;
+  }
+  return null;
+}
 
 // 市の点数制審査でひとり親が優先される施設タイプ
 const PRIORITY_TYPES_FOR_SINGLE = ["認可保育所", "認定こども園", "小規模保育", "事業所内保育"];
@@ -36,6 +46,8 @@ export default function NurseryCard({
   municipalityId,
   transportMode,
 }: NurseryCardProps) {
+  const router = useRouter();
+  const mapsUrl = getGoogleMapsUrl(nursery);
   const minutes =
     transportMode === "walk"
       ? nursery.walk_minutes
@@ -66,8 +78,10 @@ export default function NurseryCard({
         : { text: `充足率 ${occupancyRate}%`, cls: "bg-gray-50 text-gray-500" };
 
   return (
-    <Link href={`/${municipalityId}/nurseries/${nursery.id}`}>
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div
+      className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
+      onClick={() => router.push(`/${municipalityId}/nurseries/${nursery.id}`)}
+    >
         {/* 上段: ランク + 名前 + 移動時間 */}
         <div className="flex items-start gap-3">
           {/* ランクバッジ */}
@@ -136,7 +150,22 @@ export default function NurseryCard({
             👤 総社市の選考基準でひとり親加点があります（点数制）
           </div>
         )}
-      </div>
-    </Link>
+
+        {/* Googleマップボタン */}
+        {mapsUrl && (
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="mt-3 flex items-center justify-center gap-1.5 w-full border border-gray-200 rounded-lg py-2 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#4285F4"/>
+            </svg>
+            Googleマップで開く
+          </a>
+        )}
+    </div>
   );
 }

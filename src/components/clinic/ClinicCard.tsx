@@ -1,7 +1,17 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import type { ClinicWithDistance, TransportMode } from "@/lib/data/types";
+
+function getGoogleMapsUrl(clinic: ClinicWithDistance): string {
+  if (clinic.google_place_id) {
+    return `https://www.google.com/maps/place/?q=place_id:${clinic.google_place_id}`;
+  }
+  if (clinic.location) {
+    return `https://www.google.com/maps?q=${clinic.location.lat},${clinic.location.lng}`;
+  }
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(clinic.address)}`;
+}
 
 interface ClinicCardProps {
   clinic: ClinicWithDistance;
@@ -25,6 +35,8 @@ export default function ClinicCard({
   municipalityId,
   transportMode,
 }: ClinicCardProps) {
+  const router = useRouter();
+  const mapsUrl = getGoogleMapsUrl(clinic);
   const minutes =
     transportMode === "walk"
       ? clinic.walk_minutes
@@ -40,8 +52,10 @@ export default function ClinicCard({
   const moreDepts = clinic.departments.length - 3;
 
   return (
-    <Link href={`/${municipalityId}/clinics/${clinic.id}`}>
-      <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+    <div
+      className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow cursor-pointer"
+      onClick={() => router.push(`/${municipalityId}/clinics/${clinic.id}`)}
+    >
         {/* 上段: ランク + 名前 + 移動時間 */}
         <div className="flex items-start gap-3">
           {/* ランクバッジ */}
@@ -108,7 +122,20 @@ export default function ClinicCard({
             </span>
           )}
         </div>
-      </div>
-    </Link>
+
+        {/* Googleマップボタン */}
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={(e) => e.stopPropagation()}
+          className="mt-3 flex items-center justify-center gap-1.5 w-full border border-gray-200 rounded-lg py-2 text-xs font-medium text-gray-600 hover:bg-gray-50 transition-colors"
+        >
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#4285F4"/>
+          </svg>
+          Googleマップで開く
+        </a>
+    </div>
   );
 }
