@@ -142,7 +142,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
             <div className="w-8 h-8 bg-gradient-to-br from-[#4CAF82] to-[#2d9e6b] rounded-[10px] flex items-center justify-center text-white text-base">
-              🗺
+              🌱
             </div>
             <div className="text-base font-bold text-gray-900">
               総社<span className="text-[#4CAF82]">子育てノート</span>
@@ -189,7 +189,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
             <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 bg-gradient-to-br from-[#4CAF82] to-[#2d9e6b] rounded-lg flex items-center justify-center text-white text-sm">
-                  🗺
+                  🌱
                 </div>
                 <span className="font-bold text-gray-800">総社子育てノート</span>
               </div>
@@ -315,7 +315,7 @@ export default function AppHeader(props: AppHeaderProps) {
           <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-gradient-to-br from-[#4CAF82] to-[#2d9e6b] rounded-[10px] flex items-center justify-center text-white text-base">
-                🗺
+                🌱
               </div>
               <div className="text-base font-bold text-gray-900">
                 総社<span className="text-[#4CAF82]">子育てノート</span>

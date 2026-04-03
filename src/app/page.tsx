@@ -17,7 +17,7 @@ export default async function HomePage() {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center gap-3 mb-6">
             <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl backdrop-blur-sm">
-              🗺
+              🌱
             </div>
             <div>
               <h1 className="text-2xl font-bold">

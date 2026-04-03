@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>アイコン生成</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #d0d0d0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px;
+      gap: 32px;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    h2 { font-size: 14px; color: #444; letter-spacing: 1px; }
+    .previews {
+      display: flex;
+      gap: 32px;
+      align-items: flex-end;
+    }
+    .preview-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+    .preview-box span { font-size: 11px; color: #666; }
+    canvas { border-radius: 22%; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+    .btns {
+      display: flex;
+      gap: 16px;
+    }
+    button {
+      background: #2d9e6b;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    button:hover { background: #1a7a52; }
+  </style>
+</head>
+<body>
+
+<h2>PWA ホーム画面アイコン — プレビュー</h2>
+
+<div class="previews">
+  <div class="preview-box">
+    <canvas id="c512" width="512" height="512" style="width:120px;height:120px;"></canvas>
+    <span>512 × 512 px</span>
+  </div>
+  <div class="preview-box">
+    <canvas id="c192" width="192" height="192" style="width:80px;height:80px;"></canvas>
+    <span>192 × 192 px</span>
+  </div>
+  <div class="preview-box">
+    <canvas id="c64" width="64" height="64" style="width:48px;height:48px;"></canvas>
+    <span>64 × 64 px（favicon）</span>
+  </div>
+</div>
+
+<div class="btns">
+  <button onclick="download('c512','icon-512.png')">📥 icon-512.png</button>
+  <button onclick="download('c192','icon-192.png')">📥 icon-192.png</button>
+  <button onclick="download('c64','favicon.png')">📥 favicon.png</button>
+</div>
+
+<script>
+  // フォント読み込み待機後に描画
+  document.fonts.ready.then(() => {
+    ['c512','c192','c64'].forEach(id => drawIcon(id));
+  });
+
+  function drawIcon(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const size = canvas.width;
+    const ctx = canvas.getContext('2d');
+    const s = size / 512; // スケールファクター（512基準）
+
+    ctx.clearRect(0, 0, size, size);
+
+    // ── 背景（白） ──
+    const r = 80 * s; // 角丸半径
+    roundRect(ctx, 0, 0, size, size, r);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+
+    // ── 上部グリーン帯（高さ54%） ──
+    const bandH = size * 0.56;
+    ctx.save();
+    roundRect(ctx, 0, 0, size, size, r);
+    ctx.clip();
+    ctx.fillStyle = '#2d9e6b';
+    ctx.fillRect(0, 0, size, bandH);
+    ctx.restore();
+
+    // ── 葉のシンボル（白いシンプル形状）──
+    const cx = size / 2;
+    const cy = bandH * 0.44;
+    const leafSize = 120 * s;
+
+    ctx.save();
+    ctx.translate(cx, cy);
+
+    // 茎
+    ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    ctx.lineWidth = 9 * s;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(0, leafSize * 0.55);
+    ctx.lineTo(0, -leafSize * 0.6);
+    ctx.stroke();
+
+    // 左の葉
+    ctx.fillStyle = 'rgba(255,255,255,0.90)';
+    ctx.beginPath();
+    ctx.ellipse(-leafSize * 0.38, -leafSize * 0.08, leafSize * 0.42, leafSize * 0.22, -Math.PI * 0.28, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 右の葉
+    ctx.beginPath();
+    ctx.ellipse(leafSize * 0.38, -leafSize * 0.28, leafSize * 0.42, leafSize * 0.22, Math.PI * 0.28, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+
+    // ── 下部エリア（白）：テキスト ──
+    if (size >= 96) {
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+
+      // "子育て"（細め）
+      ctx.font = `700 ${Math.round(52 * s)}px 'Noto Sans JP'`;
+      ctx.fillStyle = '#1a7a52';
+      ctx.fillText('子育て', cx, bandH + (size - bandH) * 0.38);
+
+      // "ノート"（太め・小）
+      ctx.font = `900 ${Math.round(44 * s)}px 'Noto Sans JP'`;
+      ctx.fillStyle = '#2d9e6b';
+      ctx.fillText('ノート', cx, bandH + (size - bandH) * 0.72);
+    }
+
+    // ── 外枠（薄い緑） ──
+    ctx.save();
+    roundRect(ctx, 0.5, 0.5, size - 1, size - 1, r);
+    ctx.strokeStyle = 'rgba(45,158,107,0.3)';
+    ctx.lineWidth = 1.5 * s;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function roundRect(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.arcTo(x + w, y, x + w, y + r, r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
+    ctx.lineTo(x + r, y + h);
+    ctx.arcTo(x, y + h, x, y + h - r, r);
+    ctx.lineTo(x, y + r);
+    ctx.arcTo(x, y, x + r, y, r);
+    ctx.closePath();
+  }
+
+  function download(canvasId, filename) {
+    document.fonts.ready.then(() => {
+      drawIcon(canvasId);
+      setTimeout(() => {
+        const canvas = document.getElementById(canvasId);
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }, 100);
+    });
+  }
+</script>
+</body>
+</html>
