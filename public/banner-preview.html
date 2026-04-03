@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>バナープレビュー</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #c8c8c8;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 24px 40px;
+      font-family: 'Noto Sans JP', sans-serif;
+      gap: 28px;
+      min-height: 100vh;
+    }
+
+    .label {
+      font-size: 11px;
+      color: #666;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* ==============================
+       バナー本体 124 × 370px
+    ============================== */
+    #banner {
+      width: 124px;
+      height: 370px;
+      background: #ffffff;
+      border: 1.5px solid #2d9e6b;
+      border-radius: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ヘッダー帯 */
+    .bh {
+      background: #2d9e6b;
+      padding: 10px 8px 9px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+    }
+    .bh-icon {
+      font-size: 18px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .bh-name {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 10px;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.3px;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .bh-sub {
+      font-size: 6.5px;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 1.2px;
+      margin-top: 3px;
+      font-weight: 400;
+    }
+
+    /* 仕切り線 */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #b8dfc9 30%, #b8dfc9 70%, transparent);
+      margin: 0 10px;
+      flex-shrink: 0;
+    }
+
+    /* キャッチコピー */
+    .catch {
+      padding: 9px 10px 8px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .catch-main {
+      font-size: 9px;
+      font-weight: 700;
+      color: #1a6b47;
+      line-height: 1.65;
+      letter-spacing: 0.3px;
+    }
+    .catch-main em {
+      font-style: normal;
+      background: #eaf7f0;
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    /* 仕切り線2 */
+    .divider2 {
+      height: 1px;
+      background: #f0f0f0;
+      margin: 0 10px;
+      flex-shrink: 0;
+    }
+
+    /* 機能リスト */
+    .features {
+      padding: 8px 10px 7px;
+      display: flex;
+      flex-direction: column;
+      gap: 4.5px;
+      flex-shrink: 0;
+    }
+    .fi {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+    .fi-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #2d9e6b;
+      flex-shrink: 0;
+      margin-top: 3.5px;
+    }
+    .fi-text {
+      font-size: 8px;
+      color: #333;
+      line-height: 1.5;
+      font-weight: 500;
+      letter-spacing: 0.1px;
+    }
+    .fi-sub {
+      font-size: 7px;
+      color: #888;
+      font-weight: 400;
+      display: block;
+      line-height: 1.3;
+    }
+
+    /* アクセント帯 */
+    .accent {
+      margin: 0 10px;
+      background: #eaf7f0;
+      border-radius: 4px;
+      padding: 6px 8px;
+      flex-shrink: 0;
+    }
+    .accent-text {
+      font-size: 7.5px;
+      color: #1a6b47;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.5;
+      letter-spacing: 0.2px;
+    }
+
+    /* スペーサー */
+    .spacer { flex: 1; }
+
+    /* CTAエリア */
+    .cta-area {
+      padding: 0 9px 10px;
+      flex-shrink: 0;
+    }
+    .cta-btn {
+      width: 100%;
+      background: #2d9e6b;
+      color: #fff;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 7px 6px;
+      border-radius: 20px;
+      text-align: center;
+      letter-spacing: 0.3px;
+      line-height: 1;
+    }
+    .cta-note {
+      font-size: 6.5px;
+      color: #bbb;
+      text-align: center;
+      margin-top: 5px;
+      letter-spacing: 0.5px;
+      font-weight: 400;
+    }
+
+    /* ==============================
+       操作パネル
+    ============================== */
+    .panel {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .panel-note {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      line-height: 1.6;
+    }
+    .btn-dl {
+      background: #1a6b47;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 28px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .btn-dl:hover { background: #155939; }
+  </style>
+</head>
+<body>
+
+  <div class="label">BANNER — 124 × 370 px</div>
+
+  <div id="banner">
+    <!-- ヘッダー -->
+    <div class="bh">
+      <div class="bh-icon">🌱</div>
+      <div class="bh-name">総社子育てノート</div>
+      <div class="bh-sub">SOJA KOSODATE NOTE</div>
+    </div>
+
+    <!-- キャッチ -->
+    <div class="catch">
+      <div class="catch-main">
+        総社市への転入前から<br>
+        使える<em>子育て情報</em>
+      </div>
+    </div>
+
+    <div class="divider2"></div>
+
+    <!-- 機能リスト -->
+    <div class="features">
+      <div class="fi">
+        <div class="fi-dot"></div>
+        <div class="fi-text">保育園マップ
+          <span class="fi-sub">空き状況・施設情報</span>
+        </div>
+      </div>
+      <div class="fi">
+        <div class="fi-dot"></div>
+        <div class="fi-text">転入手続きガイド
+          <span class="fi-sub">チェックリスト付き</span>
+        </div>
+      </div>
+      <div class="fi">
+        <div class="fi-dot"></div>
+        <div class="fi-text">審査待ち管理
+          <span class="fi-sub">申込み後も安心</span>
+        </div>
+      </div>
+      <div class="fi">
+        <div class="fi-dot"></div>
+        <div class="fi-text">夫婦でURL共有
+          <span class="fi-sub">登録不要・完全無料</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- アクセント -->
+    <div class="accent">
+      <div class="accent-text">無料・登録不要<br>スマホで今すぐ確認</div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- CTA -->
+    <div class="cta-area">
+      <div class="cta-btn">無料で使ってみる →</div>
+      <div class="cta-note">kosodate-map.vercel.app/soja</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <p class="panel-note">デザインが決まったら書き出せます</p>
+    <button class="btn-dl" onclick="exportBanner()">PNG 書き出し（124×370px）</button>
+  </div>
+
+  <script>
+    function exportBanner() {
+      const banner = document.getElementById('banner');
+      html2canvas(banner, {
+        scale: 3,
+        width: 124,
+        height: 370,
+        backgroundColor: '#ffffff',
+        useCORS: true,
+        logging: false,
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'kosodate-map-banner.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+  </script>
+
+</body>
+</html>
