@@ -145,7 +145,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
               🗺
             </div>
             <div className="text-base font-bold text-gray-900">
-              こそだて<span className="text-[#4CAF82]">マップ</span>
+              総社<span className="text-[#4CAF82]">子育てノート</span>
             </div>
           </Link>
 
@@ -191,7 +191,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
                 <div className="w-7 h-7 bg-gradient-to-br from-[#4CAF82] to-[#2d9e6b] rounded-lg flex items-center justify-center text-white text-sm">
                   🗺
                 </div>
-                <span className="font-bold text-gray-800">こそだてマップ</span>
+                <span className="font-bold text-gray-800">総社子育てノート</span>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
@@ -318,7 +318,7 @@ export default function AppHeader(props: AppHeaderProps) {
                 🗺
               </div>
               <div className="text-base font-bold text-gray-900">
-                こそだて<span className="text-[#4CAF82]">マップ</span>
+                総社<span className="text-[#4CAF82]">子育てノート</span>
               </div>
             </div>
           </div>

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "このサービスについて｜こそだてマップ",
-  description: "こそだてマップの運営者情報・サービスの概要・お問い合わせ先をご案内します。",
+  title: "このサービスについて｜総社子育てノート",
+  description: "総社子育てノートの運営者情報・サービスの概要・お問い合わせ先をご案内します。",
 };
 
 export default function AboutPage() {
@@ -100,7 +100,7 @@ export default function AboutPage() {
               プライバシーポリシー
             </Link>
           </div>
-          <p className="text-xs text-gray-400">&copy; 2026 こそだてマップ ｜ goodtaste.inc</p>
+          <p className="text-xs text-gray-400">&copy; 2026 総社子育てノート ｜ goodtaste.inc</p>
         </div>
 
       </div>

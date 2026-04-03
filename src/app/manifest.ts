@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "こそだてマップ",
-    short_name: "こそだてMAP",
+    name: "総社子育てノート",
+    short_name: "子育てノート",
     description: "引越し前から使える保育園・子育て情報。住所が決まったその日から。",
     start_url: "/",
     display: "standalone",

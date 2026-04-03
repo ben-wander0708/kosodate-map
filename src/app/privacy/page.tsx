@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "プライバシーポリシー｜こそだてマップ",
-  description: "こそだてマップのプライバシーポリシーです。",
+  title: "プライバシーポリシー｜総社子育てノート",
+  description: "総社子育てノートのプライバシーポリシーです。",
 };
 
 export default function PrivacyPage() {
@@ -24,7 +24,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="font-bold text-gray-800 mb-2">1. 運営者</h2>
-            <p>goodtaste.inc（以下「当社」）は、こそだてマップ（以下「本サービス」）を運営しています。</p>
+            <p>goodtaste.inc（以下「当社」）は、総社子育てノート（以下「本サービス」）を運営しています。</p>
           </section>
 
           <section>
@@ -98,7 +98,7 @@ export default function PrivacyPage() {
         </div>
 
         <div className="text-center pb-4">
-          <p className="text-xs text-gray-400">&copy; 2026 こそだてマップ ｜ goodtaste.inc</p>
+          <p className="text-xs text-gray-400">&copy; 2026 総社子育てノート ｜ goodtaste.inc</p>
         </div>
 
       </div>

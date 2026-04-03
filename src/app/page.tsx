@@ -21,7 +21,7 @@ export default async function HomePage() {
             </div>
             <div>
               <h1 className="text-2xl font-bold">
-                こそだて<span className="text-green-200">マップ</span>
+                総社<span className="text-green-200">子育てノート</span>
               </h1>
               <p className="text-green-200 text-xs">
                 住む場所が決まったら、まずここへ
@@ -32,7 +32,7 @@ export default async function HomePage() {
           <p className="text-sm text-green-100 leading-relaxed">
             物件が決まってから、行政の窓口が開くまで——
             <br />
-            その空白を、こそだてマップが埋めます。
+            その空白を、総社子育てノートが埋めます。
             <br />
             <span className="text-green-300">転居前から保育園の空き状況・施設情報をひと目で。</span>
           </p>
@@ -101,7 +101,7 @@ export default async function HomePage() {
           <a href="/privacy" className="hover:text-gray-600 underline">プライバシーポリシー</a>
         </div>
         <p className="text-xs text-gray-400">
-          &copy; 2026 こそだてマップ ｜ 運営: goodtaste.inc
+          &copy; 2026 総社子育てノート ｜ 運営: goodtaste.inc
         </p>
       </footer>
     </div>

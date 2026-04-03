@@ -21,11 +21,11 @@ export async function generateMetadata(
   const name = `${municipality.prefecture_ja}${municipality.name_ja}`;
 
   return {
-    title: `${name}の保育園・子育て情報｜こそだてマップ`,
+    title: `${name}の子育て情報｜総社子育てノート`,
     description: `${name}への転入前から確認できる保育園の空き状況・施設マップ・入園手続きチェックリスト。住所確定後すぐに動ける。`,
-    keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", municipality.name_ja, municipality.prefecture_ja, "転入"],
+    keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", municipality.name_ja, municipality.prefecture_ja, "転入", "子育てノート"],
     openGraph: {
-      title: `${name}の保育園・子育て情報｜こそだてマップ`,
+      title: `${name}の子育て情報｜総社子育てノート`,
       description: `${name}への転入前から使える保育園・子育て情報サービス。`,
       type: "website",
     },
@@ -55,7 +55,7 @@ export default async function MunicipalityLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "こそだてマップ",
+    "name": "総社子育てノート",
     "url": baseUrl,
     "description": "引越し先の保育園の空き状況・子育て施設をまとめて確認できるサービス。住所が決まったその日から使えます。",
     "potentialAction": {
