@@ -1,11 +1,33 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { dataRepository } from "@/lib/data/json-adapter";
 import AvailabilityBadge from "@/components/nursery/AvailabilityBadge";
 import NurseryDetailMap from "@/components/nursery/NurseryDetailMap";
 
 interface NurseryDetailPageProps {
   params: Promise<{ municipality: string; nurseryId: string }>;
+}
+
+export async function generateMetadata({ params }: NurseryDetailPageProps): Promise<Metadata> {
+  const { municipality: municipalityId, nurseryId } = await params;
+  const nursery = await dataRepository.getNursery(municipalityId, nurseryId);
+  const municipality = await dataRepository.getMunicipality(municipalityId);
+  if (!nursery || !municipality) return {};
+
+  const hasAvailability = Object.values(nursery.availability).some((v) => v === "○" || v === "△");
+  const availabilityText = hasAvailability ? "空きあり（要確認）" : "空き状況確認";
+
+  return {
+    title: `${nursery.name}｜${municipality.name_ja}の${nursery.type}情報`,
+    description: `${municipality.prefecture_ja}${municipality.name_ja}にある${nursery.type}「${nursery.name}」の定員・空き状況・アクセス情報。定員${nursery.capacity}名、充足率${Math.round((nursery.current_enrollment / nursery.capacity) * 100)}%。${availabilityText}。`,
+    keywords: [nursery.name, municipality.name_ja, municipality.prefecture_ja, nursery.type, "保育園", "空き状況", "転入", "保活"],
+    openGraph: {
+      title: `${nursery.name}｜${municipality.name_ja}の保育施設情報`,
+      description: `定員${nursery.capacity}名・充足率${Math.round((nursery.current_enrollment / nursery.capacity) * 100)}%。${municipality.name_ja}への転入を検討中の方向けに空き状況・アクセス情報を掲載。`,
+      type: "website",
+    },
+  };
 }
 
 export async function generateStaticParams() {

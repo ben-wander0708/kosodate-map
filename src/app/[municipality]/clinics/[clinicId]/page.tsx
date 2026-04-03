@@ -1,9 +1,31 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { dataRepository } from "@/lib/data/json-adapter";
 
 interface ClinicDetailPageProps {
   params: Promise<{ municipality: string; clinicId: string }>;
+}
+
+export async function generateMetadata({ params }: ClinicDetailPageProps): Promise<Metadata> {
+  const { municipality: municipalityId, clinicId } = await params;
+  const clinic = await dataRepository.getClinic(municipalityId, clinicId);
+  const municipality = await dataRepository.getMunicipality(municipalityId);
+  if (!clinic || !municipality) return {};
+
+  const deptText = clinic.departments.slice(0, 3).join("・");
+  const ratingText = clinic.google_rating ? `評価${clinic.google_rating}点。` : "";
+
+  return {
+    title: `${clinic.name}｜${municipality.name_ja}の${clinic.facility_type}（${deptText}）`,
+    description: `${municipality.prefecture_ja}${municipality.name_ja}にある${clinic.facility_type}「${clinic.name}」の診療科・診療時間・アクセス情報。${deptText}を診療。${ratingText}子育て世帯向け医療情報を掲載。`,
+    keywords: [clinic.name, municipality.name_ja, municipality.prefecture_ja, ...clinic.departments, clinic.facility_type, "転入", "子育て"],
+    openGraph: {
+      title: `${clinic.name}｜${municipality.name_ja}の医療機関情報`,
+      description: `${deptText}を診療。${municipality.name_ja}への転入を検討中の方向けに診療時間・アクセス情報を掲載。`,
+      type: "website",
+    },
+  };
 }
 
 export async function generateStaticParams() {
