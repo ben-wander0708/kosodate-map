@@ -76,7 +76,7 @@ const ASSIGNEE_LABELS: Record<string, string> = {
 
 const FEATURE_TILES = [
   { icon: "🏫", title: "保活マップ",        sub: "保育施設の空き・距離を比較", href: (id: string) => `/${id}?tab=nursery`, color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "✅", title: "転入チェックリスト", sub: "転居前後の手続きを管理",     href: (id: string) => `/${id}/checklist`,   color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
+  { icon: "✅", title: "入園準備ナビ",       sub: "入園に必要な手続きをまとめて管理", href: (id: string) => `/${id}/checklist`,   color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
   { icon: "🌱", title: "入園後タイムライン", sub: "夫婦でタスクと担当を共有",   href: (id: string) => `/${id}/timeline`,    color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
   { icon: "🏛", title: "支援制度",          sub: "手当・医療費助成を確認",     href: (id: string) => `/${id}?tab=gov`,     color: "text-[#2d6eb0]", bg: "bg-blue-50"   },
   { icon: "🏥", title: "医療機関",          sub: "近くの病院を診療科で絞り込み", href: (id: string) => `/${id}?tab=clinic`,  color: "text-[#e05a2b]", bg: "bg-orange-50" },

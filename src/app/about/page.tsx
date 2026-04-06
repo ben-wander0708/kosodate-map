@@ -45,7 +45,7 @@ export default function AboutPage() {
               "保育施設の空き状況・マップ（総社市）",
               "医療機関（小児科）マップ",
               "行政支援制度の一覧",
-              "転入チェックリスト（パートナー共有機能付き）",
+              "入園準備ナビ（パートナー共有機能付き）",
               "入園後のタイムライン",
             ].map((item) => (
               <li key={item} className="flex items-start gap-2 text-sm text-gray-700">
