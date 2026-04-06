@@ -7,6 +7,7 @@ import { track } from "@/lib/analytics/tracker";
 interface GovSupportCardProps {
   support: GovSupport;
   municipalityId: string;
+  highlighted?: boolean;
 }
 
 const CATEGORY_STYLES: Record<GovSupportCategory, { bg: string; text: string; icon: string }> = {
@@ -19,7 +20,7 @@ const CATEGORY_STYLES: Record<GovSupportCategory, { bg: string; text: string; ic
   "障害児支援":   { bg: "bg-gray-100",  text: "text-gray-700",  icon: "🤝" },
 };
 
-export default function GovSupportCard({ support, municipalityId }: GovSupportCardProps) {
+export default function GovSupportCard({ support, municipalityId, highlighted }: GovSupportCardProps) {
   const [expanded, setExpanded] = useState(false);
   const style = CATEGORY_STYLES[support.category];
   const openedAt = useRef<number | null>(null);
@@ -51,7 +52,13 @@ export default function GovSupportCard({ support, municipalityId }: GovSupportCa
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <div className={`bg-white rounded-xl shadow-sm overflow-hidden transition-all ${highlighted ? "border-2 border-[#2d9e6b]" : "border border-gray-100"}`}>
+      {/* ハイライトバナー */}
+      {highlighted && (
+        <div className="bg-[#f0faf5] px-4 py-1.5 flex items-center gap-1.5">
+          <span className="text-[#2d9e6b] text-xs font-bold">✓ あなたに関係あり</span>
+        </div>
+      )}
       {/* ヘッダー */}
       <button
         onClick={handleToggle}

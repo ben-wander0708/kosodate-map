@@ -61,6 +61,9 @@ export default function MunicipalityHome({
   const activeTab = (searchParams.get("tab") as TabType | null) ?? "nursery";
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedAge, setSelectedAge] = useState<number | null>(null);
+  // 支援制度フィルター
+  const [govFamilyType, setGovFamilyType] = useState<"dual" | "single" | "home" | null>(null);
+  const [govChildAge, setGovChildAge] = useState<"infant" | "preschool" | "school" | null>(null);
   // タブ切り替え時にフィルターをリセット
   useEffect(() => {
     if (activeTab !== "clinic") setSelectedDepartment(null);
@@ -247,6 +250,37 @@ export default function MunicipalityHome({
     });
     return map;
   }, [govSupports]);
+
+  // 支援制度の関連度判定
+  const isGovHighlighted = useCallback((support: GovSupport): boolean => {
+    if (!govFamilyType && !govChildAge) return false;
+
+    // ひとり親限定
+    if (["jido-fuyo-teate", "hitorioya-iryo"].includes(support.id)) {
+      return govFamilyType === "single";
+    }
+    // 共働きに特に関係あり
+    if (support.id === "family-support") {
+      return govFamilyType === "dual";
+    }
+    // 0〜2歳向け
+    if (["shussan-gift", "sango-care", "kangaroo-hiroba"].includes(support.id)) {
+      return govChildAge === "infant";
+    }
+    // 0〜5歳向け
+    if (["nyuyoji-kenshin", "kosodate-center"].includes(support.id)) {
+      return govChildAge === "infant" || govChildAge === "preschool";
+    }
+    // 保育料無償化（3〜5歳が主、0〜2歳非課税も対象）
+    if (support.id === "hoiku-muryoka") {
+      return govChildAge === "preschool" || govChildAge === "infant";
+    }
+    // 全員共通の基本給付（フィルターが1つでも入っていたら表示）
+    if (["jido-teate", "kodomo-iryo", "bukka-teate"].includes(support.id)) {
+      return true;
+    }
+    return false;
+  }, [govFamilyType, govChildAge]);
 
   const dataDate = nurseries[0]?.data_date ?? "不明";
 
@@ -564,9 +598,74 @@ export default function MunicipalityHome({
       {/* 行政サポートタブ */}
       {activeTab === "gov" && (
         <div className="space-y-6">
+
+          {/* 2問フィルター */}
+          <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 space-y-4">
+            <p className="text-sm font-bold text-gray-800">🔍 あなたに合う制度を探す</p>
+
+            {/* Q1: 家族の状況 */}
+            <div>
+              <p className="text-xs text-gray-500 mb-2 font-medium">家族の状況</p>
+              <div className="flex flex-wrap gap-2">
+                {([
+                  { key: "dual",   label: "👨‍👩‍👧 共働き" },
+                  { key: "single", label: "👤 ひとり親" },
+                  { key: "home",   label: "🏠 専業主婦・夫" },
+                ] as const).map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setGovFamilyType(govFamilyType === key ? null : key)}
+                    className={`text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
+                      govFamilyType === key
+                        ? "bg-[#2d9e6b] text-white border-[#2d9e6b]"
+                        : "bg-white text-gray-600 border-gray-200 hover:border-[#2d9e6b]"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Q2: 子どもの年齢 */}
+            <div>
+              <p className="text-xs text-gray-500 mb-2 font-medium">一番小さいお子さんの年齢</p>
+              <div className="flex flex-wrap gap-2">
+                {([
+                  { key: "infant",    label: "👶 0〜2歳" },
+                  { key: "preschool", label: "🧒 3〜5歳" },
+                  { key: "school",    label: "🎒 小学生以上" },
+                ] as const).map(({ key, label }) => (
+                  <button
+                    key={key}
+                    onClick={() => setGovChildAge(govChildAge === key ? null : key)}
+                    className={`text-xs px-3 py-1.5 rounded-full border font-medium transition-all ${
+                      govChildAge === key
+                        ? "bg-[#2d9e6b] text-white border-[#2d9e6b]"
+                        : "bg-white text-gray-600 border-gray-200 hover:border-[#2d9e6b]"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* リセット */}
+            {(govFamilyType || govChildAge) && (
+              <button
+                onClick={() => { setGovFamilyType(null); setGovChildAge(null); }}
+                className="text-xs text-gray-400 underline"
+              >
+                条件をリセット
+              </button>
+            )}
+          </div>
+
           <div className="bg-blue-50 rounded-xl p-3 text-xs text-blue-700 border border-blue-100">
             💡 タップすると詳細・申請方法・問い合わせ先が確認できます
           </div>
+
           {Array.from(govSupportsByCategory.entries()).map(([category, items]) => (
             <div key={category}>
               <h3 className="text-sm font-bold text-gray-700 mb-2 flex items-center gap-1">
@@ -579,6 +678,7 @@ export default function MunicipalityHome({
                     key={support.id}
                     support={support}
                     municipalityId={municipality.id}
+                    highlighted={isGovHighlighted(support)}
                   />
                 ))}
               </div>
