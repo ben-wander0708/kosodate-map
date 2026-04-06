@@ -1,0 +1,28 @@
+{
+  "id": "okayama",
+  "name_ja": "岡山市",
+  "name_en": "Okayama",
+  "prefecture_ja": "岡山県",
+  "prefecture_en": "Okayama",
+  "center_lat": 34.6618,
+  "center_lng": 133.9347,
+  "default_zoom": 12,
+  "contact": {
+    "department": "岡山っ子育成局 保育・幼児教育部 就園管理課",
+    "url": "https://www.city.okayama.jp/kurashi/category/1-9-1-2-0-0-0-0-0-0.html",
+    "phone": "086-803-1432"
+  },
+  "data_sources": [
+    {
+      "type": "nursery_list",
+      "source_name": "令和7年度 岡山市公立保育園・認定こども園名簿",
+      "source_date": "2025-04-01",
+      "source_url": "https://www.city.okayama.jp/kurashi/0000003791.html"
+    }
+  ],
+  "features_enabled": {
+    "nursery_map": true,
+    "clinic_search": false,
+    "gov_support": false
+  }
+}

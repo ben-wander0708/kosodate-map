@@ -1,0 +1,1838 @@
+[
+  {
+    "id": "okayama-hoikuen-001",
+    "municipality_id": "okayama",
+    "name": "旭東保育園",
+    "type": "認可保育所",
+    "sub_area": "中区",
+    "address": "岡山市中区網浜14-4",
+    "tel": "086-272-0771",
+    "capacity": 130,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.646992,
+      "lng": 133.936722
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-002",
+    "municipality_id": "okayama",
+    "name": "清輝保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区新道47-5",
+    "tel": "086-223-4017",
+    "capacity": 100,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.649483,
+      "lng": 133.926208
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-003",
+    "municipality_id": "okayama",
+    "name": "小串保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区小串822-2",
+    "tel": "086-269-2029",
+    "capacity": 30,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.586452,
+      "lng": 134.031052
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-004",
+    "municipality_id": "okayama",
+    "name": "南輝保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区並木町2丁目22-8",
+    "tel": "086-262-0922",
+    "capacity": 110,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.610294,
+      "lng": 133.94104
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-005",
+    "municipality_id": "okayama",
+    "name": "三門保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区下伊福西町5-60",
+    "tel": "086-252-1509",
+    "capacity": 110,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.665215,
+      "lng": 133.901093
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-006",
+    "municipality_id": "okayama",
+    "name": "平井保育園",
+    "type": "認可保育所",
+    "sub_area": "中区",
+    "address": "岡山市中区平井5丁目2-25",
+    "tel": "086-271-0066",
+    "capacity": 120,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.640911,
+      "lng": 133.941513
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-007",
+    "municipality_id": "okayama",
+    "name": "津島保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区津島東1丁目4-3",
+    "tel": "086-252-5782",
+    "capacity": 80,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.687592,
+      "lng": 133.927505
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-008",
+    "municipality_id": "okayama",
+    "name": "浜保育園",
+    "type": "認可保育所",
+    "sub_area": "中区",
+    "address": "岡山市中区浜1丁目",
+    "tel": "086-272-3841",
+    "capacity": 120,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.673401,
+      "lng": 133.935516
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-009",
+    "municipality_id": "okayama",
+    "name": "巌井保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区関西町",
+    "tel": "086-254-1160",
+    "capacity": 95,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.672123,
+      "lng": 133.899277
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-010",
+    "municipality_id": "okayama",
+    "name": "牟佐保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区牟佐",
+    "tel": "086-229-3130",
+    "capacity": 90,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.732864,
+      "lng": 133.97438
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-011",
+    "municipality_id": "okayama",
+    "name": "平福保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区洲崎3丁目3-23",
+    "tel": "086-263-4460",
+    "capacity": 150,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.621258,
+      "lng": 133.946609
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-012",
+    "municipality_id": "okayama",
+    "name": "可知保育園",
+    "type": "認可保育所",
+    "sub_area": "東区",
+    "address": "岡山市東区可知4丁目23-5",
+    "tel": "086-942-4011",
+    "capacity": 70,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.656651,
+      "lng": 134.004669
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-013",
+    "municipality_id": "okayama",
+    "name": "宿毛保育園",
+    "type": "認可保育所",
+    "sub_area": "東区",
+    "address": "岡山市東区宿毛",
+    "tel": "086-946-1385",
+    "capacity": 60,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.623245,
+      "lng": 134.084259
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-014",
+    "municipality_id": "okayama",
+    "name": "都保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区一宮",
+    "tel": "086-284-0267",
+    "capacity": 95,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.676502,
+      "lng": 133.866272
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-015",
+    "municipality_id": "okayama",
+    "name": "横井保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区横井上",
+    "tel": "086-294-2112",
+    "capacity": 70,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.711456,
+      "lng": 133.912018
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-016",
+    "municipality_id": "okayama",
+    "name": "富原保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区富原",
+    "tel": "086-254-1871",
+    "capacity": 40,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.697151,
+      "lng": 133.890076
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-017",
+    "municipality_id": "okayama",
+    "name": "吉備津保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区吉備津",
+    "tel": "086-287-5241",
+    "capacity": 55,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.673664,
+      "lng": 133.845688
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-018",
+    "municipality_id": "okayama",
+    "name": "曽根保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区曽根",
+    "tel": "086-298-3349",
+    "capacity": 65,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.568611,
+      "lng": 133.847748
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-019",
+    "municipality_id": "okayama",
+    "name": "東畦保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区東畦",
+    "tel": "086-282-0608",
+    "capacity": 110,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.607269,
+      "lng": 133.873459
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-020",
+    "municipality_id": "okayama",
+    "name": "興除東保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区内尾",
+    "tel": "086-282-0688",
+    "capacity": 90,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.597759,
+      "lng": 133.852448
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-021",
+    "municipality_id": "okayama",
+    "name": "緑保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区藤田",
+    "tel": "086-296-2186",
+    "capacity": 80,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.587116,
+      "lng": 133.897568
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-022",
+    "municipality_id": "okayama",
+    "name": "六区保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区藤田",
+    "tel": "086-296-2313",
+    "capacity": 100,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.587116,
+      "lng": 133.897568
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-023",
+    "municipality_id": "okayama",
+    "name": "御津南保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区御津国ケ原1024",
+    "tel": "086-724-2144",
+    "capacity": 60,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.775623,
+      "lng": 133.944427
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-024",
+    "municipality_id": "okayama",
+    "name": "宇垣保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区御津宇垣1889",
+    "tel": "086-724-2252",
+    "capacity": 35,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.782856,
+      "lng": 133.924362
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-025",
+    "municipality_id": "okayama",
+    "name": "彦崎保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区彦崎2570-1",
+    "tel": "086-362-1078",
+    "capacity": 150,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.547504,
+      "lng": 133.83577
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-026",
+    "municipality_id": "okayama",
+    "name": "七区保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区西七区231",
+    "tel": "086-362-0107",
+    "capacity": 45,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.552128,
+      "lng": 133.892868
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-hoikuen-027",
+    "municipality_id": "okayama",
+    "name": "福渡保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区建部町川口1526-1",
+    "tel": "086-722-0172",
+    "capacity": 35,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.895073,
+      "lng": 133.901688
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-001",
+    "municipality_id": "okayama",
+    "name": "中山認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区一宮638-3",
+    "tel": "086-284-0158",
+    "capacity": 210,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.676388,
+      "lng": 133.867538
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-002",
+    "municipality_id": "okayama",
+    "name": "御津金川認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区御津金川476",
+    "tel": "086-724-2250",
+    "capacity": 150,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.796734,
+      "lng": 133.927658
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-003",
+    "municipality_id": "okayama",
+    "name": "太伯認定こども園",
+    "type": "認定こども園",
+    "sub_area": "東区",
+    "address": "岡山市東区神崎町22-1",
+    "tel": "086-946-8067",
+    "capacity": 170,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.628696,
+      "lng": 134.058838
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-004",
+    "municipality_id": "okayama",
+    "name": "灘崎認定こども園",
+    "type": "認定こども園",
+    "sub_area": "南区",
+    "address": "岡山市南区片岡188",
+    "tel": "086-362-0950",
+    "capacity": 240,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.54295,
+      "lng": 133.866516
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-005",
+    "municipality_id": "okayama",
+    "name": "岡南認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区七日市西町1-14",
+    "tel": "086-223-9879",
+    "capacity": 210,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.641479,
+      "lng": 133.928345
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-006",
+    "municipality_id": "okayama",
+    "name": "建部認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区建部町市場330",
+    "tel": "086-722-0173",
+    "capacity": 105,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.847984,
+      "lng": 133.901199
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-007",
+    "municipality_id": "okayama",
+    "name": "南方岡山中央認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区南方1丁目3-30",
+    "tel": "086-222-2182",
+    "capacity": 280,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.672226,
+      "lng": 133.923553
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-008",
+    "municipality_id": "okayama",
+    "name": "千種認定こども園",
+    "type": "認定こども園",
+    "sub_area": "東区",
+    "address": "岡山市東区瀬戸町鍛冶屋178-1",
+    "tel": "086-953-1313",
+    "capacity": 175,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.768169,
+      "lng": 134.065247
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-009",
+    "municipality_id": "okayama",
+    "name": "甲浦認定こども園",
+    "type": "認定こども園",
+    "sub_area": "南区",
+    "address": "岡山市南区飽浦322-1",
+    "tel": "086-267-2051",
+    "capacity": 170,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.592495,
+      "lng": 133.971832
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-010",
+    "municipality_id": "okayama",
+    "name": "興除認定こども園",
+    "type": "認定こども園",
+    "sub_area": "南区",
+    "address": "岡山市南区中畦645-11",
+    "tel": "086-298-3348",
+    "capacity": 180,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.590141,
+      "lng": 133.85437
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-011",
+    "municipality_id": "okayama",
+    "name": "錦認定こども園",
+    "type": "認定こども園",
+    "sub_area": "南区",
+    "address": "岡山市南区藤田610-11",
+    "tel": "086-296-2433",
+    "capacity": 205,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.604557,
+      "lng": 133.893402
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-012",
+    "municipality_id": "okayama",
+    "name": "伊島認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区いずみ町9-18",
+    "tel": "086-252-3682",
+    "capacity": 230,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.677082,
+      "lng": 133.913925
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-013",
+    "municipality_id": "okayama",
+    "name": "今認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区今7丁目16-43",
+    "tel": "086-241-6819",
+    "capacity": 255,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.64164,
+      "lng": 133.892914
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-014",
+    "municipality_id": "okayama",
+    "name": "鹿田認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区大供表町16-10",
+    "tel": "086-223-4943",
+    "capacity": 322,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.653465,
+      "lng": 133.914322
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-015",
+    "municipality_id": "okayama",
+    "name": "旭竜認定こども園",
+    "type": "認定こども園",
+    "sub_area": "中区",
+    "address": "岡山市中区高島1丁目5-7",
+    "tel": "086-275-1266",
+    "capacity": 237,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.684528,
+      "lng": 133.949738
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-016",
+    "municipality_id": "okayama",
+    "name": "宇野認定こども園",
+    "type": "認定こども園",
+    "sub_area": "中区",
+    "address": "岡山市中区西川原",
+    "tel": "086-272-2472",
+    "capacity": 250,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.678024,
+      "lng": 133.940964
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-017",
+    "municipality_id": "okayama",
+    "name": "陵南認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区東花尻",
+    "tel": "086-293-4455",
+    "capacity": 226,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.654747,
+      "lng": 133.862961
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-018",
+    "municipality_id": "okayama",
+    "name": "庄内認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区三手",
+    "tel": "086-287-5305",
+    "capacity": 205,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.68763,
+      "lng": 133.812088
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-019",
+    "municipality_id": "okayama",
+    "name": "妹尾認定こども園",
+    "type": "認定こども園",
+    "sub_area": "南区",
+    "address": "岡山市南区箕島",
+    "tel": "086-281-2010",
+    "capacity": 215,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.610516,
+      "lng": 133.84816
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-020",
+    "municipality_id": "okayama",
+    "name": "野谷認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区栢谷266-1",
+    "tel": "086-294-3610",
+    "capacity": 72,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.728893,
+      "lng": 133.92009
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-021",
+    "municipality_id": "okayama",
+    "name": "政田開成認定こども園",
+    "type": "認定こども園",
+    "sub_area": "東区",
+    "address": "岡山市東区政津15-1",
+    "tel": "086-948-2049",
+    "capacity": 80,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.645515,
+      "lng": 134.008011
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-022",
+    "municipality_id": "okayama",
+    "name": "浦安芳泉認定こども園",
+    "type": "認定こども園",
+    "sub_area": "南区",
+    "address": "岡山市南区浦安本町1024-2",
+    "tel": "086-262-5005",
+    "capacity": 215,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.607792,
+      "lng": 133.924545
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-023",
+    "municipality_id": "okayama",
+    "name": "あしもり認定こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区大井1724-3",
+    "tel": "086-295-0268",
+    "capacity": 95,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.742893,
+      "lng": 133.805313
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-kodomo-024",
+    "municipality_id": "okayama",
+    "name": "西大寺認定こども園",
+    "type": "認定こども園",
+    "sub_area": "東区",
+    "address": "岡山市東区西大寺上1丁目19-23",
+    "tel": "086-942-4376",
+    "capacity": 300,
+    "current_enrollment": 0,
+    "age_from_months": null,
+    "hours": {
+      "open": null,
+      "close": null,
+      "extended_close": null
+    },
+    "extended_care": null,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.657299,
+      "lng": 134.032211
+    },
+    "geocoded": true,
+    "notes": "公立施設。空き状況は岡山市就園管理課（086-803-1432）へお問い合わせください。",
+    "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
+    "data_date": "2025-04-01",
+    "last_updated": "2026-04-06"
+  }
+]
