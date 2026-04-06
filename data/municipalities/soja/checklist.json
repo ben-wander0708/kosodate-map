@@ -10,7 +10,7 @@
       "sections": [
         {
           "id": "pre-move",
-          "title": "🏠 転居前にやること",
+          "title": "🏠 入園準備を始めよう",
           "items": [
             {
               "id": "di-p-1",
@@ -61,7 +61,7 @@
         },
         {
           "id": "urgent",
-          "title": "⚡ 転入後の急ぎ手続き（期限あり）",
+          "title": "⚡ 急ぎの手続き（期限あり）",
           "items": [
             {
               "id": "di-u-1",
@@ -70,7 +70,8 @@
               "days_from_moving": 14,
               "urgency": "high",
               "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "di-u-2",
@@ -121,7 +122,8 @@
               "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課窓口で手続き。暗証番号が必要",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "di-a-2",
@@ -130,7 +132,8 @@
               "days_from_moving": 14,
               "urgency": "medium",
               "note": "職場の健保組合に転居を連絡。子どもを扶養として追加手続きも",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "di-a-3",
@@ -139,7 +142,8 @@
               "days_from_moving": 21,
               "urgency": "medium",
               "note": "医療機関受診前に必ず確認",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "di-a-4",
@@ -247,7 +251,7 @@
       "sections": [
         {
           "id": "pre-move",
-          "title": "🏠 転居前にやること",
+          "title": "🏠 入園準備を始めよう",
           "items": [
             {
               "id": "sh-p-1",
@@ -280,7 +284,7 @@
         },
         {
           "id": "urgent",
-          "title": "⚡ 転入後の急ぎ手続き（期限あり）",
+          "title": "⚡ 急ぎの手続き（期限あり）",
           "items": [
             {
               "id": "sh-u-1",
@@ -289,7 +293,8 @@
               "days_from_moving": 14,
               "urgency": "high",
               "note": "本人確認書類・旧住所の住民票持参。家族全員分まとめて手続き可",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "sh-u-2",
@@ -322,7 +327,8 @@
               "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課窓口で手続き。暗証番号が必要",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "sh-a-2",
@@ -331,7 +337,8 @@
               "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課で手続き。子どもも同時に加入",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "sh-a-3",
@@ -340,7 +347,8 @@
               "days_from_moving": 21,
               "urgency": "medium",
               "note": "医療機関受診前に必ず確認",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             }
           ]
         },
@@ -457,7 +465,7 @@
       "sections": [
         {
           "id": "pre-move",
-          "title": "🏠 転居前にやること",
+          "title": "🏠 入園準備を始めよう",
           "items": [
             {
               "id": "sp-p-1",
@@ -475,7 +483,8 @@
               "days_from_moving": null,
               "days_from_decision": 7,
               "urgency": "high",
-              "note": "転入前からこども夢づくり課に相談可能。児童扶養手当の引き継ぎ手続きも確認を"
+              "note": "転入前からこども夢づくり課に相談可能。児童扶養手当の引き継ぎ手続きも確認を",
+              "transfer_only": true
             },
             {
               "id": "sp-p-3",
@@ -499,7 +508,7 @@
         },
         {
           "id": "urgent",
-          "title": "⚡ 転入後の急ぎ手続き（期限あり）",
+          "title": "⚡ 急ぎの手続き（期限あり）",
           "items": [
             {
               "id": "sp-u-1",
@@ -508,7 +517,8 @@
               "days_from_moving": 14,
               "urgency": "high",
               "note": "本人確認書類・旧住所の住民票持参",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "sp-u-2",
@@ -592,7 +602,8 @@
               "days_from_moving": 14,
               "urgency": "medium",
               "note": "市民課窓口で手続き",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "sp-a-2",
@@ -601,7 +612,8 @@
               "days_from_moving": 14,
               "urgency": "medium",
               "note": "子どもを扶養として加入手続きも",
-              "days_from_decision": null
+              "days_from_decision": null,
+              "transfer_only": true
             },
             {
               "id": "sp-a-3-april",

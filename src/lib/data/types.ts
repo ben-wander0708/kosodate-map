@@ -179,6 +179,7 @@ export interface ChecklistItem {
   days_from_decision: number | null; // 転居決定日からの日数（転居前タスク用）
   urgency: "high" | "medium" | "low";
   note: string | null;
+  transfer_only?: boolean; // trueの場合、転居しない人には非表示
 }
 
 /** チェックリストのセクション */

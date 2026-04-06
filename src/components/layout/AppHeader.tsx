@@ -45,8 +45,8 @@ const NAV_ITEMS = [
   {
     tab: "checklist",
     icon: "✅",
-    title: "転入チェックリスト",
-    description: "転入後の手続きをフェーズ別に管理",
+    title: "入園準備ナビ",
+    description: "入園に必要な手続きをまとめて管理",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
     href: (municipalityId: string) => `/${municipalityId}/checklist`,

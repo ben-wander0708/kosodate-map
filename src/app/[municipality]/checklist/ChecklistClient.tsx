@@ -88,6 +88,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
   const [movingDateStr, setMovingDateStr] = useState<string>("");
   const [enrollmentMonth, setEnrollmentMonth] = useState<string>("");
   const [loaded, setLoaded] = useState(false);
+  const [isRelocating, setIsRelocating] = useState<boolean | null>(null); // null = 未確定
 
   const loadFromSupabase = useCallback(async (id: string) => {
     try {
@@ -164,6 +165,16 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
     if (onboarding.movingDate) {
       setMovingDateStr((prev) => prev || onboarding.movingDate!);
     }
+    // phaseから転居有無を自動判定（初回のみ）
+    if (isRelocating === null) {
+      const phase = onboarding.answers?.phase;
+      if (phase === "decided" || phase === "moving_soon" || phase === "moved") {
+        setIsRelocating(true);
+      } else if (phase === "exploring") {
+        setIsRelocating(false);
+      }
+      // phaseが未設定の場合はnullのまま→ユーザーに選択させる
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onboarding.isLoaded]);
 
@@ -222,10 +233,15 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
 
   const movingDate   = movingDateStr   ? new Date(movingDateStr)   : null;
   const selectedPersona = checklist.personas.find((p) => p.id === selectedPersonaId);
+
+  // transfer_only アイテムをフィルタリングした表示用アイテムを計算
+  const visibleItems = (items: ChecklistItem[]) =>
+    items.filter((item) => !item.transfer_only || isRelocating !== false);
+
   const totalItems = selectedPersona
-    ? selectedPersona.sections.reduce((sum, s) => sum + s.items.length, 0) : 0;
+    ? selectedPersona.sections.reduce((sum, s) => sum + visibleItems(s.items).length, 0) : 0;
   const doneItems = selectedPersona
-    ? selectedPersona.sections.flatMap((s) => s.items).filter((item) => checkedItems.has(item.id)).length : 0;
+    ? selectedPersona.sections.flatMap((s) => visibleItems(s.items)).filter((item) => checkedItems.has(item.id)).length : 0;
   const progress = totalItems > 0 ? Math.round((doneItems / totalItems) * 100) : 0;
   const hasApplied = [...APPLICATION_ITEM_IDS].some((id) => checkedItems.has(id));
 
@@ -279,10 +295,37 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-base font-bold mb-1">転入チェックリスト</h2>
+            <h2 className="text-base font-bold mb-1">入園準備ナビ</h2>
             <p className="text-xs text-green-200">
-              {municipalityName}に転入したらやること。転入日を入力するとカウントダウン表示されます。
+              {municipalityName}で保育園・幼稚園に入園するためにやること
             </p>
+          </div>
+        </div>
+
+        {/* 転居有無トグル */}
+        <div className="mt-3 bg-white/15 rounded-lg p-3">
+          <p className="text-xs text-green-100 mb-2">総社市に引越してきましたか？</p>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setIsRelocating(true)}
+              className={`flex-1 text-xs font-semibold py-2 rounded-lg transition-all ${
+                isRelocating === true
+                  ? "bg-white text-[#2d9e6b]"
+                  : "bg-white/20 text-white"
+              }`}
+            >
+              🚚 はい、引越してきた
+            </button>
+            <button
+              onClick={() => setIsRelocating(false)}
+              className={`flex-1 text-xs font-semibold py-2 rounded-lg transition-all ${
+                isRelocating === false
+                  ? "bg-white text-[#2d9e6b]"
+                  : "bg-white/20 text-white"
+              }`}
+            >
+              🏠 もともと総社市民
+            </button>
           </div>
         </div>
 
@@ -316,20 +359,22 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
 
       {/* 日付入力 */}
       <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm space-y-3">
-        <div>
-          <p className="text-xs font-semibold text-gray-500 mb-1">📅 引越し予定日</p>
-          <input
-            type="date"
-            value={movingDateStr}
-            onChange={(e) => handleMovingDateChange(e.target.value)}
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-          />
-          {movingDate && (
-            <p className="text-xs text-[#2d9e6b] mt-1 font-medium">
-              ✅ {movingDate.getMonth() + 1}月{movingDate.getDate()}日から転入後の期限を計算中
-            </p>
-          )}
-        </div>
+        {isRelocating && (
+          <div>
+            <p className="text-xs font-semibold text-gray-500 mb-1">📅 引越し予定日</p>
+            <input
+              type="date"
+              value={movingDateStr}
+              onChange={(e) => handleMovingDateChange(e.target.value)}
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
+            />
+            {movingDate && (
+              <p className="text-xs text-[#2d9e6b] mt-1 font-medium">
+                ✅ {movingDate.getMonth() + 1}月{movingDate.getDate()}日から転入後の期限を計算中
+              </p>
+            )}
+          </div>
+        )}
         <div>
           <p className="text-xs font-semibold text-gray-500 mb-1">🏫 保育園の入園月</p>
           <input
@@ -444,19 +489,13 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
           {hasApplied && <WaitingDashboard enrollmentMonth={enrollmentMonth} />}
 
           {selectedPersona.sections.map((section) => {
-            const isPreMove = section.id === "pre-move";
-            const phase = onboarding.answers?.phase;
-            const showPreMove = phase === "decided" || phase === "moving_soon";
-            if (isPreMove && !showPreMove) return (
-              <div key={section.id} className="bg-gray-50 border border-dashed border-gray-200 rounded-xl p-4 text-center">
-                <p className="text-sm text-gray-400">🏠 転居を検討中・引越し準備中の方向けの<br />転居前チェックリストです</p>
-              </div>
-            );
+            const sectionVisible = visibleItems(section.items);
+            if (sectionVisible.length === 0) return null;
             return (
               <div key={section.id}>
                 <h3 className="text-sm font-bold text-gray-700 mb-2">{section.title}</h3>
                 <div className="space-y-2">
-                  {section.items.map((item) => (
+                  {sectionVisible.map((item) => (
                     <ChecklistItemCard
                       key={item.id}
                       item={item}
