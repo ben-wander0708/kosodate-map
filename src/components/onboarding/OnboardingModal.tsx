@@ -7,7 +7,7 @@ import { ONBOARDING_DONE_EVENT } from "@/hooks/useOnboarding";
 
 export const ONBOARDING_DONE_KEY = "kosodate_onboarding_v2";
 
-type Phase = "decided" | "moving_soon" | "moved" | "exploring";
+type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident";
 type WorkStatus = "fulltime" | "parttime" | "leave";
 type ChildCount = "1人" | "2人" | "3人以上";
 
@@ -56,10 +56,11 @@ const FAMILY_TYPE_OPTIONS: { value: FamilyType; label: string; sub: string }[] =
 ];
 
 const PHASE_OPTIONS: { label: string; sub: string; value: Phase }[] = [
-  { label: "🏠 物件が決まった",  sub: "転居先が確定している",      value: "decided" },
-  { label: "🚚 もうすぐ引越し",  sub: "1〜2ヶ月以内に引越し予定", value: "moving_soon" },
-  { label: "✅ 引越し済み",      sub: "すでに転入している",        value: "moved" },
-  { label: "🔍 まだ検討中",      sub: "物件はまだ決まっていない",  value: "exploring" },
+  { label: "🏡 もともと総社市民", sub: "引越しは関係なく子育て情報を探している", value: "resident" },
+  { label: "🔍 転居を検討中",     sub: "総社市への転居を考えている",             value: "exploring" },
+  { label: "🏠 物件が決まった",   sub: "転居先が確定している",                   value: "decided" },
+  { label: "🚚 もうすぐ引越し",   sub: "1〜2ヶ月以内に引越し予定",              value: "moving_soon" },
+  { label: "✅ 最近転入した",      sub: "転入届など手続き中・直後",               value: "moved" },
 ];
 
 const WORK_OPTIONS: { label: string; sub: string; value: WorkStatus }[] = [
@@ -99,10 +100,12 @@ const MONTH_OPTIONS = getMonthOptions();
 
 function getCtaForPhase(phase: Phase | undefined, municipalityId: string) {
   switch (phase) {
+    case "resident":
+      return { message: "総社市の子育て支援制度や保育施設情報を確認してみましょう。", buttonLabel: "支援制度ガイドを見る →", href: `/${municipalityId}?tab=gov` };
     case "decided":
-      return { message: "物件が決まったら、転居前にやることを確認しましょう。", buttonLabel: "チェックリストを見る →", href: `/${municipalityId}/checklist` };
+      return { message: "物件が決まったら、転居前にやることを確認しましょう。", buttonLabel: "入園準備ナビを見る →", href: `/${municipalityId}/checklist` };
     case "moving_soon":
-      return { message: "引越しまでにやることと転入後の手続きをまとめて確認できます。", buttonLabel: "チェックリストを確認する →", href: `/${municipalityId}/checklist` };
+      return { message: "引越しまでにやることと転入後の手続きをまとめて確認できます。", buttonLabel: "入園準備ナビを確認する →", href: `/${municipalityId}/checklist` };
     case "moved":
       return { message: "転入届の提出はお済みですか？保育施設の申込みも早めに。", buttonLabel: "保育施設の空きを確認する →", href: `/${municipalityId}?tab=nursery` };
     default:
@@ -261,7 +264,7 @@ function WizardView({
                 {step === 4 && "お子さんの情報を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
-              {step === 1 && <p className="text-xs text-gray-400 mt-1">{municipalityName}への転居フェーズに合わせた情報をお届けします</p>}
+              {step === 1 && <p className="text-xs text-gray-400 mt-1">状況に合わせた子育て情報をお届けします</p>}
               {step === 2 && <p className="text-xs text-gray-400 mt-1">チェックリストや書類案内がご状況に合わせて変わります</p>}
               {step === 4 && <p className="text-xs text-gray-400 mt-1">年齢と保育園の状況をそれぞれ教えてください</p>}
             </div>
@@ -281,19 +284,22 @@ function WizardView({
       <div className="px-5 pb-10">
         {/* Step 1: フェーズ */}
         {step === 1 && (
-          <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-2">
             {PHASE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => handlePhase(opt.value)}
-                className={`text-left p-3 rounded-xl border-2 transition-all active:scale-95 ${
+                className={`w-full text-left p-3 rounded-xl border-2 transition-all active:scale-95 flex items-center justify-between gap-3 ${
                   answers.phase === opt.value
                     ? "border-[#2d9e6b] bg-[#f0faf5]"
                     : "border-gray-200 bg-white hover:border-[#2d9e6b] hover:bg-[#f0faf5]"
                 }`}
               >
-                <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                <p className="text-xs text-gray-400 mt-0.5">{opt.sub}</p>
+                <div>
+                  <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
+                  <p className="text-xs text-gray-400 mt-0.5">{opt.sub}</p>
+                </div>
+                <span className="text-gray-300 text-xl flex-shrink-0">›</span>
               </button>
             ))}
           </div>
@@ -504,17 +510,20 @@ function SettingsView({
         {/* フェーズ */}
         <div>
           <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">今の状況</p>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="space-y-1.5">
             {PHASE_OPTIONS.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => setAnswers((prev) => ({ ...prev, phase: opt.value }))}
-                className={`text-left p-3 rounded-xl border-2 transition-all active:scale-95 ${
+                className={`w-full text-left px-3 py-2.5 rounded-xl border-2 transition-all active:scale-95 flex items-center justify-between gap-2 ${
                   answers.phase === opt.value ? "border-[#2d9e6b] bg-[#f0faf5]" : "border-gray-200 bg-white"
                 }`}
               >
-                <p className="text-xs font-semibold text-gray-800">{opt.label}</p>
-                <p className="text-[10px] text-gray-400 mt-0.5">{opt.sub}</p>
+                <div>
+                  <p className="text-xs font-semibold text-gray-800">{opt.label}</p>
+                  <p className="text-[10px] text-gray-400 mt-0.5">{opt.sub}</p>
+                </div>
+                {answers.phase === opt.value && <span className="text-[#2d9e6b] text-sm flex-shrink-0">✓</span>}
               </button>
             ))}
           </div>

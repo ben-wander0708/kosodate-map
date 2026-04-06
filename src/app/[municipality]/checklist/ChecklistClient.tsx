@@ -170,7 +170,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
       const phase = onboarding.answers?.phase;
       if (phase === "decided" || phase === "moving_soon" || phase === "moved") {
         setIsRelocating(true);
-      } else if (phase === "exploring") {
+      } else if (phase === "exploring" || phase === "resident") {
         setIsRelocating(false);
       }
       // phaseが未設定の場合はnullのまま→ユーザーに選択させる

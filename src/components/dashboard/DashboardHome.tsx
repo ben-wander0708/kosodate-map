@@ -8,7 +8,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import type { PostEnrollmentEvent, EventAssignee } from "@/lib/data/types";
 import postEnrollmentData from "@/lib/data/post-enrollment-events.json";
 
-type Phase = "decided" | "moving_soon" | "moved" | "exploring";
+type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident";
 type WorkStatus = "fulltime" | "parttime" | "leave";
 
 const LOCAL_SHARE_KEY = "kosodate_share_id";
@@ -46,6 +46,12 @@ function getPriorityActions(
         { icon: "🏫", title: "保育施設の空き状況を確認", sub: "転入後すぐに申込みできる施設を探す", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏛", title: "児童手当を申請する", sub: "出生・転入から15日以内に申請必須", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
       ];
+    case "resident":
+      return [
+        { icon: "🏛", title: "使える支援制度を確認", sub: "給付金・医療費助成・保育料無償化など", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "🏫", title: "近くの保育施設を探す", sub: "認可・小規模の空き状況を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🏥", title: "かかりつけ医を探す", sub: "小児科・耳鼻科などを地図で確認", href: `/${municipalityId}?tab=clinic`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
+      ];
     default:
       return [
         { icon: "🏫", title: "保育施設の空き状況を確認", sub: "エリア別に認可・小規模を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
@@ -56,6 +62,7 @@ function getPriorityActions(
 }
 
 const PHASE_LABELS: Record<Phase, { label: string; icon: string; step: number }> = {
+  resident:    { label: "総社市民",  icon: "🏡", step: 0 },
   exploring:   { label: "検討中",    icon: "🔍", step: 1 },
   decided:     { label: "物件決定",  icon: "🏠", step: 2 },
   moving_soon: { label: "引越し準備中", icon: "🚚", step: 3 },
