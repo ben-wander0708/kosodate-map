@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   description:
     "総社市への転入前から保育園の空き状況・転入手続き・子育て支援をまとめて確認。住所が決まったその日から使えます。",
   keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", "総社市", "岡山", "転入", "子育てノート"],
+  verification: {
+    google: "GOOGLE_SEARCH_CONSOLE_CODE_HERE",
+  },
   openGraph: {
     title: "総社子育てノート｜転入前から使える子育て情報",
     description: "総社市への転入前から保育園の空き状況・転入手続き・子育て支援をまとめて確認。住所が決まったその日から使えます。",

@@ -270,7 +270,7 @@ function WizardView({
             </div>
           </div>
           {step !== "done" && (
-            <button onClick={handleSkip} className="text-xs text-gray-400 underline ml-3 mt-1 flex-shrink-0">
+            <button onClick={handleSkip} className="text-sm text-gray-500 border border-gray-300 rounded-lg px-3 py-1 ml-2 flex-shrink-0 hover:bg-gray-50 active:scale-95 transition-all">
               スキップ
             </button>
           )}
@@ -344,6 +344,15 @@ function WizardView({
                 <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
               </button>
             ))}
+          </div>
+        )}
+
+        {/* Step 1〜3: スキップリンク（下部） */}
+        {(step === 1 || step === 2 || step === 3) && (
+          <div className="mt-4 text-center">
+            <button onClick={handleSkip} className="text-xs text-gray-400 underline">
+              今はスキップしてアプリを使う
+            </button>
           </div>
         )}
 
