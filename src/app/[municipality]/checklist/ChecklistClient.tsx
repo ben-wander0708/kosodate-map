@@ -286,7 +286,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
           href={`/${municipalityId}/timeline`}
           className="flex items-center justify-center gap-2 w-full bg-[#2d9e6b] text-white text-sm font-bold py-3 rounded-xl"
         >
-          🌱 入園後タイムラインへ進む →
+          🔔 行政リマインダーを確認する →
         </Link>
       </div>
     )}
@@ -519,7 +519,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
                 href={`/${municipalityId}/timeline`}
                 className="block w-full bg-[#2d9e6b] text-white text-sm font-bold py-3 rounded-xl text-center"
               >
-                🌱 入園後タイムラインへ進む →
+                🔔 行政リマインダーを確認する →
               </Link>
             </div>
           )}

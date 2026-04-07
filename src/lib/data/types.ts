@@ -302,22 +302,21 @@ export interface MunicipalityCommunity {
 /** 担当者 */
 export type EventAssignee = "mother" | "father" | "both" | null;
 
-/** 入園後イベントのカテゴリ */
+/** 行政リマインダーのカテゴリ */
 export type PostEnrollmentCategory =
-  | "慣らし保育"
-  | "行事・発表"
-  | "園との関わり"
-  | "書類・手続き"
-  | "健康・緊急対応"
-  | "復職準備";
+  | "医療・健診"
+  | "給付金・手当"
+  | "保育・入園"
+  | "年間手続き"
+  | "節目・切り替え";
 
-/** 入園後イベント（テンプレート） */
+/** 行政リマインダーイベント */
 export interface PostEnrollmentEvent {
   id: string;
   category: PostEnrollmentCategory;
   title: string;
   note: string | null;
-  /** 入園月を0としたときの相対月数（0=入園月、1=翌月…） */
+  /** 4月（年度始まり）を0としたときの相対月数 */
   month_offset: number;
   /** 複数子がいる場合の注意書き */
   multi_child_note: string | null;
@@ -327,7 +326,7 @@ export interface PostEnrollmentEvent {
   is_milestone?: boolean;
 }
 
-/** 入園後タイムライン全体（テンプレート） */
+/** 行政リマインダー全体 */
 export interface PostEnrollmentTimeline {
   events: PostEnrollmentEvent[];
 }

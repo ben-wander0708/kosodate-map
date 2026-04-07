@@ -55,8 +55,8 @@ const NAV_ITEMS = [
   {
     tab: "timeline",
     icon: "🌱",
-    title: "入園後タイムライン",
-    description: "入園後のイベントと担当をパートナーと共有",
+    title: "行政リマインダー",
+    description: "児童手当・健診・入園申込みなど年間の行政手続き",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
     href: (municipalityId: string) => `/${municipalityId}/timeline`,

@@ -1,191 +1,155 @@
 {
   "events": [
     {
-      "id": "enrollment-ceremony",
-      "category": "行事・発表",
-      "title": "入園式",
-      "note": "持ち物・服装を事前に確認。写真撮影の準備も忘れずに。",
+      "id": "medical-card-confirm",
+      "category": "医療・健診",
+      "title": "こども医療費受給資格証を確認",
+      "note": "転入後に申請が必要。受給資格証が届いたらかかりつけ医・保育園に提示。岡山県内の医療機関では窓口無料になります。",
       "month_offset": 0,
       "multi_child_note": null,
       "is_milestone": true
     },
     {
-      "id": "trial-care-early",
-      "category": "慣らし保育",
-      "title": "慣らし保育（前半）：お迎え 11:00〜11:30ごろ",
-      "note": "子どもの様子を保育士に確認しながら、お迎え時間を調整。",
+      "id": "hoikuryo-confirm",
+      "category": "給付金・手当",
+      "title": "保育料の通知を確認",
+      "note": "4月に市から保育料決定通知が届きます。3〜5歳は無償化対象。0〜2歳は世帯収入により異なります。",
       "month_offset": 0,
-      "multi_child_note": "上の子の通常お迎えと時間が重なりやすい。担当を事前に分けておくと◎"
+      "multi_child_note": "第2子は半額、第3子以降は無料になる場合があります（要確認）。"
     },
     {
-      "id": "trial-care-mid",
-      "category": "慣らし保育",
-      "title": "慣らし保育（中盤）：給食後お迎え 13:00〜14:00ごろ",
-      "note": "給食を食べられるようになったか保育士に確認。",
-      "month_offset": 0,
-      "multi_child_note": "上の子の帰宅時間と重なる場合、家事と送迎の段取りを夫婦で確認。"
-    },
-    {
-      "id": "trial-care-late",
-      "category": "慣らし保育",
-      "title": "慣らし保育（後半）：通常保育へ移行",
-      "note": "保育士と相談のうえ、段階的に延長。個人差が大きい。",
+      "id": "nursery-emergency-contact",
+      "category": "保育・入園",
+      "title": "緊急連絡先・迎え可能者リストを提出",
+      "note": "入園時書類の一つ。転入後に変更があった場合は速やかに更新を。",
       "month_offset": 0,
       "multi_child_note": null
     },
     {
-      "id": "health-insurance-register",
-      "category": "書類・手続き",
-      "title": "健康保険証を保育園に登録・コピー提出",
-      "note": "入園時書類の一つ。提出漏れが多いので確認を。",
-      "month_offset": 0,
-      "multi_child_note": null
-    },
-    {
-      "id": "contact-app-register",
-      "category": "書類・手続き",
-      "title": "連絡帳アプリの登録（保育園指定のアプリ）",
-      "note": "kirala・HoiClueなど保育園によって異なる。両親ともに登録を。",
-      "month_offset": 0,
-      "multi_child_note": null
-    },
-    {
-      "id": "fever-contact-check",
-      "category": "健康・緊急対応",
-      "title": "発熱時の緊急連絡フローを夫婦で確認",
-      "note": "「誰が呼び出しを受けるか」「どちらが迎えに行くか」を事前に決めておく。急病時の受診先は総社市HPで確認を。https://www.city.soja.okayama.jp/s/kenkouiryou/iryou_fukushi/iryoutaisei_shokuiku/shinryou_jikangai.html",
-      "month_offset": 0,
-      "multi_child_note": "複数の子が同時に発熱するケースも。優先順位を話し合っておく。"
-    },
-    {
-      "id": "sick-childcare-register",
-      "category": "健康・緊急対応",
-      "title": "病児保育・ファミサポへの登録",
-      "note": "発熱時に使えるサービスを事前に登録しておく。登録なしでは当日利用不可。病児保育 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/byouji_hoiku.html　ファミサポ → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/family_suport.html",
-      "month_offset": 0,
-      "multi_child_note": null
-    },
-    {
-      "id": "vaccination-reminder",
-      "category": "健康・緊急対応",
-      "title": "予防接種スケジュールの確認",
-      "note": "入園後も接種が続く。ロタウイルス・B型肝炎・BCG・小児肺炎球菌・麻しん風しん（MR）・日本脳炎など。かかりつけ医と接種計画を確認しておく。",
+      "id": "infant-checkup-4m",
+      "category": "医療・健診",
+      "title": "乳幼児健診（4か月健診）の通知を確認",
+      "note": "生後4か月ごろに市から案内が届きます。身体計測・診察・育児相談を無料で受けられます。",
       "month_offset": 1,
       "multi_child_note": null
     },
     {
-      "id": "return-from-leave",
-      "category": "復職準備",
-      "title": "育休復帰の会社手続き（社会保険・育休手当の終了連絡）",
-      "note": "復職2週間前には人事へ連絡。社会保険料の再開タイミングを確認。",
-      "month_offset": 1,
+      "id": "jido-teate-genkyo",
+      "category": "給付金・手当",
+      "title": "🔴 児童手当の現況届を提出（毎年6月末締切）",
+      "note": "提出を忘れると手当が止まります。市から案内が届いたら必ず期限内に提出。マイナポータルからオンライン申請も可能。",
+      "month_offset": 2,
       "multi_child_note": null,
-      "for_leave_only": true
+      "is_milestone": true
     },
     {
-      "id": "short-work-apply",
-      "category": "復職準備",
-      "title": "時短勤務・フレックス申請",
-      "note": "お迎え時間に合わせた働き方を上司と相談。申請書類を確認。",
-      "month_offset": 1,
-      "multi_child_note": null,
-      "for_leave_only": true
-    },
-    {
-      "id": "tuition-debit",
-      "category": "書類・手続き",
-      "title": "保育料の口座振替設定を確認",
-      "note": "初回引き落としの前月末までに手続きが必要なケースが多い。",
-      "month_offset": 1,
-      "multi_child_note": null
-    },
-    {
-      "id": "parents-meeting",
-      "category": "園との関わり",
-      "title": "保護者会（全体）",
-      "note": "入園後最初の保護者会。役員選出が行われることが多い。",
-      "month_offset": 1,
-      "multi_child_note": "上の子の行事と重なる場合あり。夫婦どちらが参加するか確認。"
-    },
-    {
-      "id": "room-parent-election",
-      "category": "園との関わり",
-      "title": "役員選出への対応",
-      "note": "新入園クラスは対象になりやすい。夫婦で方針を決めておく。",
-      "month_offset": 1,
-      "multi_child_note": null
-    },
-    {
-      "id": "checkup-4m",
-      "category": "健康・緊急対応",
-      "title": "4か月児健康診査",
-      "note": "場所：清音総合センター（清音軽部1135）。内容：身体測定・内科診査・育児相談など。詳細 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/ninsin_shusan/nyuuyoujikennkousinnsa.html",
-      "month_offset": 3,
-      "multi_child_note": null
-    },
-    {
-      "id": "physical-checkup",
-      "category": "園との関わり",
-      "title": "身体測定・健康診断（園内）",
-      "note": "年数回実施。結果票を受け取って保管を。",
+      "id": "juminzei-notice",
+      "category": "年間手続き",
+      "title": "住民税の決定通知書を確認",
+      "note": "6月に職場または市から通知が届きます。翌年の保育料の基準になるため、金額を確認しておきましょう。",
       "month_offset": 2,
       "multi_child_note": null
     },
     {
-      "id": "sports-day",
-      "category": "行事・発表",
-      "title": "運動会（秋）",
-      "note": "土曜開催が多い。有給取得・祖父母への連絡を早めに調整。",
-      "month_offset": 6,
-      "multi_child_note": "複数の子が別の保育園の場合、開催日が重なる可能性あり。"
-    },
-    {
-      "id": "individual-meeting",
-      "category": "園との関わり",
-      "title": "個人面談",
-      "note": "保育士と子どもの様子を共有。平日昼間が多いため有給調整が必要なことも。",
-      "month_offset": 6,
+      "id": "infant-checkup-18m",
+      "category": "医療・健診",
+      "title": "乳幼児健診（1歳6か月健診）の通知を確認",
+      "note": "1歳6か月ごろに市から案内が届きます。身体計測・歯科検診・言語相談などを無料で受けられます。",
+      "month_offset": 5,
       "multi_child_note": null
     },
     {
-      "id": "recital",
-      "category": "行事・発表",
-      "title": "生活発表会（冬）",
-      "note": "子どもの練習成果を見る場。早めに有給申請を。",
-      "month_offset": 9,
+      "id": "nyuuen-moushikomi-start",
+      "category": "保育・入園",
+      "title": "🔴 翌年4月入園の申込み受付開始",
+      "note": "多くの自治体では10〜11月に翌年度の入園申込みを受付。書類の準備を早めに。就労証明書の取得に時間がかかることが多いです。",
+      "month_offset": 6,
+      "multi_child_note": "複数の子どもがいる場合、それぞれの施設の申込みが必要なケースがあります。",
+      "is_milestone": true
+    },
+    {
+      "id": "nyuuen-moushikomi-end",
+      "category": "保育・入園",
+      "title": "入園申込み書類の提出締切",
+      "note": "締切を過ぎると次の選考に回ります。必要書類（就労証明書・在職証明書など）は早めに準備しましょう。",
+      "month_offset": 7,
       "multi_child_note": null
     },
     {
-      "id": "next-year-enrollment-apply",
-      "category": "書類・手続き",
-      "title": "翌年度継続入所申請",
-      "note": "11〜12月が申請期間のことが多い。忘れると翌年の入所が保証されない。",
+      "id": "nenmatsu-chosei",
+      "category": "年間手続き",
+      "title": "年末調整の申請（配偶者控除・生命保険控除）",
+      "note": "職場に年末調整書類を提出する時期。配偶者控除、生命保険料控除などをもれなく申請しましょう。",
       "month_offset": 8,
       "multi_child_note": null
     },
     {
-      "id": "next-year-enrollment-confirm",
-      "category": "書類・手続き",
-      "title": "翌年度継続入所の確定通知を確認",
-      "note": "2〜3月に通知が届く。状況変化（就労証明の更新等）も確認。",
+      "id": "muryoka-confirm",
+      "category": "給付金・手当",
+      "title": "幼児教育・保育無償化の適用確認",
+      "note": "3〜5歳の子どもは保育料が無償。次年度の継続手続きが必要な場合があります。市から案内が届いたら確認を。",
+      "month_offset": 8,
+      "multi_child_note": null
+    },
+    {
+      "id": "infant-checkup-3y",
+      "category": "医療・健診",
+      "title": "乳幼児健診（3歳健診）の通知を確認",
+      "note": "3歳になるころに市から案内が届きます。視力・聴力・尿検査なども実施。発達の節目として重要な健診です。",
+      "month_offset": 9,
+      "multi_child_note": null
+    },
+    {
+      "id": "kakuteishinkoku-prep",
+      "category": "年間手続き",
+      "title": "確定申告の準備（医療費・保険料の領収書を整理）",
+      "note": "年間の医療費が10万円を超えた場合、確定申告で医療費控除を受けられます。領収書を1月中にまとめておきましょう。",
+      "month_offset": 9,
+      "multi_child_note": null
+    },
+    {
+      "id": "kakuteishinkoku-submit",
+      "category": "年間手続き",
+      "title": "🔴 確定申告の提出（2/16〜3/15）",
+      "note": "医療費控除・住宅ローン控除などがある方は期限内に申告を。e-Taxでオンライン提出が便利です。",
+      "month_offset": 10,
+      "multi_child_note": null,
+      "is_milestone": true
+    },
+    {
+      "id": "shingakkou-nyuugaku",
+      "category": "節目・切り替え",
+      "title": "小学校就学通知の確認（5歳秋〜）",
+      "note": "10〜11月ごろに市から就学通知書が届きます。就学相談・就学時健診の案内も同封されることが多いです。",
+      "month_offset": 10,
+      "multi_child_note": null,
+      "for_leave_only": false
+    },
+    {
+      "id": "new-year-hoikuryo",
+      "category": "保育・入園",
+      "title": "新年度の保育料通知を確認",
+      "note": "3月末〜4月初めに次年度の保育料が通知されます。家計への影響を確認しておきましょう。",
       "month_offset": 11,
       "multi_child_note": null
     },
     {
-      "id": "checkup-18m",
-      "category": "健康・緊急対応",
-      "title": "1歳6か月児健康診査",
-      "note": "場所：清音総合センター（清音軽部1135）。内容：身体測定・歯科診査・育児相談など。詳細 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/ninsin_shusan/nyuuyoujikennkousinnsa.html",
-      "month_offset": 15,
-      "multi_child_note": null
+      "id": "jido-teate-genkyo-2",
+      "category": "給付金・手当",
+      "title": "🔴 児童手当の現況届を提出（翌年）",
+      "note": "毎年6月末が締切です。昨年と状況が変わっていなくても、必ず提出が必要です。",
+      "month_offset": 14,
+      "multi_child_note": null,
+      "is_milestone": true
     },
     {
-      "id": "checkup-3y",
-      "category": "健康・緊急対応",
-      "title": "3歳児健康診査",
-      "note": "場所：清音総合センター（清音軽部1135）。内容：身体測定・内科・歯科・眼科・聴覚・発達確認など。詳細 → https://www.city.soja.okayama.jp/kodomo/kosodate_kyouiku/akachan_kodomo/ninsin_shusan/nyuuyoujikennkousinnsa.html",
-      "month_offset": 35,
-      "multi_child_note": null
+      "id": "nyuuen-moushikomi-start-2",
+      "category": "保育・入園",
+      "title": "🔴 翌々年4月入園の申込み受付開始（翌年）",
+      "note": "年齢が上がって施設変更を検討している場合も、早めに情報収集を。",
+      "month_offset": 18,
+      "multi_child_note": null,
+      "is_milestone": true
     }
   ]
 }

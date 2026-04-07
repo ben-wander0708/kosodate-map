@@ -121,22 +121,20 @@ function shiftMonth(ym: string, delta: number): string {
 }
 
 const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  慣らし保育:   { bg: "bg-blue-50",   text: "text-blue-700",   border: "border-blue-200" },
-  "行事・発表": { bg: "bg-amber-50",  text: "text-amber-700",  border: "border-amber-200" },
-  "園との関わり":{ bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
-  "書類・手続き":{ bg: "bg-green-50",  text: "text-green-700",  border: "border-green-200" },
-  "健康・緊急対応":{ bg: "bg-red-50", text: "text-red-700",    border: "border-red-200" },
-  復職準備:     { bg: "bg-rose-50",   text: "text-rose-700",   border: "border-rose-200" },
+  "医療・健診":    { bg: "bg-blue-50",   text: "text-blue-700",   border: "border-blue-200" },
+  "給付金・手当":  { bg: "bg-green-50",  text: "text-green-700",  border: "border-green-200" },
+  "保育・入園":    { bg: "bg-purple-50", text: "text-purple-700", border: "border-purple-200" },
+  "年間手続き":    { bg: "bg-amber-50",  text: "text-amber-700",  border: "border-amber-200" },
+  "節目・切り替え":{ bg: "bg-rose-50",   text: "text-rose-700",   border: "border-rose-200" },
 };
 
 const CATEGORY_CHIPS: { label: string; icon: string; value: string | null }[] = [
-  { label: "すべて",     icon: "",   value: null },
-  { label: "慣らし保育", icon: "🌱", value: "慣らし保育" },
-  { label: "行事・発表", icon: "🎪", value: "行事・発表" },
-  { label: "園との関わり",icon:"🏫", value: "園との関わり" },
-  { label: "書類・手続き",icon:"📋", value: "書類・手続き" },
-  { label: "健康・緊急", icon: "🏥", value: "健康・緊急対応" },
-  { label: "復職準備",   icon: "💼", value: "復職準備" },
+  { label: "すべて",      icon: "",   value: null },
+  { label: "医療・健診",  icon: "🏥", value: "医療・健診" },
+  { label: "給付金・手当",icon: "💴", value: "給付金・手当" },
+  { label: "保育・入園",  icon: "🏫", value: "保育・入園" },
+  { label: "年間手続き",  icon: "📋", value: "年間手続き" },
+  { label: "節目",        icon: "🌸", value: "節目・切り替え" },
 ];
 
 const ASSIGNEE_OPTIONS: { value: EventAssignee; label: string; emoji: string }[] = [
@@ -315,9 +313,9 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <div>
-          <h2 className="text-base font-bold mb-1">入園後タイムライン</h2>
+          <h2 className="text-base font-bold mb-1">子育て行政リマインダー</h2>
           <p className="text-xs text-green-200">
-            {municipalityName}の入園後イベントを夫婦で共有・担当を決めましょう。
+            児童手当・健診・入園申込みなど、年間の行政手続きを見逃さないために。
           </p>
         </div>
         {isShared ? (
@@ -415,12 +413,12 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         </button>
       </div>
 
-      {/* ===== 入園後タイムライン ===== */}
+      {/* ===== 行政リマインダー ===== */}
       {activeTab === "timeline" && (
         <>
-          {/* 入園月入力 */}
+          {/* 基準月入力 */}
           <div className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-            <p className="text-xs font-semibold text-gray-500 mb-1">🏫 保育園の入園月</p>
+            <p className="text-xs font-semibold text-gray-500 mb-1">📅 基準月（通常は4月）</p>
             <input
               type="month"
               value={enrollmentMonth}
@@ -429,11 +427,11 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
             />
             {enrollmentMonth ? (
               <p className="text-xs text-[#2d9e6b] mt-1 font-medium">
-                ✅ {enrollmentMonth.replace("-", "年")}月入園のスケジュールを表示中
+                ✅ {enrollmentMonth.replace("-", "年")}月を基準にしたリマインダーを表示中
               </p>
             ) : (
               <p className="text-xs text-gray-400 mt-1">
-                入園月を入力すると、各イベントの実際の月が表示されます
+                基準月（通常は4月）を入力すると各リマインダーの月が表示されます
               </p>
             )}
           </div>
@@ -441,8 +439,8 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
           {!isShared && (
             <div className="bg-blue-50 rounded-xl p-3 border border-blue-100">
               <p className="text-xs text-blue-700 leading-relaxed">
-                👫 <span className="font-semibold">担当者を設定してパートナーと共有</span>しましょう。
-                「パートナーと共有する」ボタンでURLを送れば、二人が同じ画面を見られます。
+                👫 <span className="font-semibold">担当者を設定してパートナーと共有</span>できます。
+                「パートナーと共有する」ボタンでURLを送れば、二人で同じリマインダーを確認できます。
               </p>
             </div>
           )}
@@ -479,7 +477,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
               if (events.length === 0) return null;
               const monthLabel = enrollmentMonth
                 ? getMonthLabel(enrollmentMonth, offset)
-                : `入園${offset === 0 ? "月" : `から${offset}ヶ月後`}`;
+                : `4月${offset === 0 ? "（基準月）" : `から${offset}ヶ月後`}`;
 
               return (
                 <div key={offset}>
