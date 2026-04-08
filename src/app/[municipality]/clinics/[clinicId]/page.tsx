@@ -55,8 +55,37 @@ export default async function ClinicDetailPage({
 
   const PRIORITY_DEPARTMENTS = ["小児科", "産婦人科", "耳鼻いんこう科", "皮膚科"];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    "name": clinic.name,
+    "description": `${clinic.departments.join("・")}。${clinic.facility_type}。`,
+    "medicalSpecialty": clinic.departments,
+    "address": clinic.address ? {
+      "@type": "PostalAddress",
+      "streetAddress": clinic.address,
+      "addressCountry": "JP",
+    } : undefined,
+    "telephone": clinic.tel ?? undefined,
+    "geo": clinic.location ? {
+      "@type": "GeoCoordinates",
+      "latitude": clinic.location.lat,
+      "longitude": clinic.location.lng,
+    } : undefined,
+    "url": `https://kosodate-map.vercel.app/${municipalityId}/clinics/${clinicId}`,
+    "openingHours": [
+      clinic.hours?.weekday_morning ? `Mo-Fr ${clinic.hours.weekday_morning}` : null,
+      clinic.hours?.weekday_afternoon ? `Mo-Fr ${clinic.hours.weekday_afternoon}` : null,
+      clinic.hours?.saturday ? `Sa ${clinic.hours.saturday}` : null,
+    ].filter(Boolean),
+  };
+
   return (
     <div className="p-4 space-y-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* 戻るボタン */}
       <Link
         href={`/${municipalityId}`}

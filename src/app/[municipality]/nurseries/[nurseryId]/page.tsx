@@ -101,8 +101,33 @@ export default async function NurseryDetailPage({
 
   const typeTip = TYPE_TIPS[nursery.type];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ChildCare",
+    "name": nursery.name,
+    "description": `${municipality.name_ja}の${nursery.type}。定員${nursery.capacity}名。`,
+    "address": nursery.address ? {
+      "@type": "PostalAddress",
+      "streetAddress": nursery.address,
+      "addressLocality": municipality.name_ja,
+      "addressRegion": municipality.prefecture_ja,
+      "addressCountry": "JP",
+    } : undefined,
+    "telephone": nursery.tel ?? undefined,
+    "geo": nursery.location ? {
+      "@type": "GeoCoordinates",
+      "latitude": nursery.location.lat,
+      "longitude": nursery.location.lng,
+    } : undefined,
+    "url": `https://kosodate-map.vercel.app/${municipalityId}/nurseries/${nurseryId}`,
+  };
+
   return (
     <div className="p-4 space-y-4">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* 戻るボタン */}
       <Link
         href={`/${municipalityId}`}
