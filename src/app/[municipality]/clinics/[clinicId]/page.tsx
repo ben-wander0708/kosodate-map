@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { dataRepository } from "@/lib/data/json-adapter";
+import ShareButton from "@/components/common/ShareButton";
 
 interface ClinicDetailPageProps {
   params: Promise<{ municipality: string; clinicId: string }>;
@@ -209,6 +210,13 @@ export default async function ClinicDetailPage({
           診療時間・休診日は変更されることがあります。受診前に必ず各施設にお電話でご確認ください。
         </p>
       </div>
+
+      {/* LINEシェア */}
+      <ShareButton
+        title={`${clinic.name}｜医療機関情報`}
+        url={`https://kosodate-map.vercel.app/${municipalityId}/clinics/${clinicId}`}
+        message={`${clinic.departments.slice(0, 3).join("・")}。総社子育てノートで診療時間・アクセスを確認できます。`}
+      />
 
       {/* 出典 */}
       <div className="bg-gray-50 rounded-xl p-4 text-xs text-gray-400">

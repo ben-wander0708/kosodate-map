@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { dataRepository } from "@/lib/data/json-adapter";
 import AvailabilityBadge from "@/components/nursery/AvailabilityBadge";
 import NurseryDetailMap from "@/components/nursery/NurseryDetailMap";
+import ShareButton from "@/components/common/ShareButton";
 
 interface NurseryDetailPageProps {
   params: Promise<{ municipality: string; nurseryId: string }>;
@@ -297,6 +298,13 @@ export default async function NurseryDetailPage({
           </p>
         </div>
       )}
+
+      {/* LINEシェア */}
+      <ShareButton
+        title={`${nursery.name}｜${municipality.name_ja}の${nursery.type}`}
+        url={`https://kosodate-map.vercel.app/${municipalityId}/nurseries/${nurseryId}`}
+        message={`定員${nursery.capacity}名・${Object.values(nursery.availability).some(v => v === "○" || v === "△") ? "空きあり" : "空き状況確認"}。総社子育てノートで詳細を確認できます。`}
+      />
 
       {/* 出典 */}
       <div className="bg-gray-50 rounded-xl p-4 text-xs text-gray-400">
