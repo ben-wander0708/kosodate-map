@@ -1,1 +1,189 @@
-[]
+[
+  {
+    "id": "okayama-jido-teate",
+    "municipality_id": "okayama",
+    "category": "給付金・手当",
+    "title": "児童手当",
+    "target": "中学校卒業まで（15歳到達後の最初の3月31日まで）の子どもを養育している保護者（所得制限なし）",
+    "summary": "子どもの年齢・人数に応じて毎月支給。2024年10月から所得制限が撤廃され、高校生世代まで拡充。第3子以降は月3万円に増額。",
+    "amount": "月額1万〜3万円（年齢・子どもの順番により異なる）",
+    "amount_detail": [
+      {
+        "label": "3歳未満（第1・2子）",
+        "value": "月15,000円"
+      },
+      {
+        "label": "3歳未満（第3子以降）",
+        "value": "月30,000円"
+      },
+      {
+        "label": "3歳〜小学校修了（第1・2子）",
+        "value": "月10,000円"
+      },
+      {
+        "label": "3歳〜小学校修了（第3子以降）",
+        "value": "月30,000円"
+      },
+      {
+        "label": "中学生（第1・2子）",
+        "value": "月10,000円"
+      },
+      {
+        "label": "中学生（第3子以降）",
+        "value": "月30,000円"
+      }
+    ],
+    "how_to_apply": "出生・転入から15日以内に各区役所市民保険年金課、各支所総務民生課、各地域センターで申請。出生届と同時に手続き可能。",
+    "no_application_needed": false,
+    "contact_name": "各区役所市民保険年金課",
+    "url": "https://www.city.okayama.jp/kurashi/0000011381.html",
+    "tags": [
+      "全員対象",
+      "毎月支給",
+      "2024年拡充"
+    ]
+  },
+  {
+    "id": "okayama-kodomo-iryo",
+    "municipality_id": "okayama",
+    "category": "医療費助成",
+    "title": "子ども医療費助成制度",
+    "target": "岡山市在住の0歳〜高校生等（18歳到達後の最初の3月31日まで）",
+    "summary": "保険診療の自己負担分を市が助成。就学前は外来・入院ともに実質無料。小学生以降は入院が無料、外来は1割負担。",
+    "amount": "就学前：外来・入院ともに自己負担ゼロ／小学生：入院無料・外来1割負担",
+    "amount_detail": [
+      {
+        "label": "0歳〜就学前",
+        "value": "外来・入院ともに自己負担ゼロ"
+      },
+      {
+        "label": "小学1〜6年生",
+        "value": "入院：自己負担ゼロ、外来：1割負担"
+      },
+      {
+        "label": "中学生・高校生等",
+        "value": "詳細は市窓口へ確認"
+      }
+    ],
+    "how_to_apply": "電子申請または各区役所・支所・地域センター・福祉事務所で申請。保護者の本人確認書類（免許証等）が必要。",
+    "no_application_needed": false,
+    "contact_name": "各区役所・支所・地域センター",
+    "url": "https://www.city.okayama.jp/kurashi/0000004319.html",
+    "tags": [
+      "就学前無料",
+      "窓口助成",
+      "転入時要申請"
+    ]
+  },
+  {
+    "id": "okayama-hoiku-muryoka",
+    "municipality_id": "okayama",
+    "category": "保育・教育",
+    "title": "幼児教育・保育の無償化",
+    "target": "3〜5歳の全ての子ども。0〜2歳は住民税非課税世帯のみ。",
+    "summary": "認定こども園・保育園・幼稚園の保育料が無料に。給食費・通園費などは実費負担あり。2019年10月から実施。",
+    "amount": "3〜5歳：保育料全額無償／0〜2歳（非課税世帯）：月額上限42,000円の補助",
+    "amount_detail": [
+      {
+        "label": "3〜5歳（認可保育所・こども園）",
+        "value": "保育料無料"
+      },
+      {
+        "label": "3〜5歳（幼稚園）",
+        "value": "月25,700円まで無償"
+      },
+      {
+        "label": "0〜2歳（非課税世帯）",
+        "value": "月42,000円まで補助"
+      }
+    ],
+    "how_to_apply": "入園申請と同時に市町村認定の手続きが必要。施設を通じて申請。",
+    "no_application_needed": false,
+    "contact_name": "岡山っ子育成局 就園管理課",
+    "url": "https://www.city.okayama.jp/kurashi/0000005026.html",
+    "tags": [
+      "3〜5歳無償",
+      "保育料無料",
+      "2019年開始"
+    ]
+  },
+  {
+    "id": "okayama-sango-care",
+    "municipality_id": "okayama",
+    "category": "産前産後",
+    "title": "産後ケア事業",
+    "target": "岡山市在住の産後1年未満の母親と赤ちゃん",
+    "summary": "産後の心身のケアや育児指導を専門家がサポート。宿泊・日帰り・訪問の3種類から選べる。",
+    "amount": "利用料は所得等により異なる（詳細は各区こども家庭センターへ）",
+    "amount_detail": [
+      {
+        "label": "宿泊産後ケア",
+        "value": "施設に泊まって休息・育児指導"
+      },
+      {
+        "label": "日帰り産後ケア",
+        "value": "日中のみ施設でケアを受ける"
+      },
+      {
+        "label": "訪問産後ケア",
+        "value": "自宅への訪問ケア"
+      }
+    ],
+    "how_to_apply": "各区こども家庭センター（産前産後相談ステーション）に申請。",
+    "no_application_needed": false,
+    "contact_name": "各区こども家庭センター",
+    "url": "https://www.city.okayama.jp/kurashi/0000020851.html",
+    "tags": [
+      "産後1年以内",
+      "宿泊・日帰り・訪問",
+      "専門家サポート"
+    ]
+  },
+  {
+    "id": "okayama-silver-sanzen",
+    "municipality_id": "okayama",
+    "category": "産前産後",
+    "title": "シルバー世代産前産後応援事業",
+    "target": "岡山市在住の妊娠中〜産後1年までの家庭",
+    "summary": "シルバー人材センター会員（60歳以上）が自宅を訪問し、家事・育児を低コストでサポート。",
+    "amount": "1時間あたり500円",
+    "amount_detail": [
+      {
+        "label": "家事支援",
+        "value": "食事準備・洗濯・掃除・買い物等（1時間500円）"
+      },
+      {
+        "label": "育児支援",
+        "value": "授乳・おむつ交換・沐浴介助等（1時間500円）"
+      }
+    ],
+    "how_to_apply": "各区こども家庭センターに相談・申請。",
+    "no_application_needed": false,
+    "contact_name": "各区こども家庭センター",
+    "url": "https://www.city.okayama.jp/kurashi/0000013001.html",
+    "tags": [
+      "格安サポート",
+      "家事・育児支援",
+      "妊娠中から利用可"
+    ]
+  },
+  {
+    "id": "okayama-ninshin-support",
+    "municipality_id": "okayama",
+    "category": "相談・支援",
+    "title": "おかやま妊娠・出産サポートセンター",
+    "target": "妊娠・出産に不安や悩みを抱えている方",
+    "summary": "妊娠・出産に関する不安や悩みを専門の相談員が聞いてくれる無料相談窓口。",
+    "amount": "無料",
+    "amount_detail": [],
+    "how_to_apply": "電話または窓口で相談。",
+    "no_application_needed": true,
+    "contact_name": "おかやま妊娠・出産サポートセンター",
+    "url": "https://www.city.okayama.jp/kosodate/0000045490.html",
+    "tags": [
+      "無料相談",
+      "妊娠中から",
+      "専門相談員"
+    ]
+  }
+]

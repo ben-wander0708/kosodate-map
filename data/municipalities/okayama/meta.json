@@ -22,7 +22,7 @@
   ],
   "features_enabled": {
     "nursery_map": true,
-    "clinic_search": false,
-    "gov_support": false
+    "clinic_search": true,
+    "gov_support": true
   }
 }

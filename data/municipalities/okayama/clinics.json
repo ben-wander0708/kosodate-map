@@ -1,1 +1,226 @@
-[]
+[
+  {
+    "id": "okayama-nijiiro-clinic",
+    "municipality_id": "okayama",
+    "name": "岡山南区にじいろ内科・小児科クリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市南区福成1丁目167-1",
+    "tel": "086-239-1678",
+    "departments": [
+      "小児科",
+      "内科",
+      "糖尿病内科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:30",
+      "weekday_afternoon": "14:30-18:00",
+      "saturday": null,
+      "sunday": null
+    },
+    "closed": "火曜日午後・土曜日・日曜日・祝日",
+    "notes": "乳幼児健診・予防接種は14:00〜15:00（予約制）",
+    "location": {
+      "lat": 34.6415,
+      "lng": 133.9052
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-sukoyaka-clinic",
+    "municipality_id": "okayama",
+    "name": "すこやかこどもクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市南区福成1丁目179-8",
+    "tel": "086-264-1002",
+    "departments": [
+      "小児科",
+      "アレルギー科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:30-18:30",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": "乳幼児健診・予防接種は14:00〜15:00（予約制）",
+    "location": {
+      "lat": 34.6412,
+      "lng": 133.9058
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-hattori-shoni",
+    "municipality_id": "okayama",
+    "name": "はっとり小児科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市南区浜野4丁目22-34",
+    "tel": "086-265-5660",
+    "departments": [
+      "小児科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "16:00-18:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": null,
+    "location": {
+      "lat": 34.6358,
+      "lng": 133.9272
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-fukuda-shoni",
+    "municipality_id": "okayama",
+    "name": "福田小児科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市南区福富西3丁目1-14",
+    "tel": "086-263-8585",
+    "departments": [
+      "小児科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:00-18:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": null,
+    "location": {
+      "lat": 34.6412,
+      "lng": 133.9098
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-nikoniko-kodomo",
+    "municipality_id": "okayama",
+    "name": "ニコニコこどもクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市北区辰巳7丁目102",
+    "tel": "086-242-5566",
+    "departments": [
+      "小児科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:00-18:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": null,
+    "location": {
+      "lat": 34.6632,
+      "lng": 133.9168
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-kamimachi-kodomo",
+    "municipality_id": "okayama",
+    "name": "かみまちこども医院",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市北区大元上町",
+    "tel": "086-245-0708",
+    "departments": [
+      "小児科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "15:00-18:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": null,
+    "location": {
+      "lat": 34.6652,
+      "lng": 133.9045
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-okan-sanfujin",
+    "municipality_id": "okayama",
+    "name": "岡南産婦人科医院",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市南区平福2丁目6-43",
+    "tel": "086-264-3366",
+    "departments": [
+      "産婦人科",
+      "小児科",
+      "不妊治療"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "14:00-17:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": "女医在籍",
+    "location": {
+      "lat": 34.6408,
+      "lng": 133.9318
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-kunikata-womens",
+    "municipality_id": "okayama",
+    "name": "くにかたウィメンズクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市北区野殿東町1-35 MAK岡山クリニックモール",
+    "tel": "086-255-0080",
+    "departments": [
+      "産婦人科",
+      "婦人科",
+      "不妊治療"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "14:00-18:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": "不妊治療・更年期対応",
+    "location": {
+      "lat": 34.6793,
+      "lng": 133.9352
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-oaks-maternity",
+    "municipality_id": "okayama",
+    "name": "オークスマタニティクリニック",
+    "facility_type": "クリニック",
+    "address": "岡山県岡山市北区大安寺南町2丁目2-5",
+    "tel": "086-214-1103",
+    "departments": [
+      "産婦人科",
+      "産科"
+    ],
+    "hours": {
+      "weekday_morning": "09:00-12:00",
+      "weekday_afternoon": "14:00-17:00",
+      "saturday": "09:00-12:00",
+      "sunday": null
+    },
+    "closed": "土曜日午後・日曜日・祝日",
+    "notes": "マタニティ専門クリニック",
+    "location": {
+      "lat": 34.6902,
+      "lng": 133.9403
+    },
+    "geocoded": false
+  }
+]
