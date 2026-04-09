@@ -38,9 +38,11 @@
     "contact_name": "こども課",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3267.html",
     "tags": [
+      "児童手当",
       "全員対象",
       "毎月支給",
-      "2024年拡充"
+      "2024年拡充",
+      "総社市 給付金"
     ]
   },
   {
@@ -58,8 +60,10 @@
     "url": null,
     "tags": [
       "申請不要",
-      "1回限り",
-      "自動支給"
+      "給付金",
+      "自動支給",
+      "物価高対策",
+      "子育て世帯"
     ]
   },
   {
@@ -78,7 +82,9 @@
     "tags": [
       "総社市独自",
       "出産祝い",
-      "クーポン"
+      "出産支援",
+      "おむつクーポン",
+      "新生児"
     ]
   },
   {
@@ -95,6 +101,8 @@
     "contact_name": "こども課",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3298.html",
     "tags": [
+      "医療費無料",
+      "子ども医療費",
       "中学生まで無料",
       "窓口無料",
       "転入時要申請"
@@ -127,9 +135,11 @@
     "contact_name": "こども夢づくり課",
     "url": "https://www.city.soja.okayama.jp/soshiki/44/4565.html",
     "tags": [
+      "保育料無料",
+      "保活",
+      "幼保無償化",
       "3歳から全員無料",
-      "保育料",
-      "国の制度"
+      "認可保育園"
     ]
   },
   {
@@ -159,8 +169,10 @@
     "contact_name": "こども課（保健センター）",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3246.html",
     "tags": [
+      "産後ケア",
       "産後サポート",
       "助産師",
+      "宿泊・日帰り・訪問",
       "低所得無料"
     ]
   },
@@ -191,9 +203,11 @@
     "contact_name": "こども課（保健センター）",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3258.html",
     "tags": [
+      "乳幼児健診",
+      "健診無料",
       "無料",
       "申請不要",
-      "3回実施"
+      "発達チェック"
     ]
   },
   {
@@ -212,7 +226,9 @@
     "tags": [
       "無料",
       "予約不要",
-      "助産師に相談"
+      "助産師に相談",
+      "育児相談",
+      "妊娠中から"
     ]
   },
   {
@@ -242,6 +258,8 @@
     "contact_name": "ファミリーサポートセンター",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3226.html",
     "tags": [
+      "子どもの預け先",
+      "ファミサポ",
       "送迎・預かり",
       "低価格",
       "事前登録必要"
@@ -282,6 +300,8 @@
     "contact_name": "こども夢づくり課",
     "url": "https://www.city.soja.okayama.jp/soshiki/44/4573.html",
     "tags": [
+      "子育て支援センター",
+      "子育て相談",
       "無料",
       "予約不要",
       "市内5か所"
@@ -301,8 +321,10 @@
     "contact_name": "総社PEC（発達支援センター）",
     "url": null,
     "tags": [
+      "療育相談",
       "発達相談",
       "無料相談",
+      "障害児支援",
       "専門支援"
     ]
   },
@@ -333,7 +355,9 @@
     "contact_name": "こども課",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3306.html",
     "tags": [
+      "児童扶養手当",
       "ひとり親",
+      "シングルマザー",
       "所得制限あり",
       "毎月支給"
     ]
@@ -361,8 +385,10 @@
     "contact_name": "こども課",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3307.html",
     "tags": [
+      "ひとり親医療費",
       "ひとり親",
       "医療費軽減",
+      "シングルマザー",
       "要申請"
     ]
   },
@@ -389,9 +415,96 @@
     "contact_name": "こども課",
     "url": "https://www.city.soja.okayama.jp/soshiki/23/3268.html",
     "tags": [
-      "障害児",
+      "特別児童扶養手当",
+      "障害児支援",
+      "障害手当",
       "国の制度",
       "所得制限あり"
+    ]
+  },
+  {
+    "id": "soja-ijuu-shien",
+    "municipality_id": "soja",
+    "category": "給付金・手当",
+    "title": "東京圏からの移住支援金",
+    "target": "東京23区内に在住していた者（または通勤者）が総社市に移住し、県のマッチングサイト掲載企業に就業した世帯・単身者",
+    "summary": "東京圏から総社市へ移住し、対象求人に就職した場合に支給される支援金。18歳未満の子どもを帯同すると1人あたり100万円の加算あり。転入前に要確認。",
+    "amount": "世帯100万円・単身60万円（子ども1人につき100万円加算）",
+    "amount_detail": [
+      {
+        "label": "世帯での移住",
+        "value": "100万円"
+      },
+      {
+        "label": "単身での移住",
+        "value": "60万円"
+      },
+      {
+        "label": "18歳未満の子ども帯同加算（1人あたり）",
+        "value": "100万円"
+      }
+    ],
+    "how_to_apply": "岡山県のマッチングサイトで対象求人を確認後、就業してから申請。事前に移住・定住支援窓口へ相談推奨。",
+    "no_application_needed": false,
+    "contact_name": "総社市移住・定住支援窓口",
+    "url": "https://sumousoja.jp/",
+    "tags": [
+      "移住支援",
+      "移住補助金",
+      "東京からの転入",
+      "就労支援",
+      "子育て世帯"
+    ]
+  },
+  {
+    "id": "soja-shintiku-joseikin",
+    "municipality_id": "soja",
+    "category": "給付金・手当",
+    "title": "住宅新築助成金",
+    "target": "市内の助成対象地区で住宅を新築する世帯",
+    "summary": "総社市への定住人口増加を目的とした住宅新築支援。子育て世帯の転入・定住促進のため、新築費用の一部を補助。",
+    "amount": "要問い合わせ（助成額は地区・条件により異なる）",
+    "amount_detail": [],
+    "how_to_apply": "着工前に総社市役所建築課に相談・申請。",
+    "no_application_needed": false,
+    "contact_name": "建築課",
+    "url": "https://www.city.soja.okayama.jp/miryoku/kurashi-bousai-kankyo/iju_teiju/shintiku-joseikin.html",
+    "tags": [
+      "住宅取得支援",
+      "新築補助",
+      "定住促進",
+      "総社市 補助金",
+      "子育て世帯"
+    ]
+  },
+  {
+    "id": "soja-akiya-reform",
+    "municipality_id": "soja",
+    "category": "給付金・手当",
+    "title": "空き家購入・リフォーム補助",
+    "target": "市内の空き家を購入してリフォームする世帯",
+    "summary": "総社市内の空き家を購入しリフォームする場合、工事費用の一部を補助。子育て世帯の転入・定住をサポートする制度。",
+    "amount": "リフォーム費用の1/2（上限30万円）",
+    "amount_detail": [
+      {
+        "label": "補助率",
+        "value": "リフォーム費用の1/2"
+      },
+      {
+        "label": "補助上限",
+        "value": "30万円"
+      }
+    ],
+    "how_to_apply": "市役所担当窓口に相談・申請。工事前に申請が必要。",
+    "no_application_needed": false,
+    "contact_name": "総社市役所",
+    "url": "https://www.city.soja.okayama.jp/siseizyouhouka/navi/kosodate_navi.html",
+    "tags": [
+      "空き家活用",
+      "リフォーム補助",
+      "住宅取得支援",
+      "定住促進",
+      "総社市 補助金"
     ]
   }
 ]

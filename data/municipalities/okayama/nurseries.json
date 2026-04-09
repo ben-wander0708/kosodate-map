@@ -1834,5 +1834,389 @@
     "data_source": "令和7年度岡山市公立保育園・認定こども園名簿",
     "data_date": "2025-04-01",
     "last_updated": "2026-04-06"
+  },
+  {
+    "id": "okayama-shiritsu-001",
+    "municipality_id": "okayama",
+    "name": "岡山中央保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区下石井2丁目1-3",
+    "tel": "086-222-3075",
+    "capacity": 120,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6618,
+      "lng": 133.9231
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-002",
+    "municipality_id": "okayama",
+    "name": "愛育保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区弓之町11-22",
+    "tel": "086-222-4660",
+    "capacity": 80,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.666,
+      "lng": 133.9298
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-003",
+    "municipality_id": "okayama",
+    "name": "岡山南保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区浦安本町100",
+    "tel": "086-262-0055",
+    "capacity": 100,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6295,
+      "lng": 133.9195
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-004",
+    "municipality_id": "okayama",
+    "name": "つくし保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区野田屋町1丁目8-24",
+    "tel": "086-222-4980",
+    "capacity": 60,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6643,
+      "lng": 133.9215
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-005",
+    "municipality_id": "okayama",
+    "name": "光寿保育園",
+    "type": "認可保育所",
+    "sub_area": "中区",
+    "address": "岡山市中区国富2丁目3-34",
+    "tel": "086-270-0155",
+    "capacity": 90,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6558,
+      "lng": 133.9582
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-006",
+    "municipality_id": "okayama",
+    "name": "岡山こども園",
+    "type": "認定こども園",
+    "sub_area": "北区",
+    "address": "岡山市北区津島南3丁目3-16",
+    "tel": "086-254-5561",
+    "capacity": 150,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6712,
+      "lng": 133.9215
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-007",
+    "municipality_id": "okayama",
+    "name": "ひかり認定こども園",
+    "type": "認定こども園",
+    "sub_area": "東区",
+    "address": "岡山市東区西大寺南1丁目3-8",
+    "tel": "086-942-2525",
+    "capacity": 120,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6745,
+      "lng": 134.0182
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-008",
+    "municipality_id": "okayama",
+    "name": "あおぞら保育園",
+    "type": "認可保育所",
+    "sub_area": "南区",
+    "address": "岡山市南区築港栄町4-7",
+    "tel": "086-263-2800",
+    "capacity": 80,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6388,
+      "lng": 133.9352
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-shiritsu-009",
+    "municipality_id": "okayama",
+    "name": "みどり保育園",
+    "type": "認可保育所",
+    "sub_area": "北区",
+    "address": "岡山市北区今4丁目3-45",
+    "tel": "086-243-1380",
+    "capacity": 70,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": "19:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6648,
+      "lng": 133.9178
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-sho-001",
+    "municipality_id": "okayama",
+    "name": "にじいろ小規模保育園",
+    "type": "小規模保育",
+    "sub_area": "北区",
+    "address": "岡山市北区駅元町15-1",
+    "tel": "086-230-3320",
+    "capacity": 19,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": "18:30"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6658,
+      "lng": 133.9192
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-sho-002",
+    "municipality_id": "okayama",
+    "name": "はなぞの小規模保育所",
+    "type": "小規模保育",
+    "sub_area": "中区",
+    "address": "岡山市中区原尾島3丁目11-21",
+    "tel": "086-270-8800",
+    "capacity": 19,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": "18:30"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6548,
+      "lng": 133.9562
+    },
+    "geocoded": false
+  },
+  {
+    "id": "okayama-sho-003",
+    "municipality_id": "okayama",
+    "name": "南区小さなこども園",
+    "type": "小規模保育",
+    "sub_area": "南区",
+    "address": "岡山市南区新保855-1",
+    "tel": "086-260-5151",
+    "capacity": 19,
+    "current_enrollment": 0,
+    "age_from_months": 2,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": "18:30"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": null,
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.6378,
+      "lng": 133.9098
+    },
+    "geocoded": false
   }
 ]
