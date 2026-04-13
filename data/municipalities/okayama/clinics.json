@@ -20,10 +20,10 @@
     "closed": "火曜日午後・土曜日・日曜日・祝日",
     "notes": "乳幼児健診・予防接種は14:00〜15:00（予約制）",
     "location": {
-      "lat": 34.6415,
-      "lng": 133.9052
+      "lat": 34.615952,
+      "lng": 133.932617
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-sukoyaka-clinic",
@@ -45,10 +45,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": "乳幼児健診・予防接種は14:00〜15:00（予約制）",
     "location": {
-      "lat": 34.6412,
-      "lng": 133.9058
+      "lat": 34.613152,
+      "lng": 133.932877
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-hattori-shoni",
@@ -69,10 +69,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": null,
     "location": {
-      "lat": 34.6358,
-      "lng": 133.9272
+      "lat": 34.625893,
+      "lng": 133.940979
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-fukuda-shoni",
@@ -93,10 +93,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": null,
     "location": {
-      "lat": 34.6412,
-      "lng": 133.9098
+      "lat": 34.624268,
+      "lng": 133.926956
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-nikoniko-kodomo",
@@ -117,10 +117,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": null,
     "location": {
-      "lat": 34.6632,
-      "lng": 133.9168
+      "lat": 34.641991,
+      "lng": 133.889984
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-kamimachi-kodomo",
@@ -141,10 +141,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": null,
     "location": {
-      "lat": 34.6652,
-      "lng": 133.9045
+      "lat": 34.648701,
+      "lng": 133.900436
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-okan-sanfujin",
@@ -167,10 +167,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": "女医在籍",
     "location": {
-      "lat": 34.6408,
-      "lng": 133.9318
+      "lat": 34.616169,
+      "lng": 133.94986
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-kunikata-womens",
@@ -218,9 +218,9 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": "マタニティ専門クリニック",
     "location": {
-      "lat": 34.6902,
-      "lng": 133.9403
+      "lat": 34.658371,
+      "lng": 133.887772
     },
-    "geocoded": false
+    "geocoded": true
   }
 ]
