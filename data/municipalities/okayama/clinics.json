@@ -193,10 +193,10 @@
     "closed": "土曜日午後・日曜日・祝日",
     "notes": "不妊治療・更年期対応",
     "location": {
-      "lat": 34.6793,
-      "lng": 133.9352
+      "lat": 34.658482,
+      "lng": 133.881927
     },
-    "geocoded": false
+    "geocoded": true
   },
   {
     "id": "okayama-oaks-maternity",
