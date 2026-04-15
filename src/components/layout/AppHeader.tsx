@@ -149,7 +149,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
               🌱
             </div>
             <div className="text-base font-bold text-gray-900">
-              総社<span className="text-[#4CAF82]">子育てノート</span>
+              {municipalityName ?? ""}<span className="text-[#4CAF82]">子育てノート</span>
             </div>
           </Link>
 
