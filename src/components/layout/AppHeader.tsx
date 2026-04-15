@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 import { useLiff } from "@/hooks/useLiff";
+import FeedbackButton from "@/components/common/FeedbackButton";
 
 interface AppHeaderProps {
   municipalityName?: string;
@@ -137,6 +138,9 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
 
   return (
     <>
+      {/* フィードバックボタン（全ページ右下に固定表示） */}
+      <FeedbackButton municipalityId={municipalityId} />
+
       {/* ヘッダー */}
       <header className="bg-white border-b border-gray-100 sticky top-0 z-40">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
