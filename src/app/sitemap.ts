@@ -1,7 +1,7 @@
 import { dataRepository } from "@/lib/data/json-adapter";
 import type { MetadataRoute } from "next";
 
-const BASE_URL = "https://kosodate-map.vercel.app";
+const BASE_URL = "https://kosodate-note.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const municipalities = await dataRepository.getMunicipalities();

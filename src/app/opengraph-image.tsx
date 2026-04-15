@@ -84,7 +84,7 @@ export default function OgImage() {
             color: "rgba(255,255,255,0.5)",
           }}
         >
-          kosodate-map.vercel.app
+          kosodate-note.app
         </div>
       </div>
     ),

@@ -28,10 +28,10 @@ export async function generateMetadata(
       title: `${name}の子育て情報｜総社子育てノート`,
       description: `${name}への転入前から使える保育園・子育て情報サービス。`,
       type: "website",
-      url: `https://kosodate-map.vercel.app/${municipalityId}`,
+      url: `https://kosodate-note.app/${municipalityId}`,
       images: [
         {
-          url: "https://kosodate-map.vercel.app/opengraph-image",
+          url: "https://kosodate-note.app/opengraph-image",
           width: 1200,
           height: 630,
           alt: `${name}の子育て情報｜総社子育てノート`,
@@ -42,7 +42,7 @@ export async function generateMetadata(
       card: "summary_large_image",
       title: `${name}の子育て情報｜総社子育てノート`,
       description: `${name}への転入前から使える保育園・子育て情報サービス。`,
-      images: ["https://kosodate-map.vercel.app/opengraph-image"],
+      images: ["https://kosodate-note.app/opengraph-image"],
     },
   };
 }
@@ -63,7 +63,7 @@ export default async function MunicipalityLayout({
     notFound();
   }
 
-  const baseUrl = "https://kosodate-map.vercel.app";
+  const baseUrl = "https://kosodate-note.app";
   const municipalityUrl = `${baseUrl}/${municipalityId}`;
 
   // AIが「このサービスとは何か」を理解するための構造化データ

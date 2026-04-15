@@ -72,7 +72,7 @@ export default async function ClinicDetailPage({
       "latitude": clinic.location.lat,
       "longitude": clinic.location.lng,
     } : undefined,
-    "url": `https://kosodate-map.vercel.app/${municipalityId}/clinics/${clinicId}`,
+    "url": `https://kosodate-note.app/${municipalityId}/clinics/${clinicId}`,
     "openingHours": [
       clinic.hours?.weekday_morning ? `Mo-Fr ${clinic.hours.weekday_morning}` : null,
       clinic.hours?.weekday_afternoon ? `Mo-Fr ${clinic.hours.weekday_afternoon}` : null,
@@ -243,7 +243,7 @@ export default async function ClinicDetailPage({
       {/* LINEシェア */}
       <ShareButton
         title={`${clinic.name}｜医療機関情報`}
-        url={`https://kosodate-map.vercel.app/${municipalityId}/clinics/${clinicId}`}
+        url={`https://kosodate-note.app/${municipalityId}/clinics/${clinicId}`}
         message={`${clinic.departments.slice(0, 3).join("・")}。総社子育てノートで診療時間・アクセスを確認できます。`}
       />
 

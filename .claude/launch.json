@@ -2,16 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "kosodate-map",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
-      "port": 3000
+      "name": "banner",
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.4.0/bin/node",
+      "runtimeArgs": ["/Users/pero/kosodate-map/banner-server.js"],
+      "port": 3333
     },
     {
-      "name": "mockup",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "7878", "--directory", "nimbalyst-local/mockups"],
-      "port": 7878
+      "name": "kosodate-map",
+      "runtimeExecutable": "/opt/homebrew/Cellar/node/25.4.0/bin/node",
+      "runtimeArgs": ["/Users/pero/kosodate-map/dev-server.js"],
+      "port": 3000
     }
   ]
 }

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>こそだてMAP テストフィードバックシート</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, 'Hiragino Sans', 'Noto Sans JP', sans-serif;
+    background: #f7f9fc;
+    color: #1a1a2e;
+    font-size: 15px;
+    line-height: 1.6;
+    padding-bottom: 40px;
+  }
+
+  /* ヘッダー */
+  .header {
+    background: linear-gradient(135deg, #2d9e6b, #1a7a52);
+    color: white;
+    padding: 20px 16px 16px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(45,158,107,0.3);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .header-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .header h1 { font-size: 17px; font-weight: 700; }
+  .header p { font-size: 12px; color: rgba(255,255,255,0.8); margin-top: 2px; }
+
+  /* 進捗バー */
+  .progress-wrap {
+    background: #fff;
+    border-bottom: 1px solid #e8eeea;
+    padding: 10px 16px;
+    position: sticky;
+    top: 85px;
+    z-index: 99;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .progress-bar-bg {
+    height: 6px;
+    background: #e8f5ef;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: #2d9e6b;
+    border-radius: 99px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-stats {
+    display: flex;
+    gap: 12px;
+    margin-top: 6px;
+    font-size: 11px;
+  }
+  .stat-ok   { color: #2d9e6b; font-weight: 600; }
+  .stat-ng   { color: #e05a2b; font-weight: 600; }
+  .stat-skip { color: #999;    font-weight: 600; }
+
+  /* コンテンツ */
+  .content { padding: 16px; max-width: 560px; margin: 0 auto; }
+
+  /* テストカード */
+  .test-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1.5px solid #e0ece5;
+    margin-bottom: 14px;
+    overflow: hidden;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .test-card.result-ok   { border-color: #2d9e6b; box-shadow: 0 0 0 3px rgba(45,158,107,0.08); }
+  .test-card.result-ng   { border-color: #e05a2b; box-shadow: 0 0 0 3px rgba(224,90,43,0.08); }
+  .test-card.result-skip { border-color: #bbb;    box-shadow: none; opacity: 0.75; }
+
+  .card-header {
+    padding: 12px 14px 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .tc-badge {
+    flex-shrink: 0;
+    background: #f0faf5;
+    color: #2d7a5a;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 99px;
+    border: 1px solid #c8ead8;
+    margin-top: 1px;
+  }
+  .card-title { font-size: 14px; font-weight: 700; color: #1a2e25; line-height: 1.4; }
+
+  .card-body { padding: 0 14px 14px; }
+
+  /* 手順 */
+  .steps-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 5px;
+    margin-top: 8px;
+  }
+  .steps-list { padding-left: 0; list-style: none; }
+  .steps-list li {
+    font-size: 13px;
+    color: #444;
+    padding: 2px 0;
+    display: flex;
+    gap: 6px;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 18px; height: 18px;
+    background: #e8f5ef;
+    color: #2d9e6b;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+  }
+
+  /* 理想の状態 */
+  .ideal-box {
+    background: #f5f5f7;
+    border-left: 3px solid #2d9e6b;
+    border-radius: 0 8px 8px 0;
+    padding: 9px 12px;
+    margin-top: 10px;
+  }
+  .ideal-box .ideal-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #2d9e6b;
+    margin-bottom: 3px;
+    display: block;
+  }
+  .ideal-box p { font-size: 13px; color: #333; line-height: 1.5; }
+
+  /* 結果ラジオ */
+  .result-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .radio-btn {
+    flex: 1;
+    cursor: pointer;
+  }
+  .radio-btn input { display: none; }
+  .radio-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 6px;
+    border-radius: 10px;
+    border: 1.5px solid #e0e0e0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    transition: all 0.15s;
+    cursor: pointer;
+    user-select: none;
+    text-align: center;
+  }
+  .radio-btn input:checked + .radio-label.ok   { background: #e8f8f0; border-color: #2d9e6b; color: #2d7a5a; }
+  .radio-btn input:checked + .radio-label.ng   { background: #fff0eb; border-color: #e05a2b; color: #c04020; }
+  .radio-btn input:checked + .radio-label.skip { background: #f5f5f5; border-color: #aaa;    color: #555; }
+
+  /* コメント欄 */
+  .comment-area {
+    width: 100%;
+    margin-top: 10px;
+    padding: 9px 12px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: inherit;
+    color: #333;
+    background: #fafafa;
+    resize: vertical;
+    min-height: 60px;
+    transition: border-color 0.2s;
+    display: none;
+  }
+  .comment-area:focus { outline: none; border-color: #2d9e6b; background: #fff; }
+  .comment-area.visible { display: block; }
+  .comment-toggle {
+    font-size: 12px;
+    color: #2d9e6b;
+    cursor: pointer;
+    margin-top: 6px;
+    display: inline-block;
+    text-decoration: underline;
+    background: none;
+    border: none;
+    font-family: inherit;
+    padding: 0;
+  }
+
+  /* 総合コメント */
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    margin-bottom: 10px;
+    padding-top: 6px;
+  }
+  .overall-area {
+    width: 100%;
+    padding: 12px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    color: #333;
+    background: #fff;
+    resize: vertical;
+    min-height: 100px;
+  }
+  .overall-area:focus { outline: none; border-color: #2d9e6b; }
+
+  /* まとめボタン */
+  .submit-btn {
+    width: 100%;
+    margin-top: 16px;
+    padding: 15px;
+    background: linear-gradient(135deg, #2d9e6b, #1a7a52);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(45,158,107,0.3);
+    transition: opacity 0.2s, transform 0.1s;
+  }
+  .submit-btn:active { opacity: 0.85; transform: scale(0.98); }
+
+  /* 結果モーダル */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 200;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-sheet {
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px 16px 32px;
+  }
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: #ddd;
+    border-radius: 99px;
+    margin: 0 auto 16px;
+  }
+  .modal-title { font-size: 16px; font-weight: 700; margin-bottom: 14px; color: #1a2e25; }
+  .result-text {
+    background: #f5f5f7;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 13px;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    color: #333;
+    line-height: 1.7;
+  }
+  .copy-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    background: #f0faf5;
+    color: #2d9e6b;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1.5px solid #c8ead8;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .close-btn {
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px;
+    background: #f5f5f5;
+    color: #666;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+</style>
+</head>
+<body>
+
+<!-- ヘッダー -->
+<div class="header">
+  <div class="header-top">
+    <div class="header-icon">🗺</div>
+    <div>
+      <h1>こそだてMAP テストシート</h1>
+      <p>Phase 1 &amp; 2 実装機能 手動テスト用</p>
+    </div>
+  </div>
+</div>
+
+<!-- 進捗バー -->
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span>テスト進捗</span>
+    <span id="progress-pct">0 / 10</span>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progress-fill"></div>
+  </div>
+  <div class="progress-stats">
+    <span class="stat-ok">✅ OK: <span id="cnt-ok">0</span></span>
+    <span class="stat-ng">❌ NG: <span id="cnt-ng">0</span></span>
+    <span class="stat-skip">⏭ スキップ: <span id="cnt-skip">0</span></span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- TC-01 -->
+  <div class="test-card" id="card-1">
+    <div class="card-header">
+      <span class="tc-badge">TC-01</span>
+      <span class="card-title">オンボーディング → 共働きペルソナ自動選択</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>初回アクセス（またはlocalStorageをクリア後にアクセス）</span></li>
+        <li><span class="step-num">2</span><span>ウィザードで「👫 共働き」を選択して完了</span></li>
+        <li><span class="step-num">3</span><span>チェックリストページを開く</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>「共働き世帯」が最初から選択済み（緑枠）になっている</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r1" value="ok" onchange="onResult(1,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r1" value="ng" onchange="onResult(1,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r1" value="skip" onchange="onResult(1,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(1)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-1" placeholder="気づいたこと・再現手順など…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-02 -->
+  <div class="test-card" id="card-2">
+    <div class="card-header">
+      <span class="tc-badge">TC-02</span>
+      <span class="card-title">オンボーディング → ひとり親ペルソナ自動選択</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>ウィザードで「👤 ひとり親」を選択して完了</span></li>
+        <li><span class="step-num">2</span><span>チェックリストページを開く</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>「ひとり親」が最初から選択済みになっている</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r2" value="ok" onchange="onResult(2,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r2" value="ng" onchange="onResult(2,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r2" value="skip" onchange="onResult(2,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(2)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-2" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-03 -->
+  <div class="test-card" id="card-3">
+    <div class="card-header">
+      <span class="tc-badge">TC-03</span>
+      <span class="card-title">施設詳細 → 申請書類CTAの表示</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>保活マップを開く</span></li>
+        <li><span class="step-num">2</span><span>任意の保育施設をタップ</span></li>
+        <li><span class="step-num">3</span><span>詳細ページを少し下にスクロール</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>「📋 この施設への申請書類を確認する」緑バナーが表示されている</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r3" value="ok" onchange="onResult(3,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r3" value="ng" onchange="onResult(3,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r3" value="skip" onchange="onResult(3,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(3)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-3" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-04 -->
+  <div class="test-card" id="card-4">
+    <div class="card-header">
+      <span class="tc-badge">TC-04</span>
+      <span class="card-title">ひとり親 → 保育園カードに優先バッジ</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>ひとり親でオンボーディング完了</span></li>
+        <li><span class="step-num">2</span><span>保活マップ（リストモード）を開く</span></li>
+        <li><span class="step-num">3</span><span>認可保育所・認定こども園のカードを確認</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>紫の「👤 ひとり親は入所審査で優先されやすい施設です」バッジがカード下部に表示される</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r4" value="ok" onchange="onResult(4,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r4" value="ng" onchange="onResult(4,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r4" value="skip" onchange="onResult(4,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(4)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-4" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-05 -->
+  <div class="test-card" id="card-5">
+    <div class="card-header">
+      <span class="tc-badge">TC-05</span>
+      <span class="card-title">待機ダッシュボード（入園月あり）</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>チェックリストで「🏫 保育園の入園月」を設定</span></li>
+        <li><span class="step-num">2</span><span>「【4月入所希望】保育園の入所申込み」または「【途中入所希望】〜」にチェックを入れる</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>「⏳ 申込み完了！審査待ち中」カードが表示され、結果通知まで○日のカウントダウンが出る</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r5" value="ok" onchange="onResult(5,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r5" value="ng" onchange="onResult(5,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r5" value="skip" onchange="onResult(5,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(5)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-5" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-06 -->
+  <div class="test-card" id="card-6">
+    <div class="card-header">
+      <span class="tc-badge">TC-06</span>
+      <span class="card-title">待機ダッシュボード（入園月なし）</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>入園月を設定しない状態のまま</span></li>
+        <li><span class="step-num">2</span><span>「保育園の入所申込み」にチェックを入れる</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>カードは表示されるが「入園月を設定するとカウントダウンが表示されます」という案内文が出る</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r6" value="ok" onchange="onResult(6,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r6" value="ng" onchange="onResult(6,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r6" value="skip" onchange="onResult(6,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(6)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-6" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-07 -->
+  <div class="test-card" id="card-7">
+    <div class="card-header">
+      <span class="tc-badge">TC-07</span>
+      <span class="card-title">就労証明書リマインダー（締め切り42日以内）</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>入園月を来月〜再来月に設定（例: 2026-05 or 2026-06）</span></li>
+        <li><span class="step-num">2</span><span>申込みチェックは入れないままチェックリストを確認</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>オレンジ〜赤バナーで「就労証明書の準備を始めましょう」と締め切り日・残日数が表示される</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r7" value="ok" onchange="onResult(7,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r7" value="ng" onchange="onResult(7,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r7" value="skip" onchange="onResult(7,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(7)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-7" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-08 -->
+  <div class="test-card" id="card-8">
+    <div class="card-header">
+      <span class="tc-badge">TC-08</span>
+      <span class="card-title">就労証明書リマインダー（申込み済みで非表示）</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>入園月を設定済みの状態で</span></li>
+        <li><span class="step-num">2</span><span>「保育園の入所申込み」にチェックを入れる</span></li>
+        <li><span class="step-num">3</span><span>チェックリストを再確認</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>就労証明書リマインダーバナーが表示されなくなっている</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r8" value="ok" onchange="onResult(8,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r8" value="ng" onchange="onResult(8,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r8" value="skip" onchange="onResult(8,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(8)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-8" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-09 -->
+  <div class="test-card" id="card-9">
+    <div class="card-header">
+      <span class="tc-badge">TC-09</span>
+      <span class="card-title">窓口提示モード 起動</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>チェックリストページを開く</span></li>
+        <li><span class="step-num">2</span><span>「🖥 窓口で開く」ボタンをタップ</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>① 通常ヘッダーが消える ② 緑の「窓口提示モード」バーが上部固定 ③「🖨 印刷」「✕ 終了」ボタンが見える ④ 文字サイズが少し大きくなる</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r9" value="ok" onchange="onResult(9,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r9" value="ng" onchange="onResult(9,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r9" value="skip" onchange="onResult(9,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(9)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-9" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- TC-10 -->
+  <div class="test-card" id="card-10">
+    <div class="card-header">
+      <span class="tc-badge">TC-10</span>
+      <span class="card-title">窓口提示モード 終了</span>
+    </div>
+    <div class="card-body">
+      <div class="steps-label">操作手順</div>
+      <ul class="steps-list">
+        <li><span class="step-num">1</span><span>窓口提示モード中に「✕ 終了」ボタンをタップ</span></li>
+      </ul>
+      <div class="ideal-box">
+        <span class="ideal-label">✦ 理想の状態</span>
+        <p>通常ヘッダーが復活し「🖥 窓口で開く」ボタンが再表示される</p>
+      </div>
+      <div class="result-row">
+        <label class="radio-btn"><input type="radio" name="r10" value="ok" onchange="onResult(10,'ok')"><span class="radio-label ok">✅ OK</span></label>
+        <label class="radio-btn"><input type="radio" name="r10" value="ng" onchange="onResult(10,'ng')"><span class="radio-label ng">❌ NG</span></label>
+        <label class="radio-btn"><input type="radio" name="r10" value="skip" onchange="onResult(10,'skip')"><span class="radio-label skip">⏭ スキップ</span></label>
+      </div>
+      <button class="comment-toggle" onclick="toggleComment(10)">＋ コメントを追加</button>
+      <textarea class="comment-area" id="comment-10" placeholder="気づいたこと…"></textarea>
+    </div>
+  </div>
+
+  <!-- 総合コメント -->
+  <div class="section-title">📝 総合コメント</div>
+  <textarea class="overall-area" id="overall-comment" placeholder="全体を通して気になった点、改善案、使い心地など…"></textarea>
+
+  <!-- まとめボタン -->
+  <button class="submit-btn" onclick="showSummary()">
+    📋 フィードバックをまとめる
+  </button>
+
+</div>
+
+<!-- 結果モーダル -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-title">📋 テスト結果サマリー</div>
+    <pre class="result-text" id="result-text"></pre>
+    <button class="copy-btn" onclick="copyResult()">📋 コピーしてClaudeに貼り付ける</button>
+    <button class="close-btn" onclick="document.getElementById('modal').classList.remove('open')">閉じる</button>
+  </div>
+</div>
+
+<script>
+const results = {};
+const titles = {
+  1:  'TC-01 オンボーディング→共働きペルソナ',
+  2:  'TC-02 オンボーディング→ひとり親ペルソナ',
+  3:  'TC-03 施設詳細→申請書類CTA',
+  4:  'TC-04 ひとり親→優先バッジ',
+  5:  'TC-05 待機ダッシュボード（入園月あり）',
+  6:  'TC-06 待機ダッシュボード（入園月なし）',
+  7:  'TC-07 就労証明書リマインダー（締め切り近）',
+  8:  'TC-08 就労証明書リマインダー（非表示）',
+  9:  'TC-09 窓口提示モード 起動',
+  10: 'TC-10 窓口提示モード 終了',
+};
+
+function onResult(n, val) {
+  results[n] = val;
+  const card = document.getElementById('card-' + n);
+  card.classList.remove('result-ok','result-ng','result-skip');
+  card.classList.add('result-' + val);
+  // NGのときコメント欄を自動表示
+  if (val === 'ng') {
+    const ta = document.getElementById('comment-' + n);
+    ta.classList.add('visible');
+    ta.placeholder = 'どのように想定と違いましたか？';
+    ta.focus();
+  }
+  updateProgress();
+}
+
+function toggleComment(n) {
+  const ta = document.getElementById('comment-' + n);
+  ta.classList.toggle('visible');
+  if (ta.classList.contains('visible')) ta.focus();
+}
+
+function updateProgress() {
+  const answered = Object.keys(results).length;
+  const ok   = Object.values(results).filter(v => v === 'ok').length;
+  const ng   = Object.values(results).filter(v => v === 'ng').length;
+  const skip = Object.values(results).filter(v => v === 'skip').length;
+
+  document.getElementById('progress-pct').textContent = answered + ' / 10';
+  document.getElementById('progress-fill').style.width = (answered / 10 * 100) + '%';
+  document.getElementById('cnt-ok').textContent   = ok;
+  document.getElementById('cnt-ng').textContent   = ng;
+  document.getElementById('cnt-skip').textContent = skip;
+}
+
+function showSummary() {
+  const now = new Date();
+  const dateStr = now.getFullYear() + '/' + (now.getMonth()+1).toString().padStart(2,'0') + '/' + now.getDate().toString().padStart(2,'0');
+  const ok   = Object.values(results).filter(v => v === 'ok').length;
+  const ng   = Object.values(results).filter(v => v === 'ng').length;
+  const skip = Object.values(results).filter(v => v === 'skip').length;
+
+  let text = '=== こそだてMAP テスト結果 (' + dateStr + ') ===\n\n';
+  text += '【サマリー】\n';
+  text += '✅ OK: ' + ok + '件  ❌ NG: ' + ng + '件  ⏭ スキップ: ' + skip + '件\n\n';
+  text += '【詳細】\n';
+
+  for (let i = 1; i <= 10; i++) {
+    const r = results[i];
+    const icon = r === 'ok' ? '✅' : r === 'ng' ? '❌' : r ? '⏭' : '─';
+    const label = r === 'ok' ? 'OK' : r === 'ng' ? 'NG' : r ? 'スキップ' : '未回答';
+    text += icon + ' ' + titles[i] + ' → ' + label + '\n';
+    const comment = document.getElementById('comment-' + i).value.trim();
+    if (comment) text += '   💬 ' + comment + '\n';
+  }
+
+  const overall = document.getElementById('overall-comment').value.trim();
+  if (overall) {
+    text += '\n【総合コメント】\n' + overall;
+  }
+
+  document.getElementById('result-text').textContent = text;
+  document.getElementById('modal').classList.add('open');
+}
+
+function copyResult() {
+  const text = document.getElementById('result-text').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ コピーしました！';
+    setTimeout(() => btn.textContent = '📋 コピーしてClaudeに貼り付ける', 2000);
+  });
+}
+
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) {
+    document.getElementById('modal').classList.remove('open');
+  }
+}
+</script>
+</body>
+</html>

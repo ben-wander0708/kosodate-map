@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: MunicipalityPageProps): Promi
   const nurseries = await dataRepository.getNurseries(municipalityId);
   const { name_ja, prefecture_ja } = municipality;
 
-  const baseUrl = "https://kosodate-map.vercel.app";
+  const baseUrl = "https://kosodate-note.app";
 
   return {
     title: `${name_ja}の保育園・子育て情報｜総社子育てノート`,
