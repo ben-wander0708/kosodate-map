@@ -195,7 +195,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
                 <div className="w-7 h-7 bg-gradient-to-br from-[#4CAF82] to-[#2d9e6b] rounded-lg flex items-center justify-center text-white text-sm">
                   🌱
                 </div>
-                <span className="font-bold text-gray-800">総社子育てノート</span>
+                <span className="font-bold text-gray-800">{municipalityName}子育てノート</span>
               </div>
               <button
                 onClick={() => setIsOpen(false)}

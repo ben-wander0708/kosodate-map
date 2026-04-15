@@ -328,7 +328,7 @@ export default async function NurseryDetailPage({
       <ShareButton
         title={`${nursery.name}｜${municipality.name_ja}の${nursery.type}`}
         url={`https://kosodate-note.app/${municipalityId}/nurseries/${nurseryId}`}
-        message={`定員${nursery.capacity}名・${Object.values(nursery.availability).some(v => v === "○" || v === "△") ? "空きあり" : "空き状況確認"}。総社子育てノートで詳細を確認できます。`}
+        message={`定員${nursery.capacity}名・${Object.values(nursery.availability).some(v => v === "○" || v === "△") ? "空きあり" : "空き状況確認"}。子育てノートで詳細を確認できます。`}
       />
 
       {/* 出典 */}

@@ -244,7 +244,7 @@ export default async function ClinicDetailPage({
       <ShareButton
         title={`${clinic.name}｜医療機関情報`}
         url={`https://kosodate-note.app/${municipalityId}/clinics/${clinicId}`}
-        message={`${clinic.departments.slice(0, 3).join("・")}。総社子育てノートで診療時間・アクセスを確認できます。`}
+        message={`${clinic.departments.slice(0, 3).join("・")}。子育てノートで診療時間・アクセスを確認できます。`}
       />
 
       {/* 出典 */}

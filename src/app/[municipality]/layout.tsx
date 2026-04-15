@@ -21,11 +21,11 @@ export async function generateMetadata(
   const name = `${municipality.prefecture_ja}${municipality.name_ja}`;
 
   return {
-    title: `${name}の子育て情報｜総社子育てノート`,
+    title: `${name}の子育て情報｜${municipality.name_ja}子育てノート`,
     description: `${name}への転入前から確認できる保育園の空き状況・施設マップ・入園手続きチェックリスト。住所確定後すぐに動ける。`,
     keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", municipality.name_ja, municipality.prefecture_ja, "転入", "子育てノート"],
     openGraph: {
-      title: `${name}の子育て情報｜総社子育てノート`,
+      title: `${name}の子育て情報｜${municipality.name_ja}子育てノート`,
       description: `${name}への転入前から使える保育園・子育て情報サービス。`,
       type: "website",
       url: `https://kosodate-note.app/${municipalityId}`,
@@ -34,13 +34,13 @@ export async function generateMetadata(
           url: "https://kosodate-note.app/opengraph-image",
           width: 1200,
           height: 630,
-          alt: `${name}の子育て情報｜総社子育てノート`,
+          alt: `${name}の子育て情報｜${municipality.name_ja}子育てノート`,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${name}の子育て情報｜総社子育てノート`,
+      title: `${name}の子育て情報｜${municipality.name_ja}子育てノート`,
       description: `${name}への転入前から使える保育園・子育て情報サービス。`,
       images: ["https://kosodate-note.app/opengraph-image"],
     },
@@ -70,7 +70,7 @@ export default async function MunicipalityLayout({
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "総社子育てノート",
+    "name": `${municipality.name_ja}子育てノート`,
     "url": baseUrl,
     "description": "引越し先の保育園の空き状況・子育て施設をまとめて確認できるサービス。住所が決まったその日から使えます。",
     "potentialAction": {
