@@ -28,6 +28,21 @@ export async function generateMetadata(
       title: `${name}の子育て情報｜総社子育てノート`,
       description: `${name}への転入前から使える保育園・子育て情報サービス。`,
       type: "website",
+      url: `https://kosodate-map.vercel.app/${municipalityId}`,
+      images: [
+        {
+          url: "https://kosodate-map.vercel.app/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: `${name}の子育て情報｜総社子育てノート`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${name}の子育て情報｜総社子育てノート`,
+      description: `${name}への転入前から使える保育園・子育て情報サービス。`,
+      images: ["https://kosodate-map.vercel.app/opengraph-image"],
     },
   };
 }

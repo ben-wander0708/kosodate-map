@@ -14,11 +14,20 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://kosodate-map.vercel.app",
     siteName: "総社子育てノート",
+    images: [
+      {
+        url: "https://kosodate-map.vercel.app/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "総社子育てノート",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "総社子育てノート｜転入前から使える子育て情報",
     description: "総社市への転入前から保育園の空き状況・転入手続き・子育て支援をまとめて確認。住所が決まったその日から使えます。",
+    images: ["https://kosodate-map.vercel.app/opengraph-image"],
   },
 };
 
