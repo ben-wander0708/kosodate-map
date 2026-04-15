@@ -55,13 +55,15 @@ const FAMILY_TYPE_OPTIONS: { value: FamilyType; label: string; sub: string }[] =
   { value: "leave",      label: "🍼 育休中",          sub: "育休後に復職予定" },
 ];
 
-const PHASE_OPTIONS: { label: string; sub: string; value: Phase }[] = [
-  { label: "🏡 もともと総社市民", sub: "引越しは関係なく子育て情報を探している", value: "resident" },
-  { label: "🔍 転居を検討中",     sub: "総社市への転居を考えている",             value: "exploring" },
-  { label: "🏠 物件が決まった",   sub: "転居先が確定している",                   value: "decided" },
-  { label: "🚚 もうすぐ引越し",   sub: "1〜2ヶ月以内に引越し予定",              value: "moving_soon" },
-  { label: "✅ 最近転入した",      sub: "転入届など手続き中・直後",               value: "moved" },
-];
+function getPhaseOptions(municipalityName: string): { label: string; sub: string; value: Phase }[] {
+  return [
+    { label: `🏡 もともと${municipalityName}民`, sub: "引越しは関係なく子育て情報を探している", value: "resident" },
+    { label: "🔍 転居を検討中",                  sub: `${municipalityName}への転居を考えている`, value: "exploring" },
+    { label: "🏠 物件が決まった",                sub: "転居先が確定している",                   value: "decided" },
+    { label: "🚚 もうすぐ引越し",               sub: "1〜2ヶ月以内に引越し予定",              value: "moving_soon" },
+    { label: "✅ 最近転入した",                  sub: "転入届など手続き中・直後",               value: "moved" },
+  ];
+}
 
 const WORK_OPTIONS: { label: string; sub: string; value: WorkStatus }[] = [
   { label: "💼 フルタイム",    sub: "保育標準時間（最長11時間）",  value: "fulltime" },
@@ -98,10 +100,10 @@ function getMonthOptions(): { value: string; label: string }[] {
 }
 const MONTH_OPTIONS = getMonthOptions();
 
-function getCtaForPhase(phase: Phase | undefined, municipalityId: string) {
+function getCtaForPhase(phase: Phase | undefined, municipalityId: string, municipalityName: string) {
   switch (phase) {
     case "resident":
-      return { message: "総社市の子育て支援制度や保育施設情報を確認してみましょう。", buttonLabel: "支援制度ガイドを見る →", href: `/${municipalityId}?tab=gov` };
+      return { message: `${municipalityName}の子育て支援制度や保育施設情報を確認してみましょう。`, buttonLabel: "支援制度ガイドを見る →", href: `/${municipalityId}?tab=gov` };
     case "decided":
       return { message: "物件が決まったら、転居前にやることを確認しましょう。", buttonLabel: "入園準備ナビを見る →", href: `/${municipalityId}/checklist` };
     case "moving_soon":
@@ -235,7 +237,8 @@ function WizardView({
   };
 
   const progressPercent = step === "done" ? 100 : (Number(step) / 4) * 100;
-  const cta = getCtaForPhase(answers.phase, municipalityId);
+  const cta = getCtaForPhase(answers.phase, municipalityId, municipalityName);
+  const phaseOptions = getPhaseOptions(municipalityName);
   const allChildrenComplete = childDrafts.length > 0 && childDrafts.every((d) => d.age !== null && d.enrollment_status !== null);
 
   return (
@@ -285,7 +288,7 @@ function WizardView({
         {/* Step 1: フェーズ */}
         {step === 1 && (
           <div className="space-y-2">
-            {PHASE_OPTIONS.map((opt) => (
+            {phaseOptions.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => handlePhase(opt.value)}
@@ -476,10 +479,13 @@ function WizardView({
 function SettingsView({
   onClose,
   initialAnswers,
+  municipalityName,
 }: {
   onClose: () => void;
   initialAnswers: OnboardingAnswers;
+  municipalityName: string;
 }) {
+  const phaseOptions = getPhaseOptions(municipalityName);
   const [answers, setAnswers] = useState<OnboardingAnswers>(initialAnswers);
   const [childDrafts, setChildDrafts] = useState<ChildDraft[]>(() =>
     (initialAnswers.children || []).map((c) => ({ age: c.age, enrollment_status: c.enrollment_status }))
@@ -520,7 +526,7 @@ function SettingsView({
         <div>
           <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">今の状況</p>
           <div className="space-y-1.5">
-            {PHASE_OPTIONS.map((opt) => (
+            {phaseOptions.map((opt) => (
               <button
                 key={opt.value}
                 onClick={() => setAnswers((prev) => ({ ...prev, phase: opt.value }))}
@@ -703,7 +709,7 @@ export default function OnboardingModal({
         </div>
 
         {mode === "settings" ? (
-          <SettingsView onClose={handleClose} initialAnswers={initialAnswers} />
+          <SettingsView onClose={handleClose} initialAnswers={initialAnswers} municipalityName={municipalityName} />
         ) : (
           <WizardView
             municipalityName={municipalityName}
