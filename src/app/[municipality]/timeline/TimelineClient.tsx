@@ -204,11 +204,15 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
   }, []);
 
   useEffect(() => {
+    const loadTimeout = setTimeout(() => setLoaded(true), 3000);
     const urlShareId = getShareIdFromUrl();
     if (urlShareId) {
       setShareId(urlShareId);
       setIsShared(true);
-      loadFromSupabase(urlShareId).then(() => setLoaded(true));
+      loadFromSupabase(urlShareId).then(() => {
+        clearTimeout(loadTimeout);
+        setLoaded(true);
+      });
     } else {
       let id = localStorage.getItem(LOCAL_SHARE_KEY);
       if (!id) {
@@ -218,6 +222,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
       setShareId(id);
       setIsShared(false);
       loadFromSupabase(id).then(() => {
+        clearTimeout(loadTimeout);
         try {
           const savedEnrollment = localStorage.getItem("kosodate_enrollment_month");
           if (savedEnrollment) setEnrollmentMonth((prev) => prev || savedEnrollment);
@@ -225,6 +230,7 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         setLoaded(true);
       });
     }
+    return () => clearTimeout(loadTimeout);
   }, [loadFromSupabase]);
 
   // オンボーディングの中央データから入園月を自動反映

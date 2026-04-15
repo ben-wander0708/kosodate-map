@@ -138,7 +138,9 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
     }
     setShareId(id);
 
+    const loadTimeout = setTimeout(() => setLoaded(true), 3000);
     loadFromSupabase(id).then(() => {
+      clearTimeout(loadTimeout);
       try {
         const savedPersona    = localStorage.getItem("kosodate_checklist_persona");
         const savedChecked    = localStorage.getItem("kosodate_checklist_checked");
@@ -151,6 +153,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
       } catch {}
       setLoaded(true);
     });
+    return () => clearTimeout(loadTimeout);
   }, [loadFromSupabase]);
 
   // オンボーディングの中央データから各値を自動反映（未設定の場合のみ）
@@ -304,7 +307,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
 
         {/* 転居有無トグル */}
         <div className="mt-3 bg-white/15 rounded-lg p-3">
-          <p className="text-xs text-green-100 mb-2">総社市に引越してきましたか？</p>
+          <p className="text-xs text-green-100 mb-2">{municipalityName}に引越してきましたか？</p>
           <div className="flex gap-2">
             <button
               onClick={() => setIsRelocating(true)}
@@ -324,7 +327,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
                   : "bg-white/20 text-white"
               }`}
             >
-              🏠 もともと総社市民
+              🏠 もともと{municipalityName}民
             </button>
           </div>
         </div>
