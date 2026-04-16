@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "総社子育てノート";
+export const alt = "子育てノート";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -48,7 +48,7 @@ export default function OgImage() {
             letterSpacing: "-1px",
           }}
         >
-          総社子育てノート
+          子育てノート
         </div>
 
         {/* サブタイトル */}
@@ -59,7 +59,7 @@ export default function OgImage() {
             marginBottom: 40,
           }}
         >
-          SOJA KOSODATE NOTE
+          KOSODATE NOTE
         </div>
 
         {/* 説明文 */}

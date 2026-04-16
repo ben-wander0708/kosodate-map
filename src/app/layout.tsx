@@ -3,30 +3,30 @@ import "./globals.css";
 import LiffProvider from "@/components/providers/LiffProvider";
 
 export const metadata: Metadata = {
-  title: "総社子育てノート｜転入前から使える子育て情報",
+  title: "子育てノート｜転入前から使える子育て情報",
   description:
-    "総社市への転入前から保育園の空き状況・転入手続き・子育て支援をまとめて確認。住所が決まったその日から使えます。",
-  keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", "総社市", "岡山", "転入", "子育てノート"],
+    "転入前から保育園の空き状況・行政支援・入園準備チェックリストを夫婦で確認。住所が決まったその日から使えます。",
+  keywords: ["保育園", "引越し", "転居", "子育て", "空き状況", "総社市", "岡山市", "転入", "子育てノート", "保活"],
 
   openGraph: {
-    title: "総社子育てノート｜転入前から使える子育て情報",
-    description: "総社市への転入前から保育園の空き状況・転入手続き・子育て支援をまとめて確認。住所が決まったその日から使えます。",
+    title: "子育てノート｜転入前から使える子育て情報",
+    description: "転入前から保育園の空き状況・行政支援・入園準備チェックリストを夫婦で確認。住所が決まったその日から使えます。",
     type: "website",
     url: "https://kosodate-note.app",
-    siteName: "総社子育てノート",
+    siteName: "子育てノート",
     images: [
       {
         url: "https://kosodate-note.app/opengraph-image",
         width: 1200,
         height: 630,
-        alt: "総社子育てノート",
+        alt: "子育てノート",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "総社子育てノート｜転入前から使える子育て情報",
-    description: "総社市への転入前から保育園の空き状況・転入手続き・子育て支援をまとめて確認。住所が決まったその日から使えます。",
+    title: "子育てノート｜転入前から使える子育て情報",
+    description: "転入前から保育園の空き状況・行政支援・入園準備チェックリストを夫婦で確認。住所が決まったその日から使えます。",
     images: ["https://kosodate-note.app/opengraph-image"],
   },
 };
