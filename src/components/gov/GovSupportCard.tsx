@@ -25,6 +25,19 @@ export default function GovSupportCard({ support, municipalityId, highlighted }:
   const style = CATEGORY_STYLES[support.category];
   const openedAt = useRef<number | null>(null);
 
+  const storageKey = `applied_${municipalityId}_${support.id}`;
+  const [applied, setApplied] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(storageKey) === "true";
+  });
+
+  const handleApplied = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const next = !applied;
+    setApplied(next);
+    localStorage.setItem(storageKey, String(next));
+  };
+
   const handleToggle = () => {
     if (!expanded) {
       // 展開: 閲覧開始時刻を記録
@@ -85,9 +98,21 @@ export default function GovSupportCard({ support, municipalityId, highlighted }:
               </p>
             )}
           </div>
-          <span className={`flex-shrink-0 text-gray-400 text-lg transition-transform ${expanded ? "rotate-180" : ""}`}>
-            ▾
-          </span>
+          <div className="flex items-center gap-1 flex-shrink-0">
+            <button
+              onClick={handleApplied}
+              className={`text-xs px-2 py-1 rounded-full border font-medium transition-all ${
+                applied
+                  ? "bg-[#2d9e6b] text-white border-[#2d9e6b]"
+                  : "bg-white text-gray-400 border-gray-200"
+              }`}
+            >
+              {applied ? "✅ 申請済み" : "申請済みにする"}
+            </button>
+            <span className={`text-gray-400 text-lg transition-transform ${expanded ? "rotate-180" : ""}`}>
+              ▾
+            </span>
+          </div>
         </div>
       </button>
 
@@ -129,20 +154,26 @@ export default function GovSupportCard({ support, municipalityId, highlighted }:
             </div>
           )}
 
-          {/* 問い合わせ */}
-          <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-            <div>
-              <p className="text-xs text-gray-500">{support.contact_name}</p>
-            </div>
-            <a
-              href={support.url ?? "https://www.city.soja.okayama.jp/life/2/"}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-blue-500 underline"
-              onClick={(e) => e.stopPropagation()}
-            >
-              詳細・問い合わせ →
-            </a>
+          {/* 申請・詳細リンク */}
+          <div className="pt-2 border-t border-gray-100 space-y-2">
+            <p className="text-xs text-gray-500">{support.contact_name}</p>
+            {support.url ? (
+              <a
+                href={support.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className={`block w-full text-center text-sm font-bold py-2.5 rounded-xl transition-all ${
+                  support.no_application_needed
+                    ? "bg-gray-100 text-gray-500"
+                    : "bg-[#2d9e6b] text-white"
+                }`}
+              >
+                {support.no_application_needed ? "詳細を確認する →" : "今すぐ申請する →"}
+              </a>
+            ) : (
+              <p className="text-xs text-gray-400">申請先は自治体窓口にご確認ください</p>
+            )}
           </div>
         </div>
       )}

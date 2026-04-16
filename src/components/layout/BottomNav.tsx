@@ -27,8 +27,8 @@ function BottomNavInner({ municipalityId }: BottomNavProps) {
     },
     {
       href: `/${municipalityId}?tab=gov`,
-      icon: "🏛",
-      label: "支援制度",
+      icon: "🎁",
+      label: "もらい忘れてない？",
       tab: "gov",
     },
   ];

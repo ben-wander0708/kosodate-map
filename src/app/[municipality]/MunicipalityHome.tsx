@@ -294,7 +294,7 @@ export default function MunicipalityHome({
         <p className="text-xs text-green-200">
           {activeTab === "nursery" && `🏫 保育施設 ${nurseries.length}件 ・ データ更新日: ${dataDate}`}
           {activeTab === "clinic" && `🏥 医療機関 ${clinics.length}件`}
-          {activeTab === "gov" && `🏛 支援制度 ${govSupports.length}件`}
+          {activeTab === "gov" && `🎁 もらい忘れてない？ ${govSupports.length}件`}
         </p>
       </div>
 
@@ -662,8 +662,8 @@ export default function MunicipalityHome({
             )}
           </div>
 
-          <div className="bg-blue-50 rounded-xl p-3 text-xs text-blue-700 border border-blue-100">
-            💡 タップすると詳細・申請方法・問い合わせ先が確認できます
+          <div className="bg-amber-50 rounded-xl p-3 text-xs text-amber-700 border border-amber-100">
+            ⏰ 申請には期限があります。転入後は早めの確認がおすすめ。タップで詳細・申請方法を確認できます
           </div>
 
           {Array.from(govSupportsByCategory.entries()).map(([category, items]) => (
