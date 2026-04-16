@@ -35,8 +35,8 @@ const NAV_ITEMS = [
   },
   {
     tab: "gov",
-    icon: "🏛",
-    title: "支援制度",
+    icon: "🎁",
+    title: "もらい忘れてない？",
     description: "児童手当・医療費助成など14の行政サポート",
     activeColor: "text-[#2d6eb0]",
     activeBg: "bg-blue-50 border border-blue-200",
