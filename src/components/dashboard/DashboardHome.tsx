@@ -38,26 +38,22 @@ function getPriorityActions(
       return [
         { icon: "✅", title: "転居前タスクの残りを確認", sub: "申込書の取り寄せ・役所への届出", href: `/${municipalityId}/checklist`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏫", title: "保育施設の申込書を確認", sub: "転入後すぐ動けるよう準備", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🏛", title: "使える支援制度を先に確認", sub: "児童手当・医療費助成など", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "🎁", title: "もらい忘れてない？", sub: "転入前に確認できる給付金・医療費助成", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
       ];
     case "moved":
       return [
         { icon: "🚨", title: "転入届を提出する（14日以内）", sub: "マイナンバー・住民票の異動が最優先", href: `/${municipalityId}/checklist`, color: "text-red-600", bgColor: "bg-red-50 border-red-200" },
         { icon: "🏫", title: "保育施設の空き状況を確認", sub: "転入後すぐに申込みできる施設を探す", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🏛", title: "児童手当を申請する", sub: "出生・転入から15日以内に申請必須", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "🎁", title: "児童手当を申請する", sub: "出生・転入から15日以内に申請必須", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
       ];
     case "resident":
       return [
-        { icon: "🏛", title: "使える支援制度を確認", sub: "給付金・医療費助成・保育料無償化など", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "🎁", title: "もらい忘れてない？", sub: "給付金・医療費助成・保育料無償化など", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
         { icon: "🏫", title: "近くの保育施設を探す", sub: "認可・小規模の空き状況を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏥", title: "かかりつけ医を探す", sub: "小児科・耳鼻科などを地図で確認", href: `/${municipalityId}?tab=clinic`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
     default:
-      return [
-        { icon: "🏫", title: "保育施設の空き状況を確認", sub: "エリア別に認可・小規模を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🏛", title: `${municipalityName}の子育て支援制度を確認`, sub: "給付金・医療費助成14種類", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
-        { icon: "❓", title: "よくある質問を見る", sub: "保育園申込み・転入手続きの疑問", href: `/${municipalityId}/faq`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
-      ];
+      return [];
   }
 }
 
@@ -383,13 +379,11 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       )}
 
       {/* ══════════════════════════════════════
-          保活中: 今やること（フェーズ別）
+          保活中: 今やること（フェーズ設定済みのみ表示）
           ══════════════════════════════════════ */}
-      {!hasEnrolled && (
+      {!hasEnrolled && phase && priorityActions.length > 0 && (
         <div>
-          <h3 className="text-sm font-bold text-gray-800 mb-2">
-            {phase ? "今やること" : "まずはここから"}
-          </h3>
+          <h3 className="text-sm font-bold text-gray-800 mb-2">今やること</h3>
           <div className="space-y-2">
             {priorityActions.map((action, i) => (
               <Link
