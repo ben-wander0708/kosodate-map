@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Location, TransportMode } from "@/lib/data/types";
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
-import NurseryCard from "@/components/nursery/NurseryCard";
+import NurseryCard, { getBookmarks } from "@/components/nursery/NurseryCard";
 import ClinicCard from "@/components/clinic/ClinicCard";
 import GovSupportCard from "@/components/gov/GovSupportCard";
 import TransportSelector from "@/components/nursery/TransportSelector";
@@ -64,11 +64,24 @@ export default function MunicipalityHome({
   // 支援制度フィルター
   const [govFamilyType, setGovFamilyType] = useState<"dual" | "single" | "home" | null>(null);
   const [govChildAge, setGovChildAge] = useState<"infant" | "preschool" | "school" | null>(null);
+  // 申請候補フィルター
+  const [showBookmarkedOnly, setShowBookmarkedOnly] = useState(false);
+  const [bookmarks, setBookmarks] = useState<string[]>(() => {
+    if (typeof window === "undefined") return [];
+    return getBookmarks();
+  });
   // タブ切り替え時にフィルターをリセット
   useEffect(() => {
     if (activeTab !== "clinic") setSelectedDepartment(null);
     if (activeTab !== "nursery") setSelectedAge(null);
   }, [activeTab]);
+
+  // ブックマーク変更を監視
+  useEffect(() => {
+    const handler = () => setBookmarks(getBookmarks());
+    window.addEventListener("kosodate_bookmark_changed", handler);
+    return () => window.removeEventListener("kosodate_bookmark_changed", handler);
+  }, []);
 
   const defaultCenter: Location = {
     lat: municipality.center_lat,
@@ -92,15 +105,21 @@ export default function MunicipalityHome({
     return clinics.filter((c) => c.departments.includes(selectedDepartment));
   }, [clinics, selectedDepartment]);
 
-  // 年齢フィルター適用後の保育施設一覧
+  // 年齢フィルター + ブックマークフィルター適用後の保育施設一覧
   const filteredNurseries = useMemo(() => {
-    if (selectedAge === null) return nurseries;
-    return nurseries.filter((n) => {
-      const ageKey = `age_${selectedAge}` as keyof typeof n.availability;
-      const status = n.availability[ageKey];
-      return status === "○" || status === "△";
-    });
-  }, [nurseries, selectedAge]);
+    let list = nurseries;
+    if (selectedAge !== null) {
+      list = list.filter((n) => {
+        const ageKey = `age_${selectedAge}` as keyof typeof n.availability;
+        const status = n.availability[ageKey];
+        return status === "○" || status === "△";
+      });
+    }
+    if (showBookmarkedOnly) {
+      list = list.filter((n) => bookmarks.includes(n.id));
+    }
+    return list;
+  }, [nurseries, selectedAge, showBookmarkedOnly, bookmarks]);
 
   const rankedNurseries = useMemo(() => {
     if (!userLocation) return null;
@@ -409,6 +428,29 @@ export default function MunicipalityHome({
         <div>
           {/* 移動手段セレクター（リストモード） */}
           <TransportSelector selected={transportMode} onChange={setTransportMode} />
+
+          {/* 申請候補フィルター */}
+          <div className="flex items-center gap-2 mb-2">
+            <button
+              onClick={() => setShowBookmarkedOnly(!showBookmarkedOnly)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                showBookmarkedOnly
+                  ? "bg-amber-400 text-white border-amber-400"
+                  : "bg-white text-gray-600 border-gray-200"
+              }`}
+            >
+              {showBookmarkedOnly ? "★" : "☆"} 申請候補
+              {bookmarks.length > 0 && (
+                <span className={`ml-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-bold ${showBookmarkedOnly ? "bg-white text-amber-500" : "bg-amber-100 text-amber-600"}`}>
+                  {bookmarks.length}
+                </span>
+              )}
+            </button>
+            {showBookmarkedOnly && (
+              <span className="text-xs text-gray-400">★をタップして候補に追加</span>
+            )}
+          </div>
+
           {/* 年齢フィルター */}
           <div className="overflow-x-auto pb-2 -mx-4 px-4">
             <div className="flex gap-2 min-w-max">

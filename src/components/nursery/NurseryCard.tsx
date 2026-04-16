@@ -1,9 +1,29 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState, useCallback } from "react";
 import type { NurseryWithDistance, TransportMode } from "@/lib/data/types";
 import AvailabilityBadge from "./AvailabilityBadge";
 import { useOnboarding } from "@/hooks/useOnboarding";
+
+const BOOKMARK_KEY = "kosodate_nursery_bookmarks";
+
+export function getBookmarks(): string[] {
+  try {
+    return JSON.parse(localStorage.getItem(BOOKMARK_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+export function toggleBookmark(id: string): boolean {
+  const current = getBookmarks();
+  const next = current.includes(id)
+    ? current.filter((b) => b !== id)
+    : [...current, id];
+  localStorage.setItem(BOOKMARK_KEY, JSON.stringify(next));
+  return next.includes(id);
+}
 
 function getGoogleMapsUrl(nursery: NurseryWithDistance): string | null {
   if (nursery.location) {
@@ -48,6 +68,16 @@ export default function NurseryCard({
 }: NurseryCardProps) {
   const router = useRouter();
   const mapsUrl = getGoogleMapsUrl(nursery);
+
+  const [bookmarked, setBookmarked] = useState(() => getBookmarks().includes(nursery.id));
+
+  const handleBookmark = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation();
+    const next = toggleBookmark(nursery.id);
+    setBookmarked(next);
+    // 他のコンポーネントに変更を通知
+    window.dispatchEvent(new Event("kosodate_bookmark_changed"));
+  }, [nursery.id]);
   const minutes =
     transportMode === "walk"
       ? nursery.walk_minutes
@@ -105,8 +135,15 @@ export default function NurseryCard({
             </div>
           </div>
 
-          {/* 移動時間 */}
-          <div className="flex-shrink-0 text-right">
+          {/* 移動時間 + ブックマーク */}
+          <div className="flex-shrink-0 text-right flex flex-col items-end gap-1">
+            <button
+              onClick={handleBookmark}
+              className={`text-xl leading-none transition-transform active:scale-90 ${bookmarked ? "text-amber-400" : "text-gray-200"}`}
+              aria-label={bookmarked ? "候補から外す" : "申請候補に追加"}
+            >
+              {bookmarked ? "★" : "☆"}
+            </button>
             <div className="text-xs text-gray-500">
               {transportIcons[transportMode]} {nursery.distance_text}
             </div>
