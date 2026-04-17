@@ -5,6 +5,7 @@ import { dataRepository } from "@/lib/data/json-adapter";
 import AvailabilityBadge from "@/components/nursery/AvailabilityBadge";
 import NurseryDetailMap from "@/components/nursery/NurseryDetailMap";
 import ShareButton from "@/components/common/ShareButton";
+import NurseryVisitChecklist from "@/components/nursery/NurseryVisitChecklist";
 
 interface NurseryDetailPageProps {
   params: Promise<{ municipality: string; nurseryId: string }>;
@@ -323,6 +324,9 @@ export default async function NurseryDetailPage({
           </p>
         </div>
       )}
+
+      {/* 見学チェック */}
+      <NurseryVisitChecklist nurseryId={nurseryId} />
 
       {/* LINEシェア */}
       <ShareButton
