@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Location, TransportMode } from "@/lib/data/types";
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
 import NurseryCard, { getBookmarks } from "@/components/nursery/NurseryCard";
+import NurseryVisitRanking from "@/components/nursery/NurseryVisitRanking";
 import ClinicCard from "@/components/clinic/ClinicCard";
 import GovSupportCard from "@/components/gov/GovSupportCard";
 import TransportSelector from "@/components/nursery/TransportSelector";
@@ -428,6 +429,9 @@ export default function MunicipalityHome({
         <div>
           {/* 移動手段セレクター（リストモード） */}
           <TransportSelector selected={transportMode} onChange={setTransportMode} />
+
+          {/* 見学ランキング */}
+          <NurseryVisitRanking nurseries={nurseries} municipalityId={municipality.id} />
 
           {/* 申請候補フィルター */}
           <div className="flex items-center gap-2 mb-2">
