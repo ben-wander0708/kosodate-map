@@ -39,8 +39,8 @@ interface OnboardingModalProps {
   mode?: "wizard" | "settings";
 }
 
-/** ウィザードのステップ（4ステップ） */
-type WizardStep = 1 | 2 | 3 | 4 | "done";
+/** ウィザードのステップ（2ステップ） */
+type WizardStep = 1 | 2 | "done";
 
 function countToNumber(count: ChildCount): number {
   if (count === "1人") return 1;
@@ -156,22 +156,13 @@ function WizardView({
   const router = useRouter();
   const [step, setStep] = useState<WizardStep>(1);
   const [answers, setAnswers] = useState<OnboardingAnswers>(initialAnswers);
-  const [childDrafts, setChildDrafts] = useState<ChildDraft[]>(() => {
+  const [childDraft, setChildDraft] = useState<ChildDraft>(() => {
     if (initialAnswers.children && initialAnswers.children.length > 0) {
-      return initialAnswers.children.map((c) => ({ age: c.age, enrollment_status: c.enrollment_status }));
+      const c = initialAnswers.children[0];
+      return { age: c.age, enrollment_status: c.enrollment_status };
     }
-    if (initialAnswers.child_count) {
-      return Array(countToNumber(initialAnswers.child_count)).fill(null).map(() => ({ age: null, enrollment_status: null }));
-    }
-    return [];
+    return { age: null, enrollment_status: null };
   });
-
-  useEffect(() => {
-    if (answers.child_count && !initialAnswers.children) {
-      const n = countToNumber(answers.child_count);
-      setChildDrafts(Array(n).fill(null).map(() => ({ age: null, enrollment_status: null })));
-    }
-  }, [answers.child_count, initialAnswers.children]);
 
   const handlePhase = (value: Phase) => {
     setAnswers((prev) => ({ ...prev, phase: value }));
@@ -179,43 +170,18 @@ function WizardView({
     setStep(2);
   };
 
-  const handleFamilyType = (value: FamilyType) => {
-    setAnswers((prev) => ({ ...prev, family_type: value }));
-    track("onboarding_step", { step: "family_type", value_category: value });
-    setStep(3);
+  const handleChildAge = (age: number) => {
+    setChildDraft((prev) => ({ ...prev, age }));
   };
 
-  const handleChildCount = (value: ChildCount) => {
-    const n = countToNumber(value);
-    setAnswers((prev) => ({ ...prev, child_count: value }));
-    setChildDrafts(Array(n).fill(null).map(() => ({ age: null, enrollment_status: null })));
-    track("onboarding_step", { step: "child_count", value_category: value });
-    setStep(4);
+  const handleEnrollmentStatus = (status: EnrollmentStatus) => {
+    setChildDraft((prev) => ({ ...prev, enrollment_status: status }));
   };
 
-  const handleChildAge = (index: number, age: number) => {
-    setChildDrafts((prev) => {
-      const next = [...prev];
-      next[index] = { ...next[index], age };
-      return next;
-    });
-  };
-
-  const handleEnrollmentStatus = (index: number, status: EnrollmentStatus) => {
-    setChildDrafts((prev) => {
-      const next = [...prev];
-      next[index] = { ...next[index], enrollment_status: status };
-      return next;
-    });
-  };
-
-  const handleChildrenDone = () => {
-    const children: ChildInfo[] = childDrafts.map((d) => ({
-      age: d.age ?? 0,
-      enrollment_status: d.enrollment_status ?? "seeking",
-    }));
-    const next = { ...answers, children };
-    track("onboarding_step", { step: "children", value_category: children.map((c) => `${c.age}歳/${c.enrollment_status}`).join(",") });
+  const handleChildDone = () => {
+    const children: ChildInfo[] = [{ age: childDraft.age ?? 0, enrollment_status: childDraft.enrollment_status ?? "seeking" }];
+    const next = { ...answers, children, child_count: "1人" as ChildCount };
+    track("onboarding_step", { step: "children", value_category: `${childDraft.age}歳/${childDraft.enrollment_status}` });
     saveDone(next);
     setStep("done");
   };
@@ -236,10 +202,10 @@ function WizardView({
     onClose();
   };
 
-  const progressPercent = step === "done" ? 100 : (Number(step) / 4) * 100;
+  const progressPercent = step === "done" ? 100 : (Number(step) / 2) * 100;
   const cta = getCtaForPhase(answers.phase, municipalityId, municipalityName);
   const phaseOptions = getPhaseOptions(municipalityName);
-  const allChildrenComplete = childDrafts.length > 0 && childDrafts.every((d) => d.age !== null && d.enrollment_status !== null);
+  const allChildrenComplete = childDraft.age !== null && childDraft.enrollment_status !== null;
 
   return (
     <>
@@ -247,9 +213,9 @@ function WizardView({
       <div className="px-5 pt-3 pb-4 sticky top-5 bg-white z-10">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2 flex-1">
-            {step !== 1 && step !== "done" && (
+            {step === 2 && (
               <button
-                onClick={() => setStep((s) => (s === 4 ? 3 : s === 3 ? 2 : 1) as WizardStep)}
+                onClick={() => setStep(1)}
                 className="text-gray-400 text-sm hover:text-gray-600 flex-shrink-0"
                 aria-label="戻る"
               >
@@ -258,18 +224,15 @@ function WizardView({
             )}
             <div className="flex-1">
               {step !== "done" && (
-                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/4</p>
+                <p className="text-xs text-gray-400 mb-0.5">ステップ {String(step)}/2</p>
               )}
               <h3 className="text-base font-bold text-gray-900">
                 {step === 1 && "今の状況を教えてください"}
-                {step === 2 && "世帯の状況を教えてください"}
-                {step === 3 && "未就学児は何人いますか？"}
-                {step === 4 && "お子さんの情報を教えてください"}
+                {step === 2 && "お子さんの情報を教えてください"}
                 {step === "done" && "ありがとうございます 🎉"}
               </h3>
               {step === 1 && <p className="text-xs text-gray-400 mt-1">状況に合わせた子育て情報をお届けします</p>}
-              {step === 2 && <p className="text-xs text-gray-400 mt-1">チェックリストや書類案内がご状況に合わせて変わります</p>}
-              {step === 4 && <p className="text-xs text-gray-400 mt-1">年齢と保育園の状況をそれぞれ教えてください</p>}
+              {step === 2 && <p className="text-xs text-gray-400 mt-1">年齢と保育園の状況を教えてください</p>}
             </div>
           </div>
           {step !== "done" && (
@@ -308,50 +271,8 @@ function WizardView({
           </div>
         )}
 
-        {/* Step 2: 世帯の状況 */}
-        {step === 2 && (
-          <div className="space-y-2">
-            {FAMILY_TYPE_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => handleFamilyType(opt.value)}
-                className={`w-full text-left p-4 rounded-xl border-2 transition-all active:scale-95 flex items-center justify-between gap-3 ${
-                  answers.family_type === opt.value
-                    ? "border-[#2d9e6b] bg-[#f0faf5]"
-                    : "border-gray-200 bg-white hover:border-[#2d9e6b] hover:bg-[#f0faf5]"
-                }`}
-              >
-                <div>
-                  <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{opt.sub}</p>
-                </div>
-                <span className="text-gray-300 text-xl flex-shrink-0">›</span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Step 3: 人数 */}
-        {step === 3 && (
-          <div className="grid grid-cols-3 gap-2">
-            {COUNT_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => handleChildCount(opt.value)}
-                className={`text-center p-4 rounded-xl border-2 transition-all active:scale-95 ${
-                  answers.child_count === opt.value
-                    ? "border-[#2d9e6b] bg-[#f0faf5]"
-                    : "border-gray-200 bg-white hover:border-[#2d9e6b] hover:bg-[#f0faf5]"
-                }`}
-              >
-                <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Step 1〜3: スキップリンク（下部） */}
-        {(step === 1 || step === 2 || step === 3) && (
+        {/* Step 1: スキップリンク（下部） */}
+        {step === 1 && (
           <div className="mt-4 text-center">
             <button onClick={handleSkip} className="text-xs text-gray-400 underline">
               今はスキップしてアプリを使う
@@ -359,66 +280,68 @@ function WizardView({
           </div>
         )}
 
-        {/* Step 4: 各子どもの情報 */}
-        {step === 4 && (
+        {/* Step 2: 子の情報（1人） */}
+        {step === 2 && (
           <div className="space-y-5">
-            {childDrafts.map((draft, index) => (
-              <div key={index} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                <p className="text-xs font-bold text-gray-600 mb-2">{CHILD_LABELS[index] ?? `第${index + 1}子`}</p>
-                <p className="text-[11px] text-gray-400 mb-1.5">年齢</p>
-                <div className="grid grid-cols-6 gap-1 mb-3">
-                  {AGE_OPTIONS.map((age) => (
-                    <button
-                      key={age}
-                      onClick={() => handleChildAge(index, age)}
-                      className={`py-2 rounded-lg border-2 text-xs font-bold transition-all active:scale-95 ${
-                        draft.age === age
-                          ? "border-[#2d9e6b] bg-[#2d9e6b] text-white"
-                          : "border-gray-200 bg-white text-gray-700 hover:border-[#2d9e6b]"
-                      }`}
-                    >
-                      {age}歳
-                    </button>
-                  ))}
-                </div>
-                {draft.age !== null && (
-                  <>
-                    <p className="text-[11px] text-gray-400 mb-1.5">保育園の状況</p>
-                    <div className="grid grid-cols-3 gap-1.5">
-                      {ENROLLMENT_OPTIONS.map((opt) => (
-                        <button
-                          key={opt.value}
-                          onClick={() => handleEnrollmentStatus(index, opt.value)}
-                          className={`flex flex-col items-center py-2 px-1 rounded-lg border-2 text-center transition-all active:scale-95 ${
-                            draft.enrollment_status === opt.value
-                              ? "border-[#2d9e6b] bg-[#f0faf5]"
-                              : "border-gray-200 bg-white hover:border-[#2d9e6b]"
-                          }`}
-                        >
-                          <span className="text-base">{opt.emoji}</span>
-                          <span className={`text-[11px] font-semibold mt-0.5 ${draft.enrollment_status === opt.value ? "text-[#2d9e6b]" : "text-gray-700"}`}>{opt.label}</span>
-                          <span className="text-[9px] text-gray-400 leading-tight mt-0.5">{opt.sub}</span>
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                )}
-                {draft.age !== null && draft.enrollment_status !== null && (
-                  <p className="text-[11px] text-[#2d9e6b] font-semibold mt-2">
-                    ✅ {draft.age}歳・{ENROLLMENT_OPTIONS.find((o) => o.value === draft.enrollment_status)?.label}
-                  </p>
-                )}
+            <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+              <p className="text-[11px] text-gray-400 mb-1.5">年齢</p>
+              <div className="grid grid-cols-6 gap-1 mb-3">
+                {AGE_OPTIONS.map((age) => (
+                  <button
+                    key={age}
+                    onClick={() => handleChildAge(age)}
+                    className={`py-2 rounded-lg border-2 text-xs font-bold transition-all active:scale-95 ${
+                      childDraft.age === age
+                        ? "border-[#2d9e6b] bg-[#2d9e6b] text-white"
+                        : "border-gray-200 bg-white text-gray-700 hover:border-[#2d9e6b]"
+                    }`}
+                  >
+                    {age}歳
+                  </button>
+                ))}
               </div>
-            ))}
+              {childDraft.age !== null && (
+                <>
+                  <p className="text-[11px] text-gray-400 mb-1.5">保育園の状況</p>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {ENROLLMENT_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.value}
+                        onClick={() => handleEnrollmentStatus(opt.value)}
+                        className={`flex flex-col items-center py-2 px-1 rounded-lg border-2 text-center transition-all active:scale-95 ${
+                          childDraft.enrollment_status === opt.value
+                            ? "border-[#2d9e6b] bg-[#f0faf5]"
+                            : "border-gray-200 bg-white hover:border-[#2d9e6b]"
+                        }`}
+                      >
+                        <span className="text-base">{opt.emoji}</span>
+                        <span className={`text-[11px] font-semibold mt-0.5 ${childDraft.enrollment_status === opt.value ? "text-[#2d9e6b]" : "text-gray-700"}`}>{opt.label}</span>
+                        <span className="text-[9px] text-gray-400 leading-tight mt-0.5">{opt.sub}</span>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+              {childDraft.age !== null && childDraft.enrollment_status !== null && (
+                <p className="text-[11px] text-[#2d9e6b] font-semibold mt-2">
+                  ✅ {childDraft.age}歳・{ENROLLMENT_OPTIONS.find((o) => o.value === childDraft.enrollment_status)?.label}
+                </p>
+              )}
+            </div>
             <button
-              onClick={handleChildrenDone}
+              onClick={handleChildDone}
               disabled={!allChildrenComplete}
               className={`w-full py-3 rounded-xl text-sm font-semibold transition-all ${
                 allChildrenComplete ? "bg-[#2d9e6b] text-white active:scale-95" : "bg-gray-100 text-gray-400 cursor-not-allowed"
               }`}
             >
-              {allChildrenComplete ? "完了 →" : "全員の情報を入力してください"}
+              {allChildrenComplete ? "完了 →" : "年齢と状況を選んでください"}
             </button>
+            <div className="text-center">
+              <button onClick={handleSkip} className="text-xs text-gray-400 underline">
+                今はスキップしてアプリを使う
+              </button>
+            </div>
           </div>
         )}
 
