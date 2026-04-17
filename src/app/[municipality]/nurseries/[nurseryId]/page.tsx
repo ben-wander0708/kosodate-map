@@ -131,7 +131,7 @@ export default async function NurseryDetailPage({
       />
       {/* 戻るボタン */}
       <Link
-        href={`/${municipalityId}`}
+        href={`/${municipalityId}?tab=nursery`}
         className="inline-flex items-center gap-1 text-sm text-[#2d9e6b] font-medium hover:underline"
       >
         ← 一覧に戻る
