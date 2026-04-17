@@ -216,7 +216,22 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       {/* ══════════════════════════════════════
           保活フェーズ: フェーズヘッダー
           ══════════════════════════════════════ */}
-      {!hasEnrolled && (
+      {!hasEnrolled && phase === "resident" && (
+        <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-2xl p-4 text-white">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs text-white/70">{municipalityName}の子育て情報</p>
+            <button
+              onClick={() => window.dispatchEvent(new Event(ONBOARDING_OPEN_EVENT))}
+              className="text-xs bg-white/20 hover:bg-white/30 rounded-full px-3 py-1.5 transition-colors min-h-[32px]"
+            >
+              ✏️ 設定変更
+            </button>
+          </div>
+          <h2 className="text-base font-bold">支援制度・保育施設をまとめて確認できます</h2>
+        </div>
+      )}
+
+      {!hasEnrolled && phase !== "resident" && (
         <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-2xl p-4 text-white">
           <div className="flex items-center justify-between mb-2">
             <p className="text-xs text-white/70">{municipalityName}への転居サポート</p>
@@ -236,9 +251,9 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
           </div>
 
           <h2 className="text-base font-bold">
-            {phase === "moved"       ? "転入後の手続きを進めましょう"
+            {phase === "moved"        ? "転入後の手続きを進めましょう"
             : phase === "moving_soon" ? "引越し前にやることを確認しましょう"
-            : phase === "decided"    ? "物件が決まったら早めに動きましょう"
+            : phase === "decided"     ? "物件が決まったら早めに動きましょう"
             : "転居先の子育て環境を確認しましょう"}
           </h2>
 
