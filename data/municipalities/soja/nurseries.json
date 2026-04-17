@@ -828,78 +828,6 @@
     "last_updated": "2026-03-13"
   },
   {
-    "id": "tanpopo-hoikushitsu",
-    "municipality_id": "soja",
-    "name": "たんぽぽ保育室",
-    "type": "認可外保育施設",
-    "sub_area": "総社",
-    "address": "岡山県総社市総社2丁目",
-    "tel": null,
-    "capacity": 20,
-    "current_enrollment": 15,
-    "age_from_months": 2,
-    "hours": {
-      "open": "07:30",
-      "close": "19:30",
-      "extended_close": null
-    },
-    "extended_care": false,
-    "school_lunch": true,
-    "availability": {
-      "age_0": "○",
-      "age_1": "○",
-      "age_2": "○",
-      "age_3": "○",
-      "age_4": null,
-      "age_5": null
-    },
-    "location": {
-      "lat": 34.67318,
-      "lng": 133.73842
-    },
-    "geocoded": true,
-    "notes": "認可外保育施設（0〜3歳対象）。生後2ヶ月から預かり可。病後児対応あり。土曜保育あり。",
-    "data_source": "岡山県認可外保育施設届出一覧",
-    "data_date": "2026-01-01",
-    "last_updated": "2026-03-13"
-  },
-  {
-    "id": "morinokuma-hoikushitsu",
-    "municipality_id": "soja",
-    "name": "もりのくまさん保育室",
-    "type": "認可外保育施設",
-    "sub_area": "駅南",
-    "address": "岡山県総社市駅南1丁目",
-    "tel": null,
-    "capacity": 15,
-    "current_enrollment": 12,
-    "age_from_months": 3,
-    "hours": {
-      "open": "08:00",
-      "close": "18:30",
-      "extended_close": null
-    },
-    "extended_care": false,
-    "school_lunch": true,
-    "availability": {
-      "age_0": "△",
-      "age_1": "○",
-      "age_2": "○",
-      "age_3": null,
-      "age_4": null,
-      "age_5": null
-    },
-    "location": {
-      "lat": 34.66652,
-      "lng": 133.74035
-    },
-    "geocoded": true,
-    "notes": "認可外保育施設（0〜2歳対象）。総社駅から徒歩5分。少人数で家庭的な雰囲気。",
-    "data_source": "岡山県認可外保育施設届出一覧",
-    "data_date": "2026-01-01",
-    "last_updated": "2026-03-13"
-  },
-  {
     "id": "soja-kita-yochien",
     "municipality_id": "soja",
     "name": "総社北幼稚園",
@@ -1294,5 +1222,185 @@
     "data_source": "総社市教育委員会",
     "data_date": "2026-01-01",
     "last_updated": "2026-04-08"
+  },
+  {
+    "id": "wanpaku-hoikuen",
+    "municipality_id": "soja",
+    "name": "わんぱく保育園",
+    "type": "認可外保育施設",
+    "sub_area": "総社",
+    "address": "岡山県総社市中央6丁目2-110",
+    "tel": "0866-94-5544",
+    "capacity": 43,
+    "current_enrollment": null,
+    "age_from_months": 0,
+    "hours": {
+      "open": "07:30",
+      "close": "18:10",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "△",
+      "age_1": "△",
+      "age_2": "△",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.66964,
+      "lng": 133.749161
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設。0〜2歳対象（定員：0歳1・1歳18・2歳24）。土曜保育あり。設置者：(株)Ones。",
+    "data_source": "岡山県認可外保育施設届出一覧表（令和7年10月1日現在）",
+    "data_date": "2025-10-01",
+    "last_updated": "2026-04-17"
+  },
+  {
+    "id": "aozora-hoikuen",
+    "municipality_id": "soja",
+    "name": "あおぞら保育園",
+    "type": "認可外保育施設",
+    "sub_area": "総社",
+    "address": "岡山県総社市金井戸446-1",
+    "tel": "0866-94-1833",
+    "capacity": 18,
+    "current_enrollment": null,
+    "age_from_months": 24,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": null,
+      "age_2": "△",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.67881,
+      "lng": 133.772415
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設。2歳対象（定員18）。設置者：特定非営利活動法人母子サポートあおぞら。",
+    "data_source": "岡山県認可外保育施設届出一覧表（令和7年10月1日現在）",
+    "data_date": "2025-10-01",
+    "last_updated": "2026-04-17"
+  },
+  {
+    "id": "asobinokichi-ohisama",
+    "municipality_id": "soja",
+    "name": "あそびのきちおひさま",
+    "type": "認可外保育施設",
+    "sub_area": "山手",
+    "address": "岡山県総社市美袋1584-1",
+    "tel": "0866-99-2850",
+    "capacity": 45,
+    "current_enrollment": null,
+    "age_from_months": 12,
+    "hours": {
+      "open": "07:00",
+      "close": "18:00",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": null,
+    "availability": {
+      "age_0": null,
+      "age_1": "△",
+      "age_2": "△",
+      "age_3": null,
+      "age_4": null,
+      "age_5": null
+    },
+    "location": {
+      "lat": 34.727921,
+      "lng": 133.652039
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設。1〜2歳対象（定員：1歳15・2歳30）。土曜保育あり（〜17:00）。設置者：あそびのきちおひさま企業組合。",
+    "data_source": "岡山県認可外保育施設届出一覧表（令和7年10月1日現在）",
+    "data_date": "2025-10-01",
+    "last_updated": "2026-04-17"
+  },
+  {
+    "id": "haruiro-hoikuen",
+    "municipality_id": "soja",
+    "name": "はるいろほいくえん",
+    "type": "認可外保育施設",
+    "sub_area": "総社",
+    "address": "岡山県総社市中央3丁目2-111",
+    "tel": "0866-31-8313",
+    "capacity": 50,
+    "current_enrollment": null,
+    "age_from_months": 0,
+    "hours": {
+      "open": "07:30",
+      "close": "18:00",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "△",
+      "age_1": "△",
+      "age_2": "△",
+      "age_3": "△",
+      "age_4": "△",
+      "age_5": "△"
+    },
+    "location": {
+      "lat": 34.67321,
+      "lng": 133.748932
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設。0〜5歳対象（定員：0歳3・1歳15・2歳15・3歳6・4歳6・5歳5）。土曜保育あり。設置者：合同会社ソラリエ。",
+    "data_source": "岡山県認可外保育施設届出一覧表（令和7年10月1日現在）",
+    "data_date": "2025-10-01",
+    "last_updated": "2026-04-17"
+  },
+  {
+    "id": "irodori-hoikuen",
+    "municipality_id": "soja",
+    "name": "いろどり保育園",
+    "type": "認可外保育施設",
+    "sub_area": "総社",
+    "address": "岡山県総社市中央6丁目3-110",
+    "tel": "070-2443-8787",
+    "capacity": 20,
+    "current_enrollment": null,
+    "age_from_months": 0,
+    "hours": {
+      "open": "07:30",
+      "close": "17:30",
+      "extended_close": null
+    },
+    "extended_care": false,
+    "school_lunch": null,
+    "availability": {
+      "age_0": "△",
+      "age_1": "△",
+      "age_2": "△",
+      "age_3": "△",
+      "age_4": "△",
+      "age_5": "△"
+    },
+    "location": {
+      "lat": 34.669167,
+      "lng": 133.748764
+    },
+    "geocoded": true,
+    "notes": "認可外保育施設。0〜5歳対象（定員：0歳3・1歳6・2歳6・3歳3・4歳1・5歳1）。土曜保育あり（〜15:30）。設置者：NPO法人ほっとはあと。",
+    "data_source": "岡山県認可外保育施設届出一覧表（令和7年10月1日現在）",
+    "data_date": "2025-10-01",
+    "last_updated": "2026-04-17"
   }
 ]
