@@ -1402,5 +1402,41 @@
     "data_source": "岡山県認可外保育施設届出一覧表（令和7年10月1日現在）",
     "data_date": "2025-10-01",
     "last_updated": "2026-04-17"
+  },
+  {
+    "id": "postmate-hoikuen-soja",
+    "municipality_id": "soja",
+    "name": "ポストメイト保育園・総社市役所前",
+    "type": "企業主導型保育",
+    "sub_area": "総社",
+    "address": "岡山県総社市中央2丁目2-17",
+    "tel": "086-226-3043",
+    "capacity": 19,
+    "current_enrollment": null,
+    "age_from_months": 0,
+    "hours": {
+      "open": "07:00",
+      "close": "20:00",
+      "extended_close": "22:00"
+    },
+    "extended_care": true,
+    "school_lunch": true,
+    "availability": {
+      "age_0": "△",
+      "age_1": "△",
+      "age_2": "△",
+      "age_3": "△",
+      "age_4": "△",
+      "age_5": "△"
+    },
+    "location": {
+      "lat": 34.673679,
+      "lng": 133.745728
+    },
+    "geocoded": true,
+    "notes": "企業主導型保育施設。0〜5歳対象（定員19名）。平日・土日祝7:00〜22:00（延長あり）。一時保育対応。地域枠あり（従業員以外も利用可）。",
+    "data_source": "hoicil.com・ensagaso.com",
+    "data_date": "2026-04-17",
+    "last_updated": "2026-04-17"
   }
 ]

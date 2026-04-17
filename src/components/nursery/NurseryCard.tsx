@@ -50,6 +50,7 @@ const typeColors: Record<string, string> = {
   "認定こども園": "bg-purple-100 text-purple-700",
   "小規模保育": "bg-orange-100 text-orange-700",
   "事業所内保育": "bg-teal-100 text-teal-700",
+  "企業主導型保育": "bg-cyan-100 text-cyan-700",
   "幼稚園": "bg-pink-100 text-pink-700",
   "認可外保育施設": "bg-gray-100 text-gray-600",
 };
