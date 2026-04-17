@@ -215,18 +215,18 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
     if (shareId) saveToSupabase(shareId, { checked_items: [] });
   }, [shareId, saveToSupabase]);
 
-  const handleShare = useCallback(async () => {
+  const handleShare = useCallback(() => {
     if (!shareId) return;
-    await saveToSupabase(shareId, {
+    // 保存はバックグラウンドで実行（LINEを開くのを遅延させない）
+    saveToSupabase(shareId, {
       persona_id: selectedPersonaId,
       checked_items: [...checkedItems],
       moving_date: movingDateStr,
       enrollment_month: enrollmentMonth,
-    });
+    }).catch(console.error);
     const url = `${window.location.origin}/${municipalityId}/timeline?share=${shareId}`;
     const message = `入園準備ナビを一緒に確認しよう📋\n${url}`;
-    const lineShareUrl = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
-    window.open(lineShareUrl, "_blank", "noopener,noreferrer");
+    window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
   }, [shareId, saveToSupabase, selectedPersonaId, checkedItems, movingDateStr, enrollmentMonth, municipalityId]);
 
   const movingDate   = movingDateStr   ? new Date(movingDateStr)   : null;
