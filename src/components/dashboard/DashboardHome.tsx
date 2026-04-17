@@ -58,7 +58,7 @@ function getPriorityActions(
 }
 
 const PHASE_LABELS: Record<Phase, { label: string; icon: string; step: number }> = {
-  resident:    { label: "総社市民",  icon: "🏡", step: 0 },
+  resident:    { label: "在住",      icon: "🏡", step: 0 },
   exploring:   { label: "検討中",    icon: "🔍", step: 1 },
   decided:     { label: "物件決定",  icon: "🏠", step: 2 },
   moving_soon: { label: "引越し準備中", icon: "🚚", step: 3 },
