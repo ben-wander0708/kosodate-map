@@ -224,8 +224,8 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
       enrollment_month: enrollmentMonth,
     });
     const url = `${window.location.origin}/${municipalityId}/timeline?share=${shareId}`;
-    const text = "入園準備ナビを一緒に確認しよう📋";
-    const lineShareUrl = `https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+    const message = `入園準備ナビを一緒に確認しよう📋\n${url}`;
+    const lineShareUrl = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
     window.open(lineShareUrl, "_blank", "noopener,noreferrer");
   }, [shareId, saveToSupabase, selectedPersonaId, checkedItems, movingDateStr, enrollmentMonth, municipalityId]);
 
