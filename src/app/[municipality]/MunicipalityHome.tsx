@@ -7,6 +7,7 @@ import type { Municipality, Nursery, Clinic, GovSupport, GovSupportCategory, Loc
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
 import NurseryCard, { getBookmarks } from "@/components/nursery/NurseryCard";
 import NurseryVisitRanking from "@/components/nursery/NurseryVisitRanking";
+import DataSourceNote from "@/components/nursery/DataSourceNote";
 import ClinicCard from "@/components/clinic/ClinicCard";
 import GovSupportCard from "@/components/gov/GovSupportCard";
 import TransportSelector from "@/components/nursery/TransportSelector";
@@ -542,6 +543,9 @@ export default function MunicipalityHome({
               )}
             </div>
           )}
+
+          {/* データ出典 */}
+          <DataSourceNote sources={municipality.data_sources} />
         </div>
       )}
 

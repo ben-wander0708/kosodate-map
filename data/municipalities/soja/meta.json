@@ -16,7 +16,13 @@
       "type": "nursery_availability",
       "source_name": "令和7年度保育施設入所可能状況一覧",
       "source_date": "2026-01-23",
-      "source_url": null
+      "source_url": "https://www.city.soja.okayama.jp/life/2/"
+    },
+    {
+      "type": "unlicensed_nursery",
+      "source_name": "認可外保育施設届出一覧表（令和7年10月1日現在）",
+      "source_date": "2025-10-01",
+      "source_url": "https://www.pref.okayama.jp/page/906764.html"
     }
   ],
   "features_enabled": {
