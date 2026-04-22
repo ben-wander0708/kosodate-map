@@ -24,6 +24,7 @@ import {
 const BATCH_INTERVAL_MS = 5_000;  // 5秒ごとにバッチ送信
 const BUFFER_KEY = "kosodate_event_buffer";
 const FIRST_VISIT_KEY = "kosodate_first_visit";
+const UTM_SESSION_KEY = "kosodate_utm";       // sessionStorageキー（タブを閉じると消える）
 const MAX_BUFFER_SIZE = 50;
 
 interface TrackerState {
@@ -70,12 +71,16 @@ export async function initTracker(options: {
   });
   window.addEventListener("pagehide", flushEvents);
 
-  // セッション開始イベントを送信
+  // UTM・リファラーを取得してセッション開始イベントを送信
+  const utm = getOrSaveUtm();
   track("session_start", {
     is_first_visit: isFirstVisit(),
     days_since_first_visit: getDaysSinceFirstVisit(),
-    referrer: null,
+    referrer: getReferrerDomain(),
     user_agent_category: detectDevice(),
+    utm_source: utm.utm_source,
+    utm_medium: utm.utm_medium,
+    utm_campaign: utm.utm_campaign,
   });
 }
 
@@ -207,4 +212,55 @@ function detectDevice(): "mobile" | "tablet" | "desktop" {
   if (/tablet|ipad|playbook|silk/i.test(ua)) return "tablet";
   if (/mobile|android|iphone|ipod|blackberry|opera mini|windows phone/i.test(ua)) return "mobile";
   return "desktop";
+}
+
+/** document.referrer からドメイン部分だけ取り出す */
+function getReferrerDomain(): string | null {
+  try {
+    const ref = document.referrer;
+    if (!ref) return null;
+    const url = new URL(ref);
+    // 自分自身のドメインは除外
+    if (url.hostname === window.location.hostname) return null;
+    return url.hostname;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * UTMパラメーターを取得する。
+ * 優先順位: URLのクエリパラメーター > sessionStorage（タブ内の以前のページ）
+ * URLにUTMがあればsessionStorageに保存して次のページでも引き継ぐ。
+ */
+function getOrSaveUtm(): {
+  utm_source: string | null;
+  utm_medium: string | null;
+  utm_campaign: string | null;
+} {
+  const empty = { utm_source: null, utm_medium: null, utm_campaign: null };
+  if (typeof window === "undefined") return empty;
+
+  try {
+    const params = new URLSearchParams(window.location.search);
+    const fromUrl = {
+      utm_source: params.get("utm_source"),
+      utm_medium: params.get("utm_medium"),
+      utm_campaign: params.get("utm_campaign"),
+    };
+
+    // URLにUTMがあればsessionStorageに保存（ページ遷移後も保持）
+    if (fromUrl.utm_source) {
+      sessionStorage.setItem(UTM_SESSION_KEY, JSON.stringify(fromUrl));
+      return fromUrl;
+    }
+
+    // URLになければsessionStorageから復元（同タブ内の継続セッション）
+    const saved = sessionStorage.getItem(UTM_SESSION_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch {
+    // sessionStorageが使えない環境では無視
+  }
+
+  return empty;
 }

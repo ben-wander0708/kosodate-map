@@ -102,6 +102,9 @@ export interface SessionStartProperties {
   days_since_first_visit: number;
   referrer: string | null;          // 流入元URL（ドメインのみ）
   user_agent_category: "mobile" | "tablet" | "desktop";
+  utm_source: string | null;        // UTMパラメーター（例: line, twitter, flyer）
+  utm_medium: string | null;        // UTMパラメーター（例: share, qr, social）
+  utm_campaign: string | null;      // UTMパラメーター（例: 202504_soja_demo）
 }
 
 /** イベント種別とpropertiesのマッピング */
