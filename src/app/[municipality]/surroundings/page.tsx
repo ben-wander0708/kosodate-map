@@ -23,12 +23,13 @@ export default async function SurroundingsPage({ params }: Props) {
   const municipality = await dataRepository.getMunicipality(municipalityId);
   if (!municipality) notFound();
 
-  const [nurseries, clinics, shopsData, parks, stations] = await Promise.all([
+  const [nurseries, clinics, shopsData, parks, stations, schools] = await Promise.all([
     dataRepository.getNurseries(municipalityId),
     dataRepository.getClinics(municipalityId),
     dataRepository.getShops(municipalityId),
     dataRepository.getParks(municipalityId),
     dataRepository.getStations(municipalityId),
+    dataRepository.getSchools(municipalityId),
   ]);
 
   return (
@@ -43,6 +44,7 @@ export default async function SurroundingsPage({ params }: Props) {
       shops={shopsData?.shops ?? []}
       parks={parks}
       stations={stations}
+      schools={schools}
     />
   );
 }

@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Nursery, Clinic, Shop, Park, Station, Location } from "@/lib/data/types";
+import type { Nursery, Clinic, Shop, Park, Station, School, Location } from "@/lib/data/types";
 
 // Leafletはクライアントサイドのみでインポート
 let L: typeof import("leaflet") | null = null;
 
-export type LayerKey = "nursery" | "clinic" | "shop" | "park" | "station";
+export type LayerKey = "nursery" | "clinic" | "shop" | "park" | "station" | "school";
 
 interface LeafletMapProps {
   nurseries?: Nursery[];
   clinics?: Clinic[];
   shops?: Shop[];
   parks?: Park[];
+  schools?: School[];
   stations?: Station[];
   center: { lat: number; lng: number };
   zoom: number;
@@ -59,6 +60,7 @@ export default function LeafletMap({
   shops = [],
   parks = [],
   stations = [],
+  schools = [],
   center,
   zoom,
   userLocation,
@@ -197,6 +199,24 @@ export default function LeafletMap({
               `<div style="font-family:-apple-system,sans-serif;min-width:120px;">
                 <strong style="font-size:13px;">${station.name}</strong>
                 ${lines ? `<div style="font-size:11px;color:#666;margin-top:4px;">${lines}</div>` : ""}
+              </div>`
+            );
+        });
+      }
+
+      // ── 学校マーカー ──
+      if (isVisible("school")) {
+        schools.forEach((school) => {
+          const isElementary = school.school_type === "elementary";
+          const color = isElementary ? "#1e40af" : "#7c3aed";
+          const label = isElementary ? "小" : "中";
+          const icon = makeMarker(L!, color, label);
+          L!.marker([school.location.lat, school.location.lng], { icon })
+            .addTo(map)
+            .bindPopup(
+              `<div style="font-family:-apple-system,sans-serif;min-width:130px;">
+                <strong style="font-size:13px;">${school.name}</strong>
+                <div style="font-size:11px;color:#666;margin-top:4px;">${isElementary ? "小学校" : "中学校"}${school.district ? ` | ${school.district}学区` : ""}</div>
               </div>`
             );
         });

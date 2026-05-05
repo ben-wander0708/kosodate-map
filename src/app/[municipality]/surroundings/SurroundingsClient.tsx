@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import type { Location, Nursery, Clinic, Shop, Park, Station, SavedProperty } from "@/lib/data/types";
+import type { Location, Nursery, Clinic, Shop, Park, Station, School, SavedProperty } from "@/lib/data/types";
 import { SAVED_PROPERTIES_KEY } from "@/lib/data/types";
 import type { LayerKey } from "@/components/map/LeafletMap";
 import { calculateDistance, estimateMinutes } from "@/lib/geo/haversine";
@@ -16,6 +16,7 @@ const LAYER_CONFIG: { key: LayerKey; label: string; icon: string }[] = [
   { key: "shop",    label: "スーパー", icon: "🛒" },
   { key: "park",    label: "公園",     icon: "🌳" },
   { key: "station", label: "駅",       icon: "🚉" },
+  { key: "school",  label: "学校",     icon: "🏫" },
 ];
 
 interface SurroundingsClientProps {
@@ -29,6 +30,7 @@ interface SurroundingsClientProps {
   shops: Shop[];
   parks: Park[];
   stations: Station[];
+  schools: School[];
 }
 
 export default function SurroundingsClient({
@@ -42,10 +44,11 @@ export default function SurroundingsClient({
   shops,
   parks,
   stations,
+  schools,
 }: SurroundingsClientProps) {
   const [propertyLocation, setPropertyLocation] = useState<Location | null>(null);
   const [propertyAddress, setPropertyAddress] = useState("");
-  const [visibleLayers, setVisibleLayers] = useState<LayerKey[]>(["nursery", "clinic", "shop", "park", "station"]);
+  const [visibleLayers, setVisibleLayers] = useState<LayerKey[]>(["nursery", "clinic", "shop", "park", "station", "school"]);
   const [isSaved, setIsSaved] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -74,13 +77,24 @@ export default function SurroundingsClient({
       ? parks.map(p => calculateDistance(loc, p.location)).sort((a, b) => a - b)[0]
       : null;
 
+    const elementarySchools = schools.filter(s => s.school_type === "elementary");
+    const juniorHighSchools = schools.filter(s => s.school_type === "junior_high");
+    const nearestElementary = elementarySchools.length
+      ? elementarySchools.map(s => ({ dist: calculateDistance(loc, s.location), name: s.name })).sort((a, b) => a.dist - b.dist)[0]
+      : null;
+    const nearestJuniorHigh = juniorHighSchools.length
+      ? juniorHighSchools.map(s => ({ dist: calculateDistance(loc, s.location), name: s.name })).sort((a, b) => a.dist - b.dist)[0]
+      : null;
+
     return {
-      nurseries: { count: nurseries.filter(n => n.location).length, nearestMin: nearestNursery ? estimateMinutes(nearestNursery, "walk") : 99 },
-      clinics:   { count: clinics.filter(c => c.location).length,   nearestMin: nearestClinic   ? estimateMinutes(nearestClinic,   "walk") : 99 },
-      shops:     { count: shops.filter(s => s.location).length,     nearestMin: nearestShop     ? estimateMinutes(nearestShop,     "walk") : 99 },
-      parks:     { count: parks.length,                              nearestMin: nearestPark     ? estimateMinutes(nearestPark,     "walk") : 99 },
+      nurseries:    { count: nurseries.filter(n => n.location).length, nearestMin: nearestNursery ? estimateMinutes(nearestNursery, "walk") : 99 },
+      clinics:      { count: clinics.filter(c => c.location).length,   nearestMin: nearestClinic   ? estimateMinutes(nearestClinic,   "walk") : 99 },
+      shops:        { count: shops.filter(s => s.location).length,     nearestMin: nearestShop     ? estimateMinutes(nearestShop,     "walk") : 99 },
+      parks:        { count: parks.length,                              nearestMin: nearestPark     ? estimateMinutes(nearestPark,     "walk") : 99 },
+      elementary:   nearestElementary ? { name: nearestElementary.name, nearestMin: estimateMinutes(nearestElementary.dist, "walk") } : null,
+      juniorHigh:   nearestJuniorHigh ? { name: nearestJuniorHigh.name, nearestMin: estimateMinutes(nearestJuniorHigh.dist, "walk") } : null,
     };
-  }, [propertyLocation, nurseries, clinics, shops, parks]);
+  }, [propertyLocation, nurseries, clinics, shops, parks, schools]);
 
   // GPS取得
   const handleGPS = useCallback(() => {
@@ -250,6 +264,7 @@ export default function SurroundingsClient({
           shops={shops}
           parks={parks}
           stations={stations}
+          schools={schools}
           propertyLocation={propertyLocation}
           visibleLayers={visibleLayers}
           className="h-full"
@@ -282,6 +297,22 @@ export default function SurroundingsClient({
                 <div className="text-[10px] text-[#2d9e6b] font-semibold">最寄{data.nearestMin}分</div>
               </div>
             ))}
+            {summary.elementary && (
+              <div className="flex-shrink-0 bg-blue-50 rounded-xl px-3 py-2 text-center min-w-[76px]">
+                <div className="text-xl">🏫</div>
+                <div className="text-[10px] text-gray-400 mt-0.5">最寄小学校</div>
+                <div className="text-[10px] font-bold text-gray-800 mt-0.5 truncate max-w-[80px]">{summary.elementary.name.replace("市立", "")}</div>
+                <div className="text-[10px] text-blue-600 font-semibold">徒歩{summary.elementary.nearestMin}分</div>
+              </div>
+            )}
+            {summary.juniorHigh && (
+              <div className="flex-shrink-0 bg-purple-50 rounded-xl px-3 py-2 text-center min-w-[76px]">
+                <div className="text-xl">🏫</div>
+                <div className="text-[10px] text-gray-400 mt-0.5">最寄中学校</div>
+                <div className="text-[10px] font-bold text-gray-800 mt-0.5 truncate max-w-[80px]">{summary.juniorHigh.name.replace("市立", "")}</div>
+                <div className="text-[10px] text-purple-600 font-semibold">徒歩{summary.juniorHigh.nearestMin}分</div>
+              </div>
+            )}
           </div>
 
           {/* CTA */}
