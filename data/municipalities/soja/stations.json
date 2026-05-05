@@ -1,0 +1,7 @@
+[
+  { "id": "station-4073849189", "name": "総社駅",   "lines": ["JR伯備線", "JR吉備線"], "location": { "lat": 34.6735655, "lng": 133.7380745 } },
+  { "id": "station-8120327716", "name": "東総社駅", "lines": ["JR吉備線"],             "location": { "lat": 34.6776394, "lng": 133.7509583 } },
+  { "id": "station-8118278085", "name": "清音駅",   "lines": ["JR伯備線", "井原鉄道"], "location": { "lat": 34.6435349, "lng": 133.7334709 } },
+  { "id": "station-8118278050", "name": "豪渓駅",   "lines": ["JR伯備線"],             "location": { "lat": 34.7063071, "lng": 133.7225953 } },
+  { "id": "station-339081189",  "name": "川辺宿駅", "lines": ["JR吉備線"],             "location": { "lat": 34.6324037, "lng": 133.7148104 } }
+]

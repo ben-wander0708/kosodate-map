@@ -5,8 +5,10 @@ import { useState, useEffect, useMemo } from "react";
 import { useOnboarding } from "@/hooks/useOnboarding";
 import { ONBOARDING_OPEN_EVENT } from "@/components/onboarding/OnboardingWrapper";
 import { getSupabase } from "@/lib/supabase/client";
-import type { PostEnrollmentEvent, EventAssignee } from "@/lib/data/types";
+import type { PostEnrollmentEvent, EventAssignee, SavedProperty } from "@/lib/data/types";
+import { SAVED_PROPERTIES_KEY } from "@/lib/data/types";
 import postEnrollmentData from "@/lib/data/post-enrollment-events.json";
+import SavedPropertyCard from "@/components/surroundings/SavedPropertyCard";
 
 type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident";
 type WorkStatus = "fulltime" | "parttime" | "leave";
@@ -38,17 +40,17 @@ function getPriorityActions(
       return [
         { icon: "✅", title: "転居前タスクの残りを確認", sub: "申込書の取り寄せ・役所への届出", href: `/${municipalityId}/checklist`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏫", title: "保育施設の申込書を確認", sub: "転入後すぐ動けるよう準備", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🎁", title: "もらい忘れてない？", sub: "転入前に確認できる給付金・医療費助成", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "🗺️", title: "引越し先の周辺環境を確認", sub: "保育園・スーパー・公園の距離をチェック", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
       ];
     case "moved":
       return [
         { icon: "🚨", title: "転入届を提出する（14日以内）", sub: "マイナンバー・住民票の異動が最優先", href: `/${municipalityId}/checklist`, color: "text-red-600", bgColor: "bg-red-50 border-red-200" },
         { icon: "🏫", title: "保育施設の空き状況を確認", sub: "転入後すぐに申込みできる施設を探す", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🎁", title: "児童手当を申請する", sub: "出生・転入から15日以内に申請必須", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "❓", title: "入所申込みのルールを確認", sub: "4月入所と途中入所のルールが違う", href: `/${municipalityId}/faq`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
     case "resident":
       return [
-        { icon: "🎁", title: "もらい忘れてない？", sub: "給付金・医療費助成・保育料無償化など", href: `/${municipalityId}?tab=gov`, color: "text-[#2d6eb0]", bgColor: "bg-blue-50 border-blue-200" },
+        { icon: "🗺️", title: "周辺環境を確認する", sub: "保育園・病院・スーパーの距離をまとめて確認", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏫", title: "近くの保育施設を探す", sub: "認可・小規模の空き状況を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏥", title: "かかりつけ医を探す", sub: "小児科・耳鼻科などを地図で確認", href: `/${municipalityId}?tab=clinic`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
@@ -78,12 +80,12 @@ const ASSIGNEE_LABELS: Record<string, string> = {
 };
 
 const FEATURE_TILES = [
-  { icon: "🏫", title: "保活マップ",        sub: "保育施設の空き・距離を比較", href: (id: string) => `/${id}?tab=nursery`, color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "✅", title: "入園準備ナビ",       sub: "入園に必要な手続きをまとめて管理", href: (id: string) => `/${id}/checklist`,   color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "🔔", title: "行政リマインダー",   sub: "児童手当・健診・入園申込みを通知", href: (id: string) => `/${id}/timeline`,    color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "🎁", title: "もらい忘れてない？", sub: "手当・医療費助成を確認",     href: (id: string) => `/${id}?tab=gov`,     color: "text-[#2d6eb0]", bg: "bg-blue-50"   },
-  { icon: "🏥", title: "医療機関",          sub: "近くの病院を診療科で絞り込み", href: (id: string) => `/${id}?tab=clinic`,  color: "text-[#e05a2b]", bg: "bg-orange-50" },
-  { icon: "📋", title: "申請書類診断",      sub: "必要書類を3問で確認",        href: (id: string) => `/${id}/apply`,       color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
+  { icon: "🗺️", title: "周辺環境マップ",    sub: "物件の子育て環境を一画面で確認", href: (id: string) => `/${id}/surroundings`, color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
+  { icon: "🏫", title: "保活マップ",        sub: "保育施設の空き・距離を比較",     href: (id: string) => `/${id}?tab=nursery`,  color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
+  { icon: "✅", title: "入園準備ナビ",       sub: "入園に必要な手続きをまとめて管理", href: (id: string) => `/${id}/checklist`,    color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
+  { icon: "🏥", title: "医療機関",          sub: "近くの病院を診療科で絞り込み",   href: (id: string) => `/${id}?tab=clinic`,   color: "text-[#e05a2b]", bg: "bg-orange-50" },
+  { icon: "📋", title: "申請書類診断",      sub: "必要書類を3問で確認",           href: (id: string) => `/${id}/apply`,        color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
+  { icon: "❓", title: "よくある質問",       sub: "入所申込みのルールを確認",       href: (id: string) => `/${id}/faq`,          color: "text-gray-600",  bg: "bg-gray-50"   },
 ];
 
 interface DashboardHomeProps {
@@ -96,12 +98,19 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
 
   const [checkedCount, setCheckedCount] = useState(0);
   const [eventAssignees, setEventAssignees] = useState<Record<string, EventAssignee>>({});
+  const [savedProperties, setSavedProperties] = useState<SavedProperty[]>([]);
 
   // localStorage + Supabase からデータ取得
   useEffect(() => {
     try {
       const checked = JSON.parse(localStorage.getItem("kosodate_checklist_checked") ?? "[]");
       setCheckedCount(checked.length);
+    } catch {}
+
+    // 保存した物件を読み込み
+    try {
+      const props = JSON.parse(localStorage.getItem(SAVED_PROPERTIES_KEY) ?? "[]");
+      setSavedProperties(props);
     } catch {}
 
     const loadFromSupabase = async () => {
@@ -153,6 +162,13 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
     today.setHours(0, 0, 0, 0);
     return Math.ceil((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
   }, [enrollmentMonth]);
+
+  // 保存した物件を削除
+  const handleDeleteProperty = (id: string) => {
+    const next = savedProperties.filter(p => p.id !== id);
+    setSavedProperties(next);
+    try { localStorage.setItem(SAVED_PROPERTIES_KEY, JSON.stringify(next)); } catch {}
+  };
 
   const phase = answers?.phase;
   const phaseInfo = phase ? PHASE_LABELS[phase] : null;
@@ -295,7 +311,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-bold text-gray-800">👫 夫婦の担当状況</h3>
-            <Link href={`/${municipalityId}/timeline`} className="text-xs text-[#2d9e6b] font-semibold">
+            <Link href={`/${municipalityId}/checklist`} className="text-xs text-[#2d9e6b] font-semibold">
               タイムラインへ →
             </Link>
           </div>
@@ -337,7 +353,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
             <h3 className="text-sm font-bold text-gray-800">📅 今月・来月のイベント</h3>
-            <Link href={`/${municipalityId}/timeline`} className="text-xs text-[#2d9e6b] font-semibold">
+            <Link href={`/${municipalityId}/checklist`} className="text-xs text-[#2d9e6b] font-semibold">
               すべて見る →
             </Link>
           </div>
@@ -353,7 +369,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
               return (
                 <Link
                   key={event.id}
-                  href={`/${municipalityId}/timeline`}
+                  href={`/${municipalityId}/checklist`}
                   className="px-4 py-3 flex items-center gap-3 hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex-1 min-w-0">
@@ -418,21 +434,29 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
         </div>
       )}
 
+
       {/* ══════════════════════════════════════
-          保活中: 入園後をパートナーと準備しよう
+          保存した物件
           ══════════════════════════════════════ */}
-      {!hasEnrolled && (
-        <Link
-          href={`/${municipalityId}/timeline`}
-          className="flex items-center gap-3 bg-purple-50 border border-purple-100 rounded-xl p-4 active:scale-[0.98] transition-transform"
-        >
-          <span className="text-2xl flex-shrink-0">👫</span>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-purple-700">入園後をパートナーと一緒に準備</p>
-            <p className="text-xs text-purple-500 mt-0.5">タスクの担当を決めてURLで共有できます</p>
+      {savedProperties.length > 0 && (
+        <div>
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-sm font-bold text-gray-800">⭐ 保存した物件</h3>
+            <Link href={`/${municipalityId}/surroundings`} className="text-xs text-[#2d9e6b] font-semibold">
+              新しい物件を追加 →
+            </Link>
           </div>
-          <span className="text-purple-300 text-lg">›</span>
-        </Link>
+          <div className="space-y-3">
+            {savedProperties.map(property => (
+              <SavedPropertyCard
+                key={property.id}
+                property={property}
+                municipalityId={municipalityId}
+                onDelete={handleDeleteProperty}
+              />
+            ))}
+          </div>
+        </div>
       )}
 
       {/* ══════════════════════════════════════

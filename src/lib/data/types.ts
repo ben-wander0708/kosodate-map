@@ -343,6 +343,44 @@ export const TRANSPORT_SPEEDS: Record<TransportMode, number> = {
 };
 
 // ===================================
+// 周辺環境マップ
+// ===================================
+
+/** 公園 */
+export interface Park {
+  id: string;
+  name: string;
+  address?: string;
+  location: Location;
+}
+
+/** 駅 */
+export interface Station {
+  id: string;
+  name: string;
+  lines?: string[];
+  location: Location;
+}
+
+/** 保存済み物件 */
+export interface SavedProperty {
+  id: string;
+  address: string;
+  lat: number;
+  lng: number;
+  savedAt: string;
+  summary: {
+    nurseries: { count: number; nearestMin: number };
+    clinics:   { count: number; nearestMin: number };
+    shops:     { count: number; nearestMin: number };
+    parks:     { count: number; nearestMin: number };
+  };
+  note?: string;
+}
+
+export const SAVED_PROPERTIES_KEY = "kosodate_saved_properties";
+
+// ===================================
 // お譲り (Giveaway) 機能
 // ===================================
 
