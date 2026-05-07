@@ -397,7 +397,7 @@ function WizardView({
 }
 
 // ─────────────────────────────────────────────
-// 設定変更モード（全項目を一画面で編集）
+// 設定変更モード（簡略版：今の状況・子ども情報・入園月のみ）
 // ─────────────────────────────────────────────
 function SettingsView({
   onClose,
@@ -410,19 +410,19 @@ function SettingsView({
 }) {
   const phaseOptions = getPhaseOptions(municipalityName);
   const [answers, setAnswers] = useState<OnboardingAnswers>(initialAnswers);
-  const [childDrafts, setChildDrafts] = useState<ChildDraft[]>(() =>
-    (initialAnswers.children || []).map((c) => ({ age: c.age, enrollment_status: c.enrollment_status }))
-  );
+  const [childDrafts, setChildDrafts] = useState<ChildDraft[]>(() => {
+    const existing = (initialAnswers.children || []).map((c) => ({ age: c.age, enrollment_status: c.enrollment_status }));
+    return existing.length > 0 ? existing : [{ age: null, enrollment_status: null }];
+  });
 
-  const handleChildCount = (value: ChildCount) => {
-    const n = countToNumber(value);
-    setAnswers((prev) => ({ ...prev, child_count: value }));
-    const existing = (initialAnswers.children || []).slice(0, n);
-    const newDrafts = [
-      ...existing.map((c) => ({ age: c.age, enrollment_status: c.enrollment_status })),
-      ...Array(Math.max(0, n - existing.length)).fill(null).map(() => ({ age: null, enrollment_status: null })),
-    ];
-    setChildDrafts(newDrafts);
+  const addChild = () => {
+    if (childDrafts.length >= 3) return;
+    setChildDrafts((prev) => [...prev, { age: null, enrollment_status: null }]);
+  };
+
+  const removeChild = (index: number) => {
+    if (childDrafts.length <= 1) return;
+    setChildDrafts((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSave = () => {
@@ -430,9 +430,12 @@ function SettingsView({
       age: d.age ?? 0,
       enrollment_status: d.enrollment_status ?? "seeking",
     }));
-    saveDone({ ...answers, children });
+    const child_count: ChildCount = children.length === 1 ? "1人" : children.length === 2 ? "2人" : "3人以上";
+    saveDone({ ...answers, children, child_count });
     onClose();
   };
+
+  const showEnrollmentMonth = answers.phase === "decided" || answers.phase === "moving_soon" || answers.phase === "moved";
 
   return (
     <>
@@ -445,7 +448,7 @@ function SettingsView({
       </div>
 
       <div className="px-5 pb-10 space-y-6 mt-4">
-        {/* フェーズ */}
+        {/* 今の状況 */}
         <div>
           <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">今の状況</p>
           <div className="space-y-1.5">
@@ -467,126 +470,87 @@ function SettingsView({
           </div>
         </div>
 
-        {/* 就労状況 */}
+        {/* お子さんの情報 */}
         <div>
-          <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">就労状況</p>
-          <div className="space-y-1.5">
-            {WORK_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => setAnswers((prev) => ({ ...prev, work_status: opt.value }))}
-                className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all active:scale-95 ${
-                  answers.work_status === opt.value ? "border-[#2d9e6b] bg-[#f0faf5]" : "border-gray-200 bg-white"
-                }`}
-              >
-                <span className="text-sm font-semibold text-gray-800">{opt.label}</span>
-                <span className="text-xs text-gray-400 ml-2">{opt.sub}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 子ども人数 */}
-        <div>
-          <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">未就学児の人数</p>
-          <div className="grid grid-cols-3 gap-2">
-            {COUNT_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => handleChildCount(opt.value)}
-                className={`text-center py-3 rounded-xl border-2 transition-all active:scale-95 ${
-                  answers.child_count === opt.value ? "border-[#2d9e6b] bg-[#f0faf5]" : "border-gray-200 bg-white"
-                }`}
-              >
-                <p className="text-sm font-semibold text-gray-800">{opt.label}</p>
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 各子どもの情報 */}
-        {childDrafts.length > 0 && (
-          <div>
-            <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">お子さんの情報</p>
-            <div className="space-y-4">
-              {childDrafts.map((draft, index) => (
-                <div key={index} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
-                  <p className="text-xs font-bold text-gray-600 mb-2">{CHILD_LABELS[index] ?? `第${index + 1}子`}</p>
-                  <div className="grid grid-cols-6 gap-1 mb-2">
-                    {AGE_OPTIONS.map((age) => (
-                      <button
-                        key={age}
-                        onClick={() => setChildDrafts((prev) => { const next = [...prev]; next[index] = { ...next[index], age }; return next; })}
-                        className={`py-2 rounded-lg border-2 text-xs font-bold transition-all ${
-                          draft.age === age ? "border-[#2d9e6b] bg-[#2d9e6b] text-white" : "border-gray-200 bg-white text-gray-700"
-                        }`}
-                      >
-                        {age}歳
-                      </button>
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-3 gap-1.5">
-                    {ENROLLMENT_OPTIONS.map((opt) => (
-                      <button
-                        key={opt.value}
-                        onClick={() => setChildDrafts((prev) => { const next = [...prev]; next[index] = { ...next[index], enrollment_status: opt.value }; return next; })}
-                        className={`flex flex-col items-center py-2 px-1 rounded-lg border-2 text-center transition-all ${
-                          draft.enrollment_status === opt.value ? "border-[#2d9e6b] bg-[#f0faf5]" : "border-gray-200 bg-white"
-                        }`}
-                      >
-                        <span className="text-sm">{opt.emoji}</span>
-                        <span className={`text-[10px] font-semibold mt-0.5 ${draft.enrollment_status === opt.value ? "text-[#2d9e6b]" : "text-gray-700"}`}>{opt.label}</span>
-                      </button>
-                    ))}
-                  </div>
+          <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">お子さんの情報</p>
+          <div className="space-y-3">
+            {childDrafts.map((draft, index) => (
+              <div key={index} className="bg-gray-50 rounded-xl p-3 border border-gray-100">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-bold text-gray-600">{CHILD_LABELS[index] ?? `第${index + 1}子`}</p>
+                  {childDrafts.length > 1 && (
+                    <button
+                      onClick={() => removeChild(index)}
+                      className="text-[10px] text-gray-400 hover:text-red-400 transition-colors"
+                    >
+                      削除
+                    </button>
+                  )}
                 </div>
+                <p className="text-[10px] text-gray-400 mb-1.5">年齢</p>
+                <div className="grid grid-cols-6 gap-1 mb-3">
+                  {AGE_OPTIONS.map((age) => (
+                    <button
+                      key={age}
+                      onClick={() => setChildDrafts((prev) => { const next = [...prev]; next[index] = { ...next[index], age }; return next; })}
+                      className={`py-2 rounded-lg border-2 text-xs font-bold transition-all ${
+                        draft.age === age ? "border-[#2d9e6b] bg-[#2d9e6b] text-white" : "border-gray-200 bg-white text-gray-700"
+                      }`}
+                    >
+                      {age}歳
+                    </button>
+                  ))}
+                </div>
+                <p className="text-[10px] text-gray-400 mb-1.5">保育園の状況</p>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {ENROLLMENT_OPTIONS.map((opt) => (
+                    <button
+                      key={opt.value}
+                      onClick={() => setChildDrafts((prev) => { const next = [...prev]; next[index] = { ...next[index], enrollment_status: opt.value }; return next; })}
+                      className={`flex flex-col items-center py-2 px-1 rounded-lg border-2 text-center transition-all ${
+                        draft.enrollment_status === opt.value ? "border-[#2d9e6b] bg-[#f0faf5]" : "border-gray-200 bg-white"
+                      }`}
+                    >
+                      <span className="text-sm">{opt.emoji}</span>
+                      <span className={`text-[10px] font-semibold mt-0.5 ${draft.enrollment_status === opt.value ? "text-[#2d9e6b]" : "text-gray-700"}`}>{opt.label}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+            {childDrafts.length < 3 && (
+              <button
+                onClick={addChild}
+                className="w-full py-2.5 rounded-xl border-2 border-dashed border-gray-300 text-xs text-gray-400 font-semibold hover:border-[#2d9e6b] hover:text-[#2d9e6b] transition-all"
+              >
+                ＋ お子さんを追加
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* 入園月（物件決定〜転入後のみ表示） */}
+        {showEnrollmentMonth && (
+          <div>
+            <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">入園月（任意）</p>
+            <div className="grid grid-cols-3 gap-1.5">
+              {MONTH_OPTIONS.map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setAnswers((prev) => ({
+                    ...prev,
+                    enrollment_month: prev.enrollment_month === opt.value ? undefined : opt.value,
+                  }))}
+                  className={`py-2 px-1 rounded-xl border-2 text-xs font-semibold text-center transition-all active:scale-95 ${
+                    answers.enrollment_month === opt.value ? "border-[#2d9e6b] bg-[#f0faf5] text-[#2d9e6b]" : "border-gray-200 bg-white text-gray-700"
+                  }`}
+                >
+                  {opt.label}
+                </button>
               ))}
             </div>
           </div>
         )}
-
-        {/* 入園月 */}
-        <div>
-          <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">入園月（任意）</p>
-          <div className="grid grid-cols-3 gap-1.5">
-            {MONTH_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                onClick={() => setAnswers((prev) => ({ ...prev, enrollment_month: opt.value }))}
-                className={`py-2 px-1 rounded-xl border-2 text-xs font-semibold text-center transition-all active:scale-95 ${
-                  answers.enrollment_month === opt.value ? "border-[#2d9e6b] bg-[#f0faf5] text-[#2d9e6b]" : "border-gray-200 bg-white text-gray-700"
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* 引越し日程 */}
-        <div>
-          <p className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-wide">引越し日程（任意）</p>
-          <div className="space-y-3">
-            <div>
-              <label className="text-xs text-gray-600 mb-1 block">転居を決めた日</label>
-              <input
-                type="date"
-                value={answers.decision_date || ""}
-                onChange={(e) => setAnswers((prev) => ({ ...prev, decision_date: e.target.value }))}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-              />
-            </div>
-            <div>
-              <label className="text-xs text-gray-600 mb-1 block">引越し予定日</label>
-              <input
-                type="date"
-                value={answers.moving_date || ""}
-                onChange={(e) => setAnswers((prev) => ({ ...prev, moving_date: e.target.value }))}
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm text-gray-800 focus:outline-none focus:border-[#4CAF82]"
-              />
-            </div>
-          </div>
-        </div>
 
         {/* 保存ボタン */}
         <button
