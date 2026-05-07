@@ -1,0 +1,21 @@
+[
+  { "id": "school-1423615138", "name": "市立総社中央小学校", "school_type": "elementary", "district": "総社中央", "location": { "lat": 34.6797810, "lng": 133.7368260 } },
+  { "id": "school-863470049",  "name": "市立総社小学校",     "school_type": "elementary", "district": "総社",     "location": { "lat": 34.6784074, "lng": 133.7559529 } },
+  { "id": "school-1423615147", "name": "市立総社北小学校",   "school_type": "elementary", "district": "総社北",   "location": { "lat": 34.6880860, "lng": 133.7481860 } },
+  { "id": "school-1423615159", "name": "市立総社東小学校",   "school_type": "elementary", "district": "総社東",   "location": { "lat": 34.6814750, "lng": 133.7797390 } },
+  { "id": "school-331693428",  "name": "市立常盤小学校",     "school_type": "elementary", "district": "常盤",     "location": { "lat": 34.6665150, "lng": 133.7381477 } },
+  { "id": "school-630952646",  "name": "市立清音小学校",     "school_type": "elementary", "district": "清音",     "location": { "lat": 34.6507482, "lng": 133.7394634 } },
+  { "id": "school-1423613461", "name": "市立山手小学校",     "school_type": "elementary", "district": "山手",     "location": { "lat": 34.6567280, "lng": 133.7709360 } },
+  { "id": "school-606186888",  "name": "市立神在小学校",     "school_type": "elementary", "district": "神在",     "location": { "lat": 34.6683846, "lng": 133.7186138 } },
+  { "id": "school-1423613597", "name": "市立川辺小学校",     "school_type": "elementary", "district": "川辺",     "location": { "lat": 34.6392970, "lng": 133.7219170 } },
+  { "id": "school-1423614940", "name": "市立秦小学校",       "school_type": "elementary", "district": "秦",       "location": { "lat": 34.6985850, "lng": 133.7197430 } },
+  { "id": "school-1423615332", "name": "市立阿曽小学校",     "school_type": "elementary", "district": "阿曽",     "location": { "lat": 34.7051960, "lng": 133.7849580 } },
+  { "id": "school-1423615242", "name": "市立菅生小学校",     "school_type": "elementary", "district": "菅生",     "location": { "lat": 34.6231200, "lng": 133.7747140 } },
+  { "id": "school-547073887",  "name": "市立庄内小学校",     "school_type": "elementary", "district": "庄内",     "location": { "lat": 34.6891653, "lng": 133.8161755 } },
+
+  { "id": "school-331693426",  "name": "市立総社西中学校",   "school_type": "junior_high", "district": "総社西学区", "location": { "lat": 34.6755351, "lng": 133.7410095 } },
+  { "id": "school-331693444",  "name": "市立総社東中学校",   "school_type": "junior_high", "district": "総社東学区", "location": { "lat": 34.6737595, "lng": 133.7569446 } },
+  { "id": "school-1423615139", "name": "市立総社中学校",     "school_type": "junior_high", "district": "総社学区",   "location": { "lat": 34.6776700, "lng": 133.7037450 } },
+  { "id": "school-1423612889", "name": "市立北中学校",       "school_type": "junior_high", "district": "北学区",     "location": { "lat": 34.6203990, "lng": 133.7889350 } },
+  { "id": "school-547073876",  "name": "市立高松中学校",     "school_type": "junior_high", "district": "高松学区",   "location": { "lat": 34.6873596, "lng": 133.8184078 } }
+]

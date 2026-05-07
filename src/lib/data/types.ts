@@ -362,6 +362,15 @@ export interface Station {
   location: Location;
 }
 
+/** 学校 */
+export interface School {
+  id: string;
+  name: string;
+  school_type: "elementary" | "junior_high";
+  district?: string;
+  location: Location;
+}
+
 /** 保存済み物件 */
 export interface SavedProperty {
   id: string;
