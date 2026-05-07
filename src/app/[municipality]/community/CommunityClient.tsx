@@ -4,10 +4,12 @@ import { useState, useEffect, useMemo } from "react";
 import type { MunicipalityCommunity, CommunityLink } from "@/lib/data/types";
 import { useLiff } from "@/hooks/useLiff";
 import { liff } from "@/lib/liff/liffClient";
+import PageHeader from "@/components/common/PageHeader";
 
 interface CommunityClientProps {
   community: MunicipalityCommunity;
   municipalityName: string;
+  municipalityId: string;
 }
 
 const PERSONA_KEY = "kosodate_checklist_persona";
@@ -25,7 +27,7 @@ const PLATFORM_ICONS: Record<string, string> = {
   "電話":      "📞",
 };
 
-export default function CommunityClient({ community, municipalityName }: CommunityClientProps) {
+export default function CommunityClient({ community, municipalityName, municipalityId }: CommunityClientProps) {
   const [selectedPersona, setSelectedPersona] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -70,10 +72,12 @@ export default function CommunityClient({ community, municipalityName }: Communi
   }
 
   return (
+    <>
+    <PageHeader title="🤝 地域コミュニティ" subtitle={`${municipalityName} · 地域のつながり`} municipalityId={municipalityId} />
     <div className="space-y-4 p-4">
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#7c3aed] to-[#5b21b6] rounded-xl p-4 text-white">
-        <h2 className="text-base font-bold mb-1">コミュニティ</h2>
+        <h2 className="text-base font-bold mb-1">地域コミュニティ</h2>
         <p className="text-xs text-purple-200">
           {municipalityName}での子育てに役立つ地域のつながりをまとめました。
         </p>
@@ -180,6 +184,7 @@ export default function CommunityClient({ community, municipalityName }: Communi
         </ul>
       </div>
     </div>
+    </>
   );
 }
 

@@ -5,6 +5,7 @@ import { getSupabase } from "@/lib/supabase/client";
 import type { PostEnrollmentEvent, EventAssignee } from "@/lib/data/types";
 import postEnrollmentData from "@/lib/data/post-enrollment-events.json";
 import { useOnboarding } from "@/hooks/useOnboarding";
+import PageHeader from "@/components/common/PageHeader";
 
 interface TimelineClientProps {
   municipalityName: string;
@@ -315,11 +316,13 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
   }
 
   return (
+    <>
+    <PageHeader title="📅 入園後タイムライン" subtitle={`${municipalityName} · 年間の行政手続き`} municipalityId={municipalityId} />
     <div className="space-y-4 p-4">
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <div>
-          <h2 className="text-base font-bold mb-1">子育て行政リマインダー</h2>
+          <h2 className="text-base font-bold mb-1">入園後タイムライン</h2>
           <p className="text-xs text-green-200">
             児童手当・健診・入園申込みなど、年間の行政手続きを見逃さないために。
           </p>
@@ -866,5 +869,6 @@ export default function TimelineClient({ municipalityName, municipalityId }: Tim
         </ul>
       </div>
     </div>
+    </>
   );
 }

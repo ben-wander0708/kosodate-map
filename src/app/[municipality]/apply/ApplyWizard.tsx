@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import PageHeader from "@/components/common/PageHeader";
 
 interface ApplyWizardProps {
   municipalityId: string;
@@ -174,15 +175,9 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
     answers.workStatus === "both_working" || answers.workStatus === "single_parent";
 
   return (
+    <>
+    <PageHeader title="📋 申請書類診断" subtitle={`${municipalityName} · 3問で必要書類を確認`} municipalityId={municipalityId} />
     <div className="p-4 space-y-4">
-      {/* 戻るボタン */}
-      <Link
-        href={`/${municipalityId}`}
-        className="inline-flex items-center gap-1 text-sm text-[#2d9e6b] font-medium hover:underline"
-      >
-        ← ホームに戻る
-      </Link>
-
       {/* ヘッダー */}
       <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
         <h1 className="text-lg font-bold text-gray-900">📋 申請書類 かんたん診断</h1>
@@ -491,5 +486,6 @@ https://www.city.soja.okayama.jp/kodomo_yumedukuri/
         </div>
       )}
     </div>
+    </>
   );
 }

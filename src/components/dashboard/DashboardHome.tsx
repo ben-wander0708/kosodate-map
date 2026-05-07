@@ -27,31 +27,37 @@ interface PriorityAction {
 function getPriorityActions(
   phase: Phase | undefined,
   municipalityId: string,
-  municipalityName: string
+  _municipalityName: string
 ): PriorityAction[] {
   switch (phase) {
+    case "exploring":
+      return [
+        { icon: "🗺️", title: "物件周辺の子育て環境を調べる", sub: "保育園・医療・スーパー・公園を地図でまとめて確認", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🏫", title: "希望エリアの保育園を比較する", sub: "空き状況・距離・定員をチェック", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "❓", title: "入所申込みのスケジュールを確認", sub: "4月入所と途中入所のルールが違う", href: `/${municipalityId}/faq`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
+      ];
     case "decided":
       return [
-        { icon: "✅", title: "転居前チェックリストを始める", sub: "保育園申込みのタイミングを確認", href: `/${municipalityId}/checklist`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🏫", title: "希望エリアの保育施設を確認", sub: "空き状況・距離・定員を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "❓", title: "入所申込みのスケジュールを確認", sub: "4月入所と途中入所のルールが違う", href: `/${municipalityId}/faq`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
+        { icon: "✅", title: "入園準備チェックリストを始める", sub: "保育園申込みのタイミングを確認", href: `/${municipalityId}/checklist`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🗺️", title: "物件の周辺環境を確認する", sub: "保育園・医療・スーパー・公園の距離をチェック", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🏫", title: "希望エリアの保育園を比較する", sub: "空き状況・距離・定員を比較", href: `/${municipalityId}?tab=nursery`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
     case "moving_soon":
       return [
-        { icon: "✅", title: "転居前タスクの残りを確認", sub: "申込書の取り寄せ・役所への届出", href: `/${municipalityId}/checklist`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🏫", title: "保育施設の申込書を確認", sub: "転入後すぐ動けるよう準備", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🗺️", title: "引越し先の周辺環境を確認", sub: "保育園・スーパー・公園の距離をチェック", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "✅", title: "入園準備チェックリストの残りを確認", sub: "申込書の取り寄せ・役所への届出", href: `/${municipalityId}/checklist`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🗺️", title: "引越し先の周辺環境を確認", sub: "保育園・医療・スーパー・公園の距離をチェック", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "📋", title: "申請書類を確認する", sub: "3問で必要な書類を把握", href: `/${municipalityId}/apply`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
     case "moved":
       return [
         { icon: "🚨", title: "転入届を提出する（14日以内）", sub: "マイナンバー・住民票の異動が最優先", href: `/${municipalityId}/checklist`, color: "text-red-600", bgColor: "bg-red-50 border-red-200" },
-        { icon: "🏫", title: "保育施設の空き状況を確認", sub: "転入後すぐに申込みできる施設を探す", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🏫", title: "保育園の空き状況を確認", sub: "転入後すぐに申込みできる施設を探す", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "❓", title: "入所申込みのルールを確認", sub: "4月入所と途中入所のルールが違う", href: `/${municipalityId}/faq`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
     case "resident":
       return [
-        { icon: "🗺️", title: "周辺環境を確認する", sub: "保育園・病院・スーパーの距離をまとめて確認", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
-        { icon: "🏫", title: "近くの保育施設を探す", sub: "認可・小規模の空き状況を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🗺️", title: "周辺環境を確認する", sub: "保育園・医療・スーパー・公園の距離をまとめて確認", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🏫", title: "近くの保育園を探す", sub: "認可・小規模の空き状況を比較", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
         { icon: "🏥", title: "かかりつけ医を探す", sub: "小児科・耳鼻科などを地図で確認", href: `/${municipalityId}?tab=clinic`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
       ];
     default:
@@ -80,12 +86,12 @@ const ASSIGNEE_LABELS: Record<string, string> = {
 };
 
 const FEATURE_TILES = [
-  { icon: "🗺️", title: "周辺環境マップ",    sub: "物件の子育て環境を一画面で確認", href: (id: string) => `/${id}/surroundings`, color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "🏫", title: "保活マップ",        sub: "保育施設の空き・距離を比較",     href: (id: string) => `/${id}?tab=nursery`,  color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "✅", title: "入園準備ナビ",       sub: "入園に必要な手続きをまとめて管理", href: (id: string) => `/${id}/checklist`,    color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "🏥", title: "医療機関",          sub: "近くの病院を診療科で絞り込み",   href: (id: string) => `/${id}?tab=clinic`,   color: "text-[#e05a2b]", bg: "bg-orange-50" },
-  { icon: "📋", title: "申請書類診断",      sub: "必要書類を3問で確認",           href: (id: string) => `/${id}/apply`,        color: "text-[#2d9e6b]", bg: "bg-[#f0faf5]" },
-  { icon: "❓", title: "よくある質問",       sub: "入所申込みのルールを確認",       href: (id: string) => `/${id}/faq`,          color: "text-gray-600",  bg: "bg-gray-50"   },
+  { icon: "🗺️", title: "周辺環境マップ",         sub: "物件の子育て環境を一画面で確認",     href: (id: string) => `/${id}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+  { icon: "🏫", title: "保育園を探す",            sub: "空き状況・距離・定員を比較",         href: (id: string) => `/${id}?tab=nursery`,  color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+  { icon: "✅", title: "入園準備チェックリスト",   sub: "入園に必要な手続きをまとめて管理",   href: (id: string) => `/${id}/checklist`,    color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+  { icon: "🏥", title: "医療機関を探す",          sub: "近くの病院を診療科で絞り込み",       href: (id: string) => `/${id}?tab=clinic`,   color: "text-[#e05a2b]", bgColor: "bg-orange-50 border-orange-100" },
+  { icon: "📋", title: "申請書類診断",            sub: "必要書類を3問で確認",                href: (id: string) => `/${id}/apply`,        color: "text-gray-700",  bgColor: "bg-gray-50 border-gray-200" },
+  { icon: "❓", title: "よくある質問",             sub: "入所申込みのルールを確認",          href: (id: string) => `/${id}/faq`,          color: "text-gray-700",  bgColor: "bg-gray-50 border-gray-200" },
 ];
 
 interface DashboardHomeProps {
@@ -312,7 +318,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-bold text-gray-800">👫 夫婦の担当状況</h3>
             <Link href={`/${municipalityId}/checklist`} className="text-xs text-[#2d9e6b] font-semibold">
-              タイムラインへ →
+              入園後タイムラインへ →
             </Link>
           </div>
 
@@ -460,20 +466,23 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       )}
 
       {/* ══════════════════════════════════════
-          共通: すべての機能タイル
+          共通: すべての機能（リスト型）
           ══════════════════════════════════════ */}
       <div>
         <h3 className="text-sm font-bold text-gray-800 mb-2">すべての機能</h3>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="space-y-2">
           {FEATURE_TILES.map((tile) => (
             <Link
               key={tile.title}
               href={tile.href(municipalityId)}
-              className={`${tile.bg} rounded-xl p-3 text-center active:scale-95 transition-transform`}
+              className={`flex items-center gap-3 p-3 rounded-xl border ${tile.bgColor} active:scale-[0.98] transition-transform`}
             >
-              <div className="text-2xl mb-1">{tile.icon}</div>
-              <p className={`text-xs font-semibold leading-tight ${tile.color}`}>{tile.title}</p>
-              <p className="text-[10px] text-gray-400 mt-0.5 leading-tight">{tile.sub}</p>
+              <div className="text-2xl w-8 text-center flex-shrink-0">{tile.icon}</div>
+              <div className="flex-1 min-w-0">
+                <p className={`text-sm font-semibold ${tile.color}`}>{tile.title}</p>
+                <p className="text-xs text-gray-500 mt-0.5">{tile.sub}</p>
+              </div>
+              <span className="text-gray-300 text-sm flex-shrink-0">›</span>
             </Link>
           ))}
         </div>

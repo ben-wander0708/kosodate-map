@@ -6,6 +6,7 @@ import { useSearchParams, usePathname } from "next/navigation";
 import { getSupabase } from "@/lib/supabase/client";
 import type { MunicipalityChecklist, ChecklistItem } from "@/lib/data/types";
 import { useOnboarding } from "@/hooks/useOnboarding";
+import PageHeader from "@/components/common/PageHeader";
 
 interface ChecklistClientProps {
   checklist: MunicipalityChecklist;
@@ -225,7 +226,7 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
       enrollment_month: enrollmentMonth,
     }).catch(console.error);
     const url = `${window.location.origin}/${municipalityId}/timeline?share=${shareId}`;
-    const message = `入園準備ナビを一緒に確認しよう📋\n${url}`;
+    const message = `入園準備チェックリストを一緒に確認しよう📋\n${url}`;
     window.location.href = `https://line.me/R/msg/text/?${encodeURIComponent(message)}`;
   }, [shareId, saveToSupabase, selectedPersonaId, checkedItems, movingDateStr, enrollmentMonth, municipalityId]);
 
@@ -288,12 +289,19 @@ export default function ChecklistClient({ checklist, municipalityName, municipal
         </Link>
       </div>
     )}
+    {!isKioskMode && (
+      <PageHeader
+        title="入園準備チェックリスト"
+        subtitle={`${municipalityName} · 入園に必要な手続き`}
+        municipalityId={municipalityId}
+      />
+    )}
     <div className={`space-y-4 p-4${progress === 100 ? " pb-20" : ""}${isKioskMode ? " kiosk-mode pt-20" : ""}`}>
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-base font-bold mb-1">入園準備ナビ</h2>
+            <h2 className="text-base font-bold mb-1">入園準備チェックリスト</h2>
             <p className="text-xs text-green-200">
               {municipalityName}で保育園・幼稚園に入園するためにやること
             </p>

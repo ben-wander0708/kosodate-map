@@ -26,6 +26,7 @@ export default async function CommunityPage({ params }: CommunityPageProps) {
     <CommunityClient
       community={community}
       municipalityName={municipality.name_ja}
+      municipalityId={municipalityId}
     />
   );
 }

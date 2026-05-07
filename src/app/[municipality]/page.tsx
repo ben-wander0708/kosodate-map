@@ -70,10 +70,9 @@ export default async function MunicipalityPage({
     );
   }
 
-  const [nurseries, clinics, govSupports] = await Promise.all([
+  const [nurseries, clinics] = await Promise.all([
     dataRepository.getNurseries(municipalityId),
     dataRepository.getClinics(municipalityId),
-    dataRepository.getGovSupports(municipalityId),
   ]);
 
   return (
@@ -82,7 +81,6 @@ export default async function MunicipalityPage({
         municipality={municipality}
         nurseries={nurseries}
         clinics={clinics}
-        govSupports={govSupports}
       />
     </Suspense>
   );

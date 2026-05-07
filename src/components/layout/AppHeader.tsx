@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams, usePathname } from "next/navigation";
 import { Suspense } from "react";
 import { useLiff } from "@/hooks/useLiff";
+import { useOnboarding } from "@/hooks/useOnboarding";
 import FeedbackButton from "@/components/common/FeedbackButton";
 
 interface AppHeaderProps {
@@ -12,7 +13,19 @@ interface AppHeaderProps {
   municipalityId?: string;
 }
 
-const NAV_ITEMS = [
+interface NavItem {
+  tab: string;
+  icon: string;
+  title: string;
+  description: string;
+  activeColor: string;
+  activeBg: string;
+  href: (municipalityId: string) => string;
+  type: "page" | "tab";
+  showWhen?: "always" | "enrolled";
+}
+
+const NAV_ITEMS: NavItem[] = [
   {
     tab: "home",
     icon: "🏠",
@@ -24,49 +37,29 @@ const NAV_ITEMS = [
     type: "page",
   },
   {
+    tab: "surroundings",
+    icon: "🗺️",
+    title: "周辺環境マップ",
+    description: "物件の子育て環境を一画面で確認",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}/surroundings`,
+    type: "page",
+  },
+  {
     tab: "nursery",
     icon: "🏫",
-    title: "保活マップ",
-    description: "認可保育所・こども園の空き状況と距離ランキング",
+    title: "保育園を探す",
+    description: "認可保育所・こども園の空き状況と距離",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
     href: (municipalityId: string) => `/${municipalityId}?tab=nursery`,
     type: "tab",
   },
   {
-    tab: "gov",
-    icon: "🎁",
-    title: "もらい忘れてない？",
-    description: "児童手当・医療費助成など14の行政サポート",
-    activeColor: "text-[#2d6eb0]",
-    activeBg: "bg-blue-50 border border-blue-200",
-    href: (municipalityId: string) => `/${municipalityId}?tab=gov`,
-    type: "tab",
-  },
-  {
-    tab: "checklist",
-    icon: "✅",
-    title: "入園準備ナビ",
-    description: "入園に必要な手続きをまとめて管理",
-    activeColor: "text-[#2d9e6b]",
-    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
-    href: (municipalityId: string) => `/${municipalityId}/checklist`,
-    type: "page",
-  },
-  {
-    tab: "timeline",
-    icon: "🌱",
-    title: "行政リマインダー",
-    description: "児童手当・健診・入園申込みなど年間の行政手続き",
-    activeColor: "text-[#2d9e6b]",
-    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
-    href: (municipalityId: string) => `/${municipalityId}/timeline`,
-    type: "page",
-  },
-  {
     tab: "clinic",
     icon: "🏥",
-    title: "医療機関",
+    title: "医療機関を探す",
     description: "近くのクリニック・病院を診療科で絞り込み",
     activeColor: "text-[#e05a2b]",
     activeBg: "bg-orange-50 border border-orange-200",
@@ -74,14 +67,35 @@ const NAV_ITEMS = [
     type: "tab",
   },
   {
+    tab: "checklist",
+    icon: "✅",
+    title: "入園準備チェックリスト",
+    description: "入園に必要な手続きをまとめて管理",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}/checklist`,
+    type: "page",
+  },
+  {
     tab: "apply",
     icon: "📋",
-    title: "申請書類 診断",
+    title: "申請書類診断",
     description: "3問に答えるだけで必要書類リストを作成",
     activeColor: "text-[#2d9e6b]",
     activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
     href: (municipalityId: string) => `/${municipalityId}/apply`,
     type: "page",
+  },
+  {
+    tab: "timeline",
+    icon: "📅",
+    title: "入園後タイムライン",
+    description: "児童手当・健診・入園申込みなど年間の行政手続き",
+    activeColor: "text-[#2d9e6b]",
+    activeBg: "bg-[#f0faf5] border border-[#c8ead8]",
+    href: (municipalityId: string) => `/${municipalityId}/timeline`,
+    type: "page",
+    showWhen: "enrolled",
   },
   {
     tab: "faq",
@@ -100,23 +114,26 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { isLoggedIn, profile, loading: liffLoading } = useLiff();
+  const { hasEnrolled } = useOnboarding();
   const activeTab = searchParams.get("tab") ?? "nursery";
 
   // 窓口提示モード中はヘッダーを非表示
   if (searchParams.get("mode") === "kiosk") return null;
 
   // サブページの判定
-  const isChecklistPage  = pathname?.endsWith("/checklist")  ?? false;
-  const isTimelinePage   = pathname?.endsWith("/timeline")   ?? false;
-  const isShopsPage      = pathname?.endsWith("/shops")       ?? false;
-  const isGiveawayPage   = pathname?.includes("/giveaway")    ?? false;
-  const isCommunityPage  = pathname?.endsWith("/community")   ?? false;
-  const isFaqPage        = pathname?.endsWith("/faq")         ?? false;
-  const isApplyPage      = pathname?.endsWith("/apply")       ?? false;
+  const isChecklistPage    = pathname?.endsWith("/checklist")     ?? false;
+  const isTimelinePage     = pathname?.endsWith("/timeline")      ?? false;
+  const isSurroundingsPage = pathname?.endsWith("/surroundings")  ?? false;
+  const isShopsPage        = pathname?.endsWith("/shops")          ?? false;
+  const isGiveawayPage     = pathname?.includes("/giveaway")       ?? false;
+  const isCommunityPage    = pathname?.endsWith("/community")      ?? false;
+  const isFaqPage          = pathname?.endsWith("/faq")            ?? false;
+  const isApplyPage        = pathname?.endsWith("/apply")          ?? false;
 
   const isHomePage =
     !isChecklistPage &&
     !isTimelinePage &&
+    !isSurroundingsPage &&
     !isShopsPage &&
     !isGiveawayPage &&
     !isCommunityPage &&
@@ -124,17 +141,20 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
     !isApplyPage &&
     !searchParams.get("tab");
 
-  const isActive = (item: typeof NAV_ITEMS[number]) => {
-    if (isChecklistPage) return item.tab === "checklist";
-    if (isTimelinePage)  return item.tab === "timeline";
-    if (isShopsPage)     return item.tab === "shops";
-    if (isGiveawayPage)  return item.tab === "giveaway";
-    if (isCommunityPage) return item.tab === "community";
-    if (isFaqPage)       return item.tab === "faq";
-    if (isApplyPage)     return item.tab === "apply";
-    if (isHomePage)      return item.tab === "home";
+  const isActive = (item: NavItem) => {
+    if (isChecklistPage)    return item.tab === "checklist";
+    if (isTimelinePage)     return item.tab === "timeline";
+    if (isSurroundingsPage) return item.tab === "surroundings";
+    if (isFaqPage)          return item.tab === "faq";
+    if (isApplyPage)        return item.tab === "apply";
+    if (isHomePage)         return item.tab === "home";
     return item.type === "tab" && activeTab === item.tab;
   };
+
+  // 入園後タイムラインは hasEnrolled 時のみ表示
+  const visibleNavItems = NAV_ITEMS.filter(
+    (item) => item.showWhen !== "enrolled" || hasEnrolled
+  );
 
   return (
     <>
@@ -215,7 +235,7 @@ function AppHeaderInner({ municipalityName, municipalityId }: AppHeaderProps) {
             {/* ナビゲーション */}
             <nav className="flex-1 min-h-0 px-4 py-4 space-y-2 overflow-y-auto" style={{ WebkitOverflowScrolling: "touch" }}>
               <p className="text-xs text-gray-400 font-medium px-1 mb-3">カテゴリ</p>
-              {NAV_ITEMS.map((item) => {
+              {visibleNavItems.map((item) => {
                 const active = isActive(item);
                 const href = municipalityId ? item.href(municipalityId) : "/";
                 return (

@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { useLiff } from "@/hooks/useLiff";
 import { fetchGiveawayItems } from "@/lib/api/giveaway";
+import PageHeader from "@/components/common/PageHeader";
 import {
   GIVEAWAY_CATEGORY_LABELS,
   GIVEAWAY_CONDITION_LABELS,
@@ -46,6 +47,8 @@ export default function GiveawayListClient({ municipalityId, municipalityName }:
   }, [items, selectedCategory]);
 
   return (
+    <>
+    <PageHeader title="🎁 お譲り" subtitle={`${municipalityName} · 子育て世代の譲り合い`} municipalityId={municipalityId} />
     <div className="space-y-4 p-4">
       {/* ヘッダーバナー */}
       <div className="bg-gradient-to-r from-[#e05a8c] to-[#c2185b] rounded-xl p-4 text-white">
@@ -187,5 +190,6 @@ export default function GiveawayListClient({ municipalityId, municipalityName }:
         </Link>
       )}
     </div>
+    </>
   );
 }

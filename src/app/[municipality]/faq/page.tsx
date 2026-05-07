@@ -1,7 +1,7 @@
 import { dataRepository } from "@/lib/data/json-adapter";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Link from "next/link";
+import PageHeader from "@/components/common/PageHeader";
 import FaqAccordion from "./FaqAccordion";
 
 interface FaqPageProps {
@@ -74,32 +74,18 @@ export default async function FaqPage({ params }: FaqPageProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 pb-32 overflow-y-auto"
-      style={{ WebkitOverflowScrolling: "touch" }}
-    >
+    <>
+      <PageHeader title="よくある質問" subtitle={`${name}の保育園・子育て情報について`} municipalityId={municipalityId} />
+      <div className="space-y-4 p-4 pb-32 overflow-y-auto"
+        style={{ WebkitOverflowScrolling: "touch" }}
+      >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
-      {/* ヘッダー */}
-      <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
-        <h1 className="text-base font-bold mb-1">よくある質問</h1>
-        <p className="text-xs text-green-200">{name}の保育園・子育て情報について</p>
-      </div>
-
       {/* FAQ一覧 */}
       <FaqAccordion items={FAQ_ITEMS} />
-
-      {/* 戻るリンク */}
-      <div className="pt-2">
-        <Link
-          href={`/${municipalityId}`}
-          className="block bg-white rounded-xl p-4 text-center text-sm text-[#2d9e6b] font-semibold border border-[#c8ead8] shadow-sm"
-        >
-          ← {name}の保育園マップに戻る
-        </Link>
-      </div>
 
       {/* お問い合わせ */}
       <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 text-center">
@@ -123,6 +109,7 @@ export default async function FaqPage({ params }: FaqPageProps) {
           ※ このページの情報は参考目的で掲載しています。掲載内容は公開情報をもとにしており、行政機関による正式な案内ではありません。制度の詳細・申請手続きは必ず各担当窓口にご確認ください。
         </p>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

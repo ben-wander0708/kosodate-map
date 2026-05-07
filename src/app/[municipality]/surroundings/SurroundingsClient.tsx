@@ -7,6 +7,7 @@ import type { Location, Nursery, Clinic, Shop, Park, Station, School, SavedPrope
 import { SAVED_PROPERTIES_KEY } from "@/lib/data/types";
 import type { LayerKey } from "@/components/map/LeafletMap";
 import { calculateDistance, estimateMinutes } from "@/lib/geo/haversine";
+import PageHeader from "@/components/common/PageHeader";
 
 const LeafletMap = dynamic(() => import("@/components/map/LeafletMap"), { ssr: false });
 
@@ -173,16 +174,11 @@ export default function SurroundingsClient({
   return (
     <div className="flex flex-col h-[100dvh] overflow-hidden">
 
-      {/* ─── ヘッダー ─── */}
-      <div className="bg-white border-b border-gray-100 px-4 py-3 flex-shrink-0">
-        <div className="flex items-center gap-2">
-          <Link href={`/${municipalityId}`} className="text-gray-400 text-lg">‹</Link>
-          <div>
-            <h1 className="text-sm font-bold text-gray-800">🗺️ 周辺環境マップ</h1>
-            <p className="text-xs text-gray-400">{municipalityName} · 物件の子育て環境を確認</p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        title="🗺️ 周辺環境マップ"
+        subtitle={`${municipalityName} · 物件の子育て環境を確認`}
+        municipalityId={municipalityId}
+      />
 
       {/* ─── 住所入力 ─── */}
       <div className="bg-white border-b border-gray-100 px-4 py-3 flex-shrink-0 space-y-2">
