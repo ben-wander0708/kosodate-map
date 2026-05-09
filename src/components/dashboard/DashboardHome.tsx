@@ -11,7 +11,6 @@ import postEnrollmentData from "@/lib/data/post-enrollment-events.json";
 import SavedPropertyCard from "@/components/surroundings/SavedPropertyCard";
 
 type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident" | "researching";
-type WorkStatus = "fulltime" | "parttime" | "leave";
 
 const LOCAL_SHARE_KEY = "kosodate_share_id";
 
@@ -80,11 +79,6 @@ const PHASE_LABELS: Record<Phase, { label: string; icon: string; step: number }>
   moved:       { label: "転入済み",  icon: "✅", step: 4 },
 };
 
-const WORK_LABELS: Record<WorkStatus, string> = {
-  fulltime: "フルタイム",
-  parttime: "パート・時短",
-  leave:    "育休中",
-};
 
 const ASSIGNEE_LABELS: Record<string, string> = {
   mother: "👩 ママ",
@@ -284,25 +278,10 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
             : phase === "moving_soon" ? "引越し前にやることを確認しましょう"
             : phase === "decided"     ? "物件が決まったら早めに動きましょう"
             : phase === "researching" ? "転居が決まる前に情報を集めておきましょう"
-            : "転居先の子育て環境を確認しましょう"}
+            : "物件選びの前に、子育て環境をチェックしましょう"}
           </h2>
 
-          {answers && (
-            <div className="flex gap-2 mt-2 flex-wrap">
-              {answers.work_status && (
-                <span className="text-xs bg-white/20 rounded-full px-2 py-0.5">
-                  💼 {WORK_LABELS[answers.work_status as WorkStatus]}
-                </span>
-              )}
-              {answers.child_count && (
-                <span className="text-xs bg-white/20 rounded-full px-2 py-0.5">
-                  👶 {answers.child_count}
-                </span>
-              )}
-            </div>
-          )}
-
-          {phaseInfo && (
+          {phaseInfo && phase !== "researching" && (
             <div className="mt-3">
               <div className="flex justify-between text-[11px] text-white/60 mb-1">
                 <span>検討中</span><span>物件決定</span><span>引越し準備</span><span>転入済み</span>
@@ -314,6 +293,12 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
                 />
               </div>
             </div>
+          )}
+
+          {phase === "researching" && (
+            <p className="text-[11px] text-white/60 mt-2">
+              転居時期が決まったら設定を更新してください
+            </p>
           )}
         </div>
       )}
