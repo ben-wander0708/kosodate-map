@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import dynamic from "next/dynamic";
 import type { Municipality, Nursery, Clinic, Location, TransportMode } from "@/lib/data/types";
 import { rankNurseriesByDistance, rankClinicsByDistance } from "@/lib/geo/haversine";
@@ -249,15 +250,36 @@ export default function MunicipalityHome({
 
   return (
     <div className="space-y-4 p-4">
-      {/* ウェルカムバナー */}
-      <div className="bg-gradient-to-r from-[#2d9e6b] to-[#1a7a52] rounded-xl p-4 text-white">
-        <h2 className="text-base font-bold mb-1">
-          {municipality.name_ja}の子育て情報
-        </h2>
-        <p className="text-xs text-green-200">
-          {activeTab === "nursery" && `🏫 保育施設 ${nurseries.length}件 ・ データ更新日: ${dataDate}`}
-          {activeTab === "clinic" && `🏥 医療機関 ${clinics.length}件`}
-        </p>
+      {/* ナビ: 戻るボタン + タブ切替 */}
+      <div className="flex items-center gap-3">
+        <Link
+          href={`/${municipality.id}`}
+          className="flex items-center gap-1 text-sm text-gray-500 font-medium min-w-[48px] min-h-[44px] py-2"
+        >
+          ‹ ホーム
+        </Link>
+        <div className="flex flex-1 bg-gray-100 rounded-xl p-1 gap-1">
+          <Link
+            href={`/${municipality.id}?tab=nursery`}
+            className={`flex-1 flex items-center justify-center gap-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "nursery"
+                ? "bg-white text-[#2d9e6b] shadow-sm"
+                : "text-gray-500"
+            }`}
+          >
+            🏫 保育園を探す
+          </Link>
+          <Link
+            href={`/${municipality.id}?tab=clinic`}
+            className={`flex-1 flex items-center justify-center gap-1 py-2 text-xs font-semibold rounded-lg transition-all ${
+              activeTab === "clinic"
+                ? "bg-white text-[#e05a2b] shadow-sm"
+                : "text-gray-500"
+            }`}
+          >
+            🏥 医療機関を探す
+          </Link>
+        </div>
       </div>
 
       {/* 自宅位置設定 */}
