@@ -42,11 +42,6 @@ interface OnboardingModalProps {
 /** ウィザードのステップ（2ステップ） */
 type WizardStep = 1 | 2 | "done";
 
-function countToNumber(count: ChildCount): number {
-  if (count === "1人") return 1;
-  if (count === "2人") return 2;
-  return 3;
-}
 
 const FAMILY_TYPE_OPTIONS: { value: FamilyType; label: string; sub: string }[] = [
   { value: "dual",       label: "👫 共働き",         sub: "両親ともに就労中（フルタイム・パートを含む）" },
@@ -66,17 +61,6 @@ function getPhaseOptions(municipalityName: string): { label: string; sub: string
   ];
 }
 
-const WORK_OPTIONS: { label: string; sub: string; value: WorkStatus }[] = [
-  { label: "💼 フルタイム",    sub: "保育標準時間（最長11時間）",  value: "fulltime" },
-  { label: "⏰ パート・時短",  sub: "保育短時間（最長8時間）",    value: "parttime" },
-  { label: "🍼 育休中",        sub: "復職後の入園に向けて準備",   value: "leave" },
-];
-
-const COUNT_OPTIONS: { label: string; value: ChildCount }[] = [
-  { label: "👶 1人",         value: "1人" },
-  { label: "👶👶 2人",       value: "2人" },
-  { label: "👶👶👶 3人以上", value: "3人以上" },
-];
 
 const AGE_OPTIONS = [0, 1, 2, 3, 4, 5];
 
@@ -104,15 +88,18 @@ const MONTH_OPTIONS = getMonthOptions();
 function getCtaForPhase(phase: Phase | undefined, municipalityId: string, municipalityName: string) {
   switch (phase) {
     case "resident":
-      return { message: `${municipalityName}の子育て支援制度や保育施設情報を確認してみましょう。`, buttonLabel: "支援制度ガイドを見る →", href: `/${municipalityId}?tab=gov` };
+      return { message: `${municipalityName}の保育施設情報を地図でまとめて確認できます。`, buttonLabel: "保育園を探す →", href: `/${municipalityId}?tab=nursery` };
+    case "researching":
+    case "exploring":
+      return { message: "気になるエリアの保育園・病院・スーパーなどを地図でまとめて確認しましょう。", buttonLabel: "周辺環境マップを確認する →", href: `/${municipalityId}/surroundings` };
     case "decided":
-      return { message: "物件が決まったら、転居前にやることを確認しましょう。", buttonLabel: "入園準備ナビを見る →", href: `/${municipalityId}/checklist` };
+      return { message: "物件が決まったら、転居前にやることを確認しましょう。", buttonLabel: "入園準備チェックリストを見る →", href: `/${municipalityId}/checklist` };
     case "moving_soon":
-      return { message: "引越しまでにやることと転入後の手続きをまとめて確認できます。", buttonLabel: "入園準備ナビを確認する →", href: `/${municipalityId}/checklist` };
+      return { message: "引越しまでにやることと転入後の手続きをまとめて確認できます。", buttonLabel: "入園準備チェックリストを確認する →", href: `/${municipalityId}/checklist` };
     case "moved":
-      return { message: "転入届の提出はお済みですか？保育施設の申込みも早めに。", buttonLabel: "保育施設の空きを確認する →", href: `/${municipalityId}?tab=nursery` };
+      return { message: "転入届の提出はお済みですか？保育施設の申込みも早めに。", buttonLabel: "保育園の空きを確認する →", href: `/${municipalityId}?tab=nursery` };
     default:
-      return { message: "気になるエリアの保育施設の空き状況を先に確認しておきましょう。", buttonLabel: "保育施設マップを見る →", href: `/${municipalityId}` };
+      return { message: "気になるエリアの子育て環境をまとめて確認できます。", buttonLabel: "周辺環境マップを確認する →", href: `/${municipalityId}/surroundings` };
   }
 }
 

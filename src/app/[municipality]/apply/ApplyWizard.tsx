@@ -26,7 +26,7 @@ interface DocItem {
   important?: boolean;
 }
 
-function buildDocList(answers: Answers): { docs: DocItem[]; tips: string[] } {
+function buildDocList(answers: Answers, municipalityName: string): { docs: DocItem[]; tips: string[] } {
   const docs: DocItem[] = [];
   const tips: string[] = [];
 
@@ -58,7 +58,7 @@ function buildDocList(answers: Answers): { docs: DocItem[]; tips: string[] } {
     docs.push({
       id: "doc_shuro",
       text: "就労証明書（各勤務先に記入依頼）",
-      note: "様式は市役所 or 総社市ウェブサイトから入手。両親ともに就労中の場合は2枚必要",
+      note: `様式は市役所 or ${municipalityName}ウェブサイトから入手。両親ともに就労中の場合は2枚必要`,
       important: true,
     });
     tips.push("就労証明書は勤務先の記入に時間がかかる場合があります。申請の2〜3週間前には依頼しておきましょう。");
@@ -85,7 +85,7 @@ function buildDocList(answers: Answers): { docs: DocItem[]; tips: string[] } {
   // 入所時期に応じたtips
   if (answers.timing === "soon") {
     tips.push("途中入所の申請は「入所希望月の前月中旬まで」が目安です。毎月審査があるため、早めに窓口に相談することをお勧めします。");
-    tips.push("申請窓口：総社市こども夢づくり課（総社市役所内）");
+    tips.push(`申請窓口：${municipalityName}の保育担当窓口（市役所内）`);
   }
 
   if (answers.timing === "april") {
@@ -169,7 +169,7 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
     }
   };
 
-  const { docs, tips } = step === 4 ? buildDocList(answers) : { docs: [], tips: [] };
+  const { docs, tips } = step === 4 ? buildDocList(answers, municipalityName) : { docs: [], tips: [] };
   const checkedCount = docs.filter((d) => checkedDocs[d.id]).length;
   const needsShuroTemplate =
     answers.workStatus === "both_working" || answers.workStatus === "single_parent";
@@ -428,8 +428,7 @@ export default function ApplyWizard({ municipalityId, municipalityName }: ApplyW
 申請希望月の前月中旬（途中入所の場合）
 
 【書類について】
-岡山県総社市所定の様式です。下記よりダウンロードいただくか、添付ファイルをご確認ください。
-https://www.city.soja.okayama.jp/kodomo_yumedukuri/
+${municipalityName}所定の様式です。市役所窓口または市のウェブサイトよりダウンロードいただくか、添付ファイルをご確認ください。
 
 【記入内容】
 ・就労形態・雇用区分
@@ -453,7 +452,7 @@ https://www.city.soja.okayama.jp/kodomo_yumedukuri/
           {/* 窓口リンク */}
           <div className="bg-blue-50 rounded-xl p-4 border border-blue-100">
             <p className="text-sm font-bold text-blue-700 mb-2">📞 申請窓口</p>
-            <p className="text-xs text-blue-600 mb-2">総社市こども夢づくり課（総社市役所内）</p>
+            <p className="text-xs text-blue-600 mb-2">{municipalityName}の保育担当窓口（市役所内）</p>
             <a
               href="https://www.city.soja.okayama.jp/kodomo_yumedukuri/sisei_kodomo_yume/kodomo_yume.html"
               target="_blank"
