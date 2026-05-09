@@ -11,7 +11,8 @@
       "name": "kosodate-map",
       "runtimeExecutable": "/opt/homebrew/Cellar/node/25.4.0/bin/node",
       "runtimeArgs": ["/Users/pero/kosodate-map/dev-server.js"],
-      "port": 3000
+      "port": 3002,
+      "autoPort": true
     }
   ]
 }
