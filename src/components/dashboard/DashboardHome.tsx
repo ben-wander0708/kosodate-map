@@ -10,7 +10,7 @@ import { SAVED_PROPERTIES_KEY } from "@/lib/data/types";
 import postEnrollmentData from "@/lib/data/post-enrollment-events.json";
 import SavedPropertyCard from "@/components/surroundings/SavedPropertyCard";
 
-type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident";
+type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident" | "researching";
 type WorkStatus = "fulltime" | "parttime" | "leave";
 
 const LOCAL_SHARE_KEY = "kosodate_share_id";
@@ -30,6 +30,12 @@ function getPriorityActions(
   _municipalityName: string
 ): PriorityAction[] {
   switch (phase) {
+    case "researching":
+      return [
+        { icon: "🗺️", title: "気になるエリアの子育て環境を下調べする", sub: "保育園・医療・公園・スーパーを地図で一括確認", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "🏫", title: "保育園の数・タイプを把握しておく", sub: "認可・小規模・こども園の違いと空き状況を確認", href: `/${municipalityId}?tab=nursery`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
+        { icon: "❓", title: "入所申込みのスケジュールを把握する", sub: "4月入所の締切は意外と早い。先に知っておこう", href: `/${municipalityId}/faq`, color: "text-gray-700", bgColor: "bg-gray-50 border-gray-200" },
+      ];
     case "exploring":
       return [
         { icon: "🗺️", title: "物件周辺の子育て環境を調べる", sub: "保育園・医療・スーパー・公園を地図でまとめて確認", href: `/${municipalityId}/surroundings`, color: "text-[#2d9e6b]", bgColor: "bg-[#f0faf5] border-[#c8ead8]" },
@@ -66,7 +72,8 @@ function getPriorityActions(
 }
 
 const PHASE_LABELS: Record<Phase, { label: string; icon: string; step: number }> = {
-  resident:    { label: "在住",      icon: "🏡", step: 0 },
+  resident:    { label: "在住",       icon: "🏡", step: 0 },
+  researching: { label: "情報収集中", icon: "📚", step: 0 },
   exploring:   { label: "検討中",    icon: "🔍", step: 1 },
   decided:     { label: "物件決定",  icon: "🏠", step: 2 },
   moving_soon: { label: "引越し準備中", icon: "🚚", step: 3 },
@@ -276,6 +283,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
             {phase === "moved"        ? "転入後の手続きを進めましょう"
             : phase === "moving_soon" ? "引越し前にやることを確認しましょう"
             : phase === "decided"     ? "物件が決まったら早めに動きましょう"
+            : phase === "researching" ? "転居が決まる前に情報を集めておきましょう"
             : "転居先の子育て環境を確認しましょう"}
           </h2>
 

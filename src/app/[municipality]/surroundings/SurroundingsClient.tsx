@@ -182,17 +182,20 @@ export default function SurroundingsClient({
 
       {/* ─── 住所入力 ─── */}
       <div className="bg-white border-b border-gray-100 px-4 py-3 flex-shrink-0 space-y-2">
+        <p className="text-[11px] text-gray-400 leading-snug">
+          現在地を使うか、物件の住所を入力して周辺環境を確認できます。<span className="font-medium text-gray-500">位置情報の許可は不要です。</span>
+        </p>
         <div className="flex gap-2">
           <button
             onClick={handleGPS}
             disabled={isLocating}
             className="flex-1 flex items-center justify-center gap-1.5 bg-gradient-to-r from-[#4CAF82] to-[#2d9e6b] text-white rounded-xl py-2.5 text-sm font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity"
           >
-            {isLocating ? <><span className="animate-spin">⏳</span>取得中…</> : <>📍 現在地を起点にする</>}
+            {isLocating ? <><span className="animate-spin">⏳</span>取得中…</> : <>📍 現在地を使う</>}
           </button>
           <button
             onClick={() => { setShowAddressInput(v => !v); setError(null); }}
-            className="px-4 bg-gray-100 text-gray-600 rounded-xl py-2.5 text-sm font-medium hover:bg-gray-200 transition-colors whitespace-nowrap"
+            className="px-4 bg-[#f0faf5] text-[#2d9e6b] border border-[#c8ead8] rounded-xl py-2.5 text-sm font-semibold hover:bg-[#e0f5ea] transition-colors whitespace-nowrap"
           >
             🔍 住所で入力
           </button>

@@ -7,7 +7,7 @@ import { ONBOARDING_DONE_EVENT } from "@/hooks/useOnboarding";
 
 export const ONBOARDING_DONE_KEY = "kosodate_onboarding_v2";
 
-type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident";
+type Phase = "decided" | "moving_soon" | "moved" | "exploring" | "resident" | "researching";
 type WorkStatus = "fulltime" | "parttime" | "leave";
 type ChildCount = "1人" | "2人" | "3人以上";
 
@@ -58,6 +58,7 @@ const FAMILY_TYPE_OPTIONS: { value: FamilyType; label: string; sub: string }[] =
 function getPhaseOptions(municipalityName: string): { label: string; sub: string; value: Phase }[] {
   return [
     { label: `🏡 もともと${municipalityName}民`, sub: "引越しは関係なく子育て情報を探している", value: "resident" },
+    { label: "📚 まだ転居時期は未定",             sub: "いつか転居するかもしれない。先に情報収集したい", value: "researching" },
     { label: "🔍 転居を検討中",                  sub: `${municipalityName}への転居を考えている`, value: "exploring" },
     { label: "🏠 物件が決まった",                sub: "転居先が確定している",                   value: "decided" },
     { label: "🚚 もうすぐ引越し",               sub: "1〜2ヶ月以内に引越し予定",              value: "moving_soon" },
