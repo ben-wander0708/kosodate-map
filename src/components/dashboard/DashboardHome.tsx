@@ -43,6 +43,12 @@ const PHASE_LABELS: Record<Phase, { label: string; icon: string; step: number }>
   moved:       { label: "転入済み",  icon: "✅", step: 4 },
 };
 
+// 入園後フェーズUIの表示制御フラグ
+// 現状のコア体験は「夫婦でのタスク共有・転居前後の情報収集」のため、
+// 入園後カウントダウン・担当進捗・月別イベントの3セクションは非表示にしている。
+// 再導入する場合は true にするだけで復活する。
+const SHOW_POST_ENROLLMENT_SECTIONS = false;
+
 
 const ASSIGNEE_LABELS: Record<string, string> = {
   mother: "👩 ママ",
@@ -160,7 +166,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       {/* ══════════════════════════════════════
           入園後フェーズ: カウントダウン / 入園後ヘッダー
           ══════════════════════════════════════ */}
-      {hasEnrolled && (
+      {SHOW_POST_ENROLLMENT_SECTIONS && hasEnrolled && (
         <div className={`rounded-2xl p-4 text-white ${
           daysUntilEnrollment !== null && daysUntilEnrollment > 0
             ? "bg-gradient-to-r from-rose-400 to-pink-500"
@@ -270,7 +276,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       {/* ══════════════════════════════════════
           入園後: 夫婦の担当状況
           ══════════════════════════════════════ */}
-      {hasEnrolled && (
+      {SHOW_POST_ENROLLMENT_SECTIONS && hasEnrolled && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-sm font-bold text-gray-800">👫 夫婦の担当状況</h3>
@@ -312,7 +318,7 @@ export default function DashboardHome({ municipalityId, municipalityName }: Dash
       {/* ══════════════════════════════════════
           入園後: 今月・来月のイベント
           ══════════════════════════════════════ */}
-      {hasEnrolled && currentMonthEvents.length > 0 && (
+      {SHOW_POST_ENROLLMENT_SECTIONS && hasEnrolled && currentMonthEvents.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
             <h3 className="text-sm font-bold text-gray-800">📅 今月・来月のイベント</h3>
